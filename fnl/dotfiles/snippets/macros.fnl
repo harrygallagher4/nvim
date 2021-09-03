@@ -1,5 +1,5 @@
 {
  :f
  (fn [args inputs ...]
-   `(snipf (fn ,args ,...) ,inputs))}
+   `(F (fn ,args ,...) ,inputs))}
 

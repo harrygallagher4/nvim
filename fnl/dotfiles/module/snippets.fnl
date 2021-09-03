@@ -10,7 +10,7 @@
 (def s (. ls :s))
 (def t (. ls :t))
 (def i (. ls :i))
-(def snipf (. ls :f))
+(def F (. ls :f))
 (def c (. ls :c))
 (def d (. ls :d))
 (def sn (. ls :sn))
