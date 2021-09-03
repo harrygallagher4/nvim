@@ -1,0 +1,155 @@
+-- vim: ft=lua
+local packer = require('packer')
+local u = packer.use
+
+local packer_config = {
+    display = {
+        open_cmd = 'aboveleft 85vnew [packer]'
+    }
+}
+
+return packer.startup({function()
+    u { 'wbthomason/packer.nvim'}
+    u { '~/.config/nvim/localplugin', as = 'harryg'}
+
+    -- u {
+    --     'glepnir/zephyr-nvim',
+    --     config = function()
+    --         vim.o.termguicolors = true
+    --         vim.cmd 'colorscheme zephyr'
+    --         vim.g.colors_name = 'zephyr' -- not sure why zephyr doesn't do this itself
+    --     end
+    -- }
+
+    u {
+        '~/Projects/base16/test-builder/templates/vim',
+        requires = { 'glepnir/zephyr-nvim' },
+        as = 'base16',
+        config = function()
+            vim.o.termguicolors = true
+            vim.cmd 'colorscheme base16-gruvbox-dark-soft'
+            vim.cmd 'call harryg#colors#customize("base16-gruvbox-dark-soft")'
+            -- vim.cmd 'colorscheme zephyr'
+            -- vim.g.colors_name = 'zephyr' -- not sure why zephyr doesn't do this itself
+        end
+    }
+
+    u {
+        'nvim-lua/plenary.nvim',
+        'tjdevries/astronauta.nvim'
+    }
+
+    u { 'kyazdani42/nvim-web-devicons' }
+
+    u {
+        'oberblastmeister/neuron.nvim',
+        branch = 'unstable'
+    }
+
+    u {
+        'rktjmp/lush.nvim'
+    }
+
+    u {
+        'nvim-telescope/telescope.nvim',
+        config = function()
+            vim.cmd 'highlight! link TelescopeBorder NonText'
+            vim.cmd 'highlight! link TelescopeSelection Special'
+            vim.cmd 'highlight! link TelescopeMatching gitcommitSummary'
+        end,
+        requires = {
+            {'nvim-lua/popup.nvim'},
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope-packer.nvim'},
+            {'nvim-telescope/telescope-fzy-native.nvim'}
+        }
+    }
+
+    -- u {
+    --     'nvim-telescope/telescope-frecency.nvim',
+    --     after = 'telescope.nvim',
+    --     requires = {
+    --         {'tami5/sql.nvim'}
+    --     },
+    --     config = function()
+    --         require'telescope'.load_extension('frecency')
+    --     end
+    -- }
+
+    u {
+        {
+            'neovim/nvim-lspconfig'
+        },
+        {
+            'nvim-lua/lsp-status.nvim'
+        },
+        {
+            'nvim-lua/completion-nvim',
+            requires = {
+                { 'hrsh7th/vim-vsnip' },
+                { 'hrsh7th/vim-vsnip-integ' }
+            }
+        }
+    }
+
+    u {
+        {
+            'nvim-treesitter/completion-treesitter',
+        },
+        {
+            'nvim-treesitter/nvim-treesitter',
+            requires = {
+                { 'harrygallagher4/nvim-treesitter-refactor' },
+                { 'nvim-treesitter/nvim-treesitter-textobjects' },
+                { 'nvim-treesitter/playground' }
+            }
+        }
+    }
+
+    u {
+        {
+            'Olical/conjure'
+        },
+        {
+            'Olical/aniseed',
+            after = { 'base16', 'astronauta.nvim' },
+            config = function()
+                require('aniseed.env').init({compile = true})
+            end
+        },
+        {
+            'bakpakin/fennel.vim'
+        }
+    }
+
+    u {
+        'eraserhd/parinfer-rust',
+        run = 'cargo build --release'
+    }
+
+    u {
+        'datwaft/bubbly.nvim',
+        after = {'aniseed', 'base16'}
+    }
+
+    u {
+        'tpope/vim-repeat',
+        'tpope/vim-commentary',
+        'tpope/vim-surround'
+    }
+
+    u {
+        'editorconfig/editorconfig-vim',
+        'raimondi/delimitmate',
+        '/usr/local/opt/fzf',
+        'junegunn/fzf.vim',
+        'junegunn/vim-slash',
+        'harrygallagher4/vim-lf',
+        'sbdchd/neoformat',
+--      '~/.config/nvim/plugins/neuron.vim'
+--      'harrygallagher4/neuron.vim'
+        'chaoren/vim-wordmotion',
+        'norcalli/nvim-colorizer.lua'
+    }
+end, config = packer_config})
+
