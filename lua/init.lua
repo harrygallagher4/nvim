@@ -20,7 +20,7 @@ nvim.ex.set("termguicolors")
 local lualine_opts = {inactive_sections = {lualine_a = {}, lualine_b = {}, lualine_c = {"filename"}, lualine_x = {"location"}, lualine_y = {}, lualine_z = {}}, options = {component_separators = {"", ""}, disabled_filetypes = {"Trouble"}, icons_enabled = true, section_separators = {"\238\130\180", "\238\130\182"}, theme = "tokyonight"}, sections = {lualine_a = {"mode"}, lualine_b = {"branch"}, lualine_c = {"filename"}, lualine_x = {"encoding", {"fileformat", icons_enabled = false}, "filetype"}, lualine_y = {"progress"}, lualine_z = {"location"}}}
 _2amodule_locals_2a["lualine-opts"] = lualine_opts
 do
-  vim.g["tokyonight_style"] = "storm"
+  vim.g["tokyonight_style"] = "day"
   nvim.ex.colorscheme("tokyonight")
   lualine.setup(lualine_opts)
 end

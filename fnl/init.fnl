@@ -29,7 +29,7 @@
                        :lualine_z {}}})
 
 (do
-  (tset vim.g :tokyonight_style "storm")
+  (tset vim.g :tokyonight_style "day")
   (nvim.ex.colorscheme "tokyonight")
   (lualine.setup lualine-opts))
 
