@@ -1,4 +1,10 @@
+.DS_Store
+
 .pack.old/
 .backup/
 .undofiles/
-.DS_Store
+
+lua/**/*
+!lua/nvim.lua
+!lua/plugins/*
+
