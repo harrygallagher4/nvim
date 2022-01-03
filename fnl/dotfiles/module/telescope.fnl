@@ -57,7 +57,7 @@
 (telescope.load_extension "fzf")
 (telescope.load_extension "project")
 (telescope.load_extension "ghq")
-(telescope.load_extension "packer")
+; (telescope.load_extension "packer")
 
 (def- projects
   {:display_type "full"

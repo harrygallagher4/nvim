@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, core, str, _ = require("aniseed.core"), require("dotfiles.core"), require("aniseed.string"), nil
 _2amodule_locals_2a["a"] = a
@@ -24,7 +24,7 @@ end
 _2amodule_2a["splitter"] = splitter
 local split
 local function split0(pat, _3fs)
-  assert((nil ~= pat), string.format("Missing argument %s on %s:%s", "pat", "/Users/harry/.config/nvim/fnl/dotfiles/core/string.fnl", 12))
+  _G.assert((nil ~= pat), "Missing argument pat on /Users/harry/.config/nvim/fnl/dotfiles/core/string.fnl:12")
   if _3fs then
     return str.split(_3fs, pat)
   else

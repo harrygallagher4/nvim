@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, hsluv, icons, lush, nvim, str, u, _ = require("aniseed.core"), require("hsluv"), require("nvim-web-devicons"), require("lush"), require("aniseed.nvim"), require("aniseed.string"), require("harryg.colorutils"), nil
 _2amodule_locals_2a["a"] = a
@@ -20,10 +20,10 @@ _2amodule_locals_2a["str"] = str
 _2amodule_locals_2a["u"] = u
 _2amodule_locals_2a["_"] = _
 do
-  local a_5_auto = require("aniseed.core")
-  local s_6_auto = require("aniseed.string")
-  local v_7_auto = require("aniseed.nvim")
-  if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_auto.last(s_6_auto.split(v_7_auto.buf_get_name(0), "/"))) then
+  local a_2_auto = require("aniseed.core")
+  local s_3_auto = require("aniseed.string")
+  local v_4_auto = require("aniseed.nvim")
+  if ((a_2_auto.last(s_3_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_2_auto.last(s_3_auto.split(v_4_auto.buf_get_name(0), "/"))) then
     local function _1_(...)
       local icons0 = (require("nvim-web-devicons")).get_icons()
       local cmap = {}
@@ -38,13 +38,14 @@ do
       return cmap
     end
     _1_(...)
+  else
   end
 end
 do
-  local a_5_auto = require("aniseed.core")
-  local s_6_auto = require("aniseed.string")
-  local v_7_auto = require("aniseed.nvim")
-  if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_auto.last(s_6_auto.split(v_7_auto.buf_get_name(0), "/"))) then
+  local a_2_auto = require("aniseed.core")
+  local s_3_auto = require("aniseed.string")
+  local v_4_auto = require("aniseed.nvim")
+  if ((a_2_auto.last(s_3_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_2_auto.last(s_3_auto.split(v_4_auto.buf_get_name(0), "/"))) then
     local function _8_(_6_)
       local _arg_7_ = _6_
       local k = _arg_7_[1]
@@ -57,6 +58,7 @@ do
     end
     a.map(tostring, a["get-in"](require("melange.colors"), {"Melange", "lush", "g"}))
     a["map-indexed"](_8_, a["get-in"](require("melange.colors"), {"Melange", "lush"}))
+  else
   end
 end
 local deg = math.deg
@@ -206,10 +208,10 @@ local function palette_lush(c)
 end
 _2amodule_locals_2a["palette-lush"] = palette_lush
 do
-  local a_5_auto = require("aniseed.core")
-  local s_6_auto = require("aniseed.string")
-  local v_7_auto = require("aniseed.nvim")
-  if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_auto.last(s_6_auto.split(v_7_auto.buf_get_name(0), "/"))) then
+  local a_2_auto = require("aniseed.core")
+  local s_3_auto = require("aniseed.string")
+  local v_4_auto = require("aniseed.nvim")
+  if ((a_2_auto.last(s_3_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_2_auto.last(s_3_auto.split(v_4_auto.buf_get_name(0), "/"))) then
     tostring(hsluv__3elush(darken(lush__3ehsluv(palette_lush("blue")), 0.4)))
     tostring(hsluv__3elush(darken(saturate(rotate(lush__3ehsluv(palette_lush("yellow")), 120), 0.075), 0.25)))
     tostring(lush_lighten(palette_lush("blue"), 0.1))
@@ -226,12 +228,13 @@ do
     hsluv__3ehex(darken(hex__3ehsluv(palette("red")), 0.25))
     hsluv__3ehex(saturate(hex__3ehsluv(palette("red")), 0.25))
     hsluv__3ehex(desaturate(hex__3ehsluv(palette("red")), 0.25))
+  else
   end
 end
-local a_5_auto = require("aniseed.core")
-local s_6_auto = require("aniseed.string")
-local v_7_auto = require("aniseed.nvim")
-if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_auto.last(s_6_auto.split(v_7_auto.buf_get_name(0), "/"))) then
+local a_2_auto = require("aniseed.core")
+local s_3_auto = require("aniseed.string")
+local v_4_auto = require("aniseed.nvim")
+if ((a_2_auto.last(s_3_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_2_auto.last(s_3_auto.split(v_4_auto.buf_get_name(0), "/"))) then
   local function _16_(_241)
     return (_241 * 2)
   end
@@ -242,4 +245,6 @@ if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_au
     return (_241 * 1.1)
   end
   return transform_h(hex__3ehsluv(palette("red")), _16_), transform_s(hex__3ehsluv(palette("red")), _17_), transform_l(hex__3ehsluv(palette("red")), _18_), palette("red"), gradient_n(palette("green"), "#2a2621", 36), gradient("#d65c71", "#2a2621"), tostring(blend(lush.hsl(palette("red")), lush.hsl(palette("green")), 0.5)), (blend(lush.hsl("#ff7e7e"), lush.hsl("#4a4a4a"))).hex, (u.blend(lush.hsl("#ff7e7e"), lush.hsl("#4a4a4a"))).hex, blend_hex("#ff7e7e", "#4a4a4a"), u.blend_hex("#ff7e7e", "#4a4a4a"), hsluv.hsluv_to_hex(blend_hsluv(hsluv.hex_to_hsluv("#ff7e7e"), hsluv.hex_to_hsluv("#4a4a4a"))), hsluv.hsluv_to_hex(u.blend_hsluv(hsluv.hex_to_hsluv("#ff7e7e"), hsluv.hex_to_hsluv("#4a4a4a")))
+else
+  return nil
 end

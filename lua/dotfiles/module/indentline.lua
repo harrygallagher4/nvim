@@ -7,14 +7,14 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, packer, _ = require("aniseed.core"), require("packer"), nil
 _2amodule_locals_2a["a"] = a
 _2amodule_locals_2a["packer"] = packer
 _2amodule_locals_2a["_"] = _
-local gs = {buftype_exclude = {"terminal", "prompt"}, char = "\226\148\130", context_patterns = {"class", "function", "method", "^if", "^while", "^for", "^object", "^table", "block", "arguments", "^attrset$", "^list$", "^let$", "^indented_string$"}, filetype_exclude = {"", "help", "fennel", "packer", "lspinfo", "tsplayground", "query", "scheme", "Trouble"}, show_current_context = true, use_treesitter = true, viewport_buffer = 30}
+local gs = {char = "\226\148\130", viewport_buffer = 30, use_treesitter = true, show_current_context = true, context_patterns = {"class", "function", "method", "^if", "^while", "^for", "^object", "^table", "block", "arguments", "^attrset$", "^list$", "^let$", "^indented_string$"}, filetype_exclude = {"", "help", "fennel", "packer", "lspinfo", "tsplayground", "query", "scheme", "Trouble"}, buftype_exclude = {"terminal", "prompt"}}
 _2amodule_locals_2a["gs"] = gs
 for k, v in pairs(gs) do
   vim.g[("indent_blankline_" .. k)] = v

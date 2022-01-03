@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, colorizer, lush, nvim, str, _, _0 = require("aniseed.core"), require("colorizer"), require("lush"), require("aniseed.nvim"), require("aniseed.string"), nil, nil
 _2amodule_locals_2a["a"] = a
@@ -18,10 +18,10 @@ _2amodule_locals_2a["nvim"] = nvim
 _2amodule_locals_2a["str"] = str
 _2amodule_locals_2a["_"] = _0
 _2amodule_locals_2a["_"] = _0
-colorizer.setup(nil, {mode = "both", names = false})
+colorizer.setup(nil, {names = false, mode = "both"})
 local hsl = lush.hsl
 _2amodule_locals_2a["hsl"] = hsl
-local gruvbox = {NONE = "NONE", aqua = "#8ec07c", bg0 = "#32302f", bg1 = "#3c3836", bg2 = "#504945", bg3 = "#665c54", bg4 = "#7c6f64", blue = "#83a598", bright_aqua = "#8ec07c", bright_blue = "#83a598", bright_green = "#b8bb26", bright_orange = "#fe8019", bright_purple = "#d3869b", bright_red = "#fb4934", bright_yellow = "#fabd2f", dark0 = "#282828", dark0_hard = "#1d2021", dark0_soft = "#32302f", dark1 = "#3c3836", dark2 = "#504945", dark3 = "#665c54", dark4 = "#7c6f64", faded_aqua = "#427b58", faded_blue = "#076678", faded_green = "#79740e", faded_orange = "#af3a03", faded_purple = "#8f3f71", faded_red = "#9d0006", faded_yellow = "#b57614", fg0 = "#fbf1c7", fg1 = "#ebdbb2", fg2 = "#d5c4a1", fg3 = "#bdae93", fg4 = "#a89984", gray = "#928374", green = "#b8bb26", light0 = "#fbf1c7", light0_hard = "#f9f5d7", light0_soft = "#f2e5bc", light1 = "#ebdbb2", light2 = "#d5c4a1", light3 = "#bdae93", light4 = "#a89984", neutral_aqua = "#689d6a", neutral_blue = "#458588", neutral_green = "#98971a", neutral_orange = "#d65d0e", neutral_purple = "#b16286", neutral_red = "#cc241d", neutral_yellow = "#d79921", orange = "#fe8019", purple = "#d3869b", red = "#fb4934", sl = "#32302e", yellow = "#fabd2f"}
+local gruvbox = {dark0_hard = "#1d2021", dark0 = "#282828", dark0_soft = "#32302f", dark1 = "#3c3836", dark2 = "#504945", dark3 = "#665c54", dark4 = "#7c6f64", light0_hard = "#f9f5d7", light0 = "#fbf1c7", light0_soft = "#f2e5bc", light1 = "#ebdbb2", light2 = "#d5c4a1", light3 = "#bdae93", light4 = "#a89984", bright_red = "#fb4934", bright_green = "#b8bb26", bright_yellow = "#fabd2f", bright_blue = "#83a598", bright_purple = "#d3869b", bright_aqua = "#8ec07c", bright_orange = "#fe8019", neutral_red = "#cc241d", neutral_green = "#98971a", neutral_yellow = "#d79921", neutral_blue = "#458588", neutral_purple = "#b16286", neutral_aqua = "#689d6a", neutral_orange = "#d65d0e", faded_red = "#9d0006", faded_green = "#79740e", faded_yellow = "#b57614", faded_blue = "#076678", faded_purple = "#8f3f71", faded_aqua = "#427b58", faded_orange = "#af3a03", gray = "#928374", bg0 = "#32302f", bg1 = "#3c3836", bg2 = "#504945", bg3 = "#665c54", bg4 = "#7c6f64", fg0 = "#fbf1c7", fg1 = "#ebdbb2", fg2 = "#d5c4a1", fg3 = "#bdae93", fg4 = "#a89984", red = "#fb4934", green = "#b8bb26", yellow = "#fabd2f", blue = "#83a598", purple = "#d3869b", aqua = "#8ec07c", orange = "#fe8019", NONE = "NONE", sl = "#32302e"}
 _2amodule_2a["gruvbox"] = gruvbox
 local function resolve_color(color)
   return (string.match(color, "#%x%x%x%x%x%x") or a.get(gruvbox, color))

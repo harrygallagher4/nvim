@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, nvim = require("aniseed.core"), require("aniseed.nvim")
 do end (_2amodule_locals_2a)["a"] = a
@@ -30,6 +30,8 @@ local function coerce_to_seq(s)
     if ((nil ~= _1_) and _3_()) then
       local x = _1_
       return {x}
+    else
+      return nil
     end
   end
 end

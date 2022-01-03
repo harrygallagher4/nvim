@@ -159,6 +159,8 @@
       _gen_fzf_default_opts
     "))
 
+; after this is generated the theme can be reloaded with:
+; > kitty @ set-colors --all --configured ~/.config/kitty/nvim_auto_colors.conf
 (defn generate-kitty []
   (a.spit
     "/Users/harry/.config/kitty/nvim_auto_colors.conf"

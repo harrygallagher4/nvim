@@ -64,7 +64,8 @@ local M = packer.startup { function()
         'oberblastmeister/neuron.nvim', branch = 'unstable'
     }
     use {
-        'bfredl/nvim-luadev'
+        'bfredl/nvim-luadev', -- I don't think I actually use this
+        disable = true
     }
     use {
         'nvim-telescope/telescope.nvim',
@@ -83,12 +84,14 @@ local M = packer.startup { function()
         'neovim/nvim-lspconfig',
         {
             'ray-x/guihua.lua',
+            disable = true,
+            opt = true,
             run = 'cd lua/fzy && make'
         },
-        'ray-x/navigator.lua',
-        'ray-x/lsp_signature.nvim',
+        { 'ray-x/navigator.lua', opt = true, disable = true },
+        { 'ray-x/lsp_signature.nvim', opt = true, disable = true },
         'folke/lua-dev.nvim',
-        'glepnir/lspsaga.nvim',
+        'tami5/lspsaga.nvim',
         'nvim-lua/lsp-status.nvim',
         'folke/trouble.nvim',
         'L3MON4D3/LuaSnip',
@@ -100,7 +103,8 @@ local M = packer.startup { function()
     use {
         'nvim-treesitter/completion-treesitter',
         {
-            '~/Projects/tree-sitter/nvim-treesitter', as = 'nvim-treesitter',
+            'nvim-treesitter/nvim-treesitter',
+            -- '~/Projects/tree-sitter/nvim-treesitter', as = 'nvim-treesitter',
             requires = {
                 { 'nvim-treesitter/nvim-treesitter-refactor' },
                 { 'nvim-treesitter/nvim-treesitter-textobjects' },
@@ -110,7 +114,8 @@ local M = packer.startup { function()
         }
     }
     use {
-        'vhyrro/neorg', branch = 'unstable',
+        -- 'vhyrro/neorg', branch = 'unstable',
+        'nvim-neorg/neorg',
         config = function()
             require('neorg').setup {
                 -- Tell Neorg what modules to load

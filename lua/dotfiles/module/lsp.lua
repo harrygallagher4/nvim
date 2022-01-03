@@ -7,44 +7,44 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
-local a, configs, lsp, lspsig, lspstatus, lualsp, navigator, nvim, saga, trouble, util, _, _0 = require("aniseed.core"), require("lspconfig/configs"), require("lspconfig"), require("lsp_signature"), require("lsp-status"), require("dotfiles.util.lualsp"), require("navigator"), require("aniseed.nvim"), require("lspsaga"), require("trouble"), require("lspconfig/util"), nil, nil
+local a, lsp, lspstatus, nvim, saga, trouble, _, _0 = require("aniseed.core"), require("lspconfig"), require("lsp-status"), require("aniseed.nvim"), require("lspsaga"), require("trouble"), nil, nil
 _2amodule_locals_2a["a"] = a
-_2amodule_locals_2a["configs"] = configs
 _2amodule_locals_2a["lsp"] = lsp
-_2amodule_locals_2a["lspsig"] = lspsig
 _2amodule_locals_2a["lspstatus"] = lspstatus
-_2amodule_locals_2a["lualsp"] = lualsp
-_2amodule_locals_2a["navigator"] = navigator
 _2amodule_locals_2a["nvim"] = nvim
 _2amodule_locals_2a["saga"] = saga
 _2amodule_locals_2a["trouble"] = trouble
-_2amodule_locals_2a["util"] = util
 _2amodule_locals_2a["_"] = _0
 _2amodule_locals_2a["_"] = _0
+local lua_runtime_path = a.concat({"lua/?.lua", "lua/?/init.lua"}, vim.split(package.path, ";"))
+do end (_2amodule_locals_2a)["lua-runtime-path"] = lua_runtime_path
 trouble.setup({auto_preview = false, height = 8})
 local function on_attach(client)
   lspstatus.on_attach(client)
-  vim.keymap.nnoremap({"K", vim.lsp.buf.hover, buffer = true})
-  vim.keymap.nnoremap({"<c-l>", vim.lsp.buf.signature_help, buffer = true})
-  vim.keymap.inoremap({"<c-l>", vim.lsp.buf.signature_help, buffer = true})
-  vim.keymap.nnoremap({"gd", vim.lsp.buf.definition, buffer = true})
-  vim.keymap.nnoremap({"gr", vim.lsp.buf.references, buffer = true})
-  vim.keymap.nnoremap({"gD", vim.lsp.buf.declaration, buffer = true})
-  vim.keymap.nnoremap({"gi", vim.lsp.buf.implementation, buffer = true})
-  vim.keymap.nnoremap({"<leader>r", vim.lsp.buf.rename, buffer = true})
-  vim.keymap.nnoremap({"<leader>ca", vim.lsp.buf.code_action, buffer = true})
-  vim.keymap.nnoremap({"<leader>d", vim.lsp.diagnostic.show_line_diagnostics, buffer = true})
-  vim.keymap.nnoremap({"[d", vim.lsp.diagnostic.goto_prev, buffer = true})
-  vim.keymap.nnoremap({"d]", vim.lsp.diagnostic.goto_next, buffer = true})
-  vim.keymap.nnoremap({"<leader>q", vim.lsp.diagnostic.set_loclist, buffer = true})
+  vim.keymap.nnoremap({buffer = true, "K", vim.lsp.buf.hover})
+  vim.keymap.nnoremap({buffer = true, "<c-l>", vim.lsp.buf.signature_help})
+  vim.keymap.inoremap({buffer = true, "<c-l>", vim.lsp.buf.signature_help})
+  vim.keymap.nnoremap({buffer = true, "gd", vim.lsp.buf.definition})
+  vim.keymap.nnoremap({buffer = true, "gr", vim.lsp.buf.references})
+  vim.keymap.nnoremap({buffer = true, "gD", vim.lsp.buf.declaration})
+  vim.keymap.nnoremap({buffer = true, "gi", vim.lsp.buf.implementation})
+  vim.keymap.nnoremap({buffer = true, "<leader>r", vim.lsp.buf.rename})
+  vim.keymap.nnoremap({buffer = true, "<leader>ca", vim.lsp.buf.code_action})
+  vim.keymap.nnoremap({buffer = true, "<leader>d", vim.lsp.diagnostic.show_line_diagnostics})
+  vim.keymap.nnoremap({buffer = true, "[d", vim.lsp.diagnostic.goto_prev})
+  vim.keymap.nnoremap({buffer = true, "d]", vim.lsp.diagnostic.goto_next})
+  vim.keymap.nnoremap({buffer = true, "<leader>q", vim.lsp.diagnostic.set_loclist})
   if client.resolved_capabilities.document_formatting then
-    vim.keymap.nnoremap({"<leader>f", vim.lsp.buf.formatting, buffer = true})
+    vim.keymap.nnoremap({buffer = true, "<leader>f", vim.lsp.buf.formatting})
+  else
   end
   if client.resolved_capabilities.document_range_formatting then
-    return vim.keymap.vnoremap({"<leader>f", vim.lsp.buf.range_formatting, buffer = true})
+    return vim.keymap.vnoremap({buffer = true, "<leader>f", vim.lsp.buf.range_formatting})
+  else
+    return nil
   end
 end
 _2amodule_locals_2a["on_attach"] = on_attach
@@ -54,7 +54,6 @@ end
 _2amodule_locals_2a["setup"] = setup
 lspstatus.register_progress()
 saga.init_lsp_saga()
-setup("rnix", {on_attach = on_attach})
 setup("svelte", {on_attach = on_attach})
 setup("denols", {on_attach = on_attach})
 setup("tsserver", {on_attach = on_attach})
@@ -63,4 +62,4 @@ setup("jsonls", {on_attach = on_attach})
 setup("bashls", {on_attach = on_attach})
 setup("yamlls", {on_attach = on_attach})
 setup("vimls", {on_attach = on_attach})
-return setup("sumneko_lua", lualsp.setup({on_attach = on_attach}))
+return setup("sumneko_lua", {on_attach = on_attach, settings = {Lua = {runtime = {version = "LuaJIT", path = lua_runtime_path}, diagnostics = {globals = {"vim"}}, workspace = {library = vim.api.nvim_get_runtime_file("", true)}, telemetry = {enable = false}}}})

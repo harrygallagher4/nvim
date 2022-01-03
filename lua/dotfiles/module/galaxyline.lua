@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, devicons, nvim, str, _ = require("aniseed.core"), require("nvim-web-devicons"), require("aniseed.nvim"), require("aniseed.string"), nil
 _2amodule_locals_2a["a"] = a
@@ -46,20 +46,22 @@ local function file_symbol()
     local _1 = (_2_)[4]
     return ("help" ~= ft)
   end
-  if (((type(_2_) == "table") and ((_2_)[1] == true) and (nil ~= (_2_)[2]) and true and true) and _3_()) then
+  if (((_G.type(_2_) == "table") and ((_2_)[1] == true) and (nil ~= (_2_)[2]) and true and true) and _3_()) then
     local ft = (_2_)[2]
     local _0 = (_2_)[3]
     local _1 = (_2_)[4]
     return "\238\130\162"
-  elseif ((type(_2_) == "table") and true and true and ((_2_)[3] == true) and ((_2_)[4] == true)) then
+  elseif ((_G.type(_2_) == "table") and true and true and ((_2_)[3] == true) and ((_2_)[4] == true)) then
     local _0 = (_2_)[1]
     local _1 = (_2_)[2]
     return "\239\129\128 "
-  elseif ((type(_2_) == "table") and true and true and true and true) then
+  elseif ((_G.type(_2_) == "table") and true and true and true and true) then
     local _0 = (_2_)[1]
     local _1 = (_2_)[2]
     local _2 = (_2_)[3]
     local _3 = (_2_)[4]
+    return nil
+  else
     return nil
   end
 end
@@ -133,9 +135,11 @@ local function cursor_percentage()
     return "top"
   elseif (_9_ == total) then
     return "bot"
-  else
+  elseif true then
     local _0 = _9_
     return percent(line, total)
+  else
+    return nil
   end
 end
 _2amodule_2a["cursor_percentage"] = cursor_percentage

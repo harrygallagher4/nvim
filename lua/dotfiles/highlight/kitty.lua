@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, lustache, str = require("aniseed.core"), require("lustache"), require("aniseed.string")
 do end (_2amodule_locals_2a)["a"] = a
@@ -63,7 +63,7 @@ _2amodule_locals_2a["trim-common"] = trim_common
 local function tail(xs)
   local _let_5_ = xs
   local h = _let_5_[1]
-  local t = {(table.unpack or unpack)(_let_5_, 2)}
+  local t = (function (t, k) local mt = getmetatable(t) if "table" == type(mt) and mt.__fennelrest then return mt.__fennelrest(t, k) else return {(table.unpack or unpack)(t, k)} end end)(_let_5_, 2)
   return t
 end
 _2amodule_locals_2a["tail"] = tail
@@ -104,7 +104,7 @@ local view
 local function _8_(t, k)
   return get_hl(k)
 end
-view = setmetatable({["0"] = vim.g.terminal_color_0, ["1"] = vim.g.terminal_color_1, ["10"] = vim.g.terminal_color_10, ["11"] = vim.g.terminal_color_11, ["12"] = vim.g.terminal_color_12, ["13"] = vim.g.terminal_color_13, ["14"] = vim.g.terminal_color_14, ["15"] = vim.g.terminal_color_15, ["2"] = vim.g.terminal_color_2, ["3"] = vim.g.terminal_color_3, ["4"] = vim.g.terminal_color_4, ["5"] = vim.g.terminal_color_5, ["6"] = vim.g.terminal_color_6, ["7"] = vim.g.terminal_color_7, ["8"] = vim.g.terminal_color_8, ["9"] = vim.g.terminal_color_9, scheme_name = vim.g.colors_name}, {__index = _8_})
+view = setmetatable({scheme_name = vim.g.colors_name, ["0"] = vim.g.terminal_color_0, ["1"] = vim.g.terminal_color_1, ["2"] = vim.g.terminal_color_2, ["3"] = vim.g.terminal_color_3, ["4"] = vim.g.terminal_color_4, ["5"] = vim.g.terminal_color_5, ["6"] = vim.g.terminal_color_6, ["7"] = vim.g.terminal_color_7, ["8"] = vim.g.terminal_color_8, ["9"] = vim.g.terminal_color_9, ["10"] = vim.g.terminal_color_10, ["11"] = vim.g.terminal_color_11, ["12"] = vim.g.terminal_color_12, ["13"] = vim.g.terminal_color_13, ["14"] = vim.g.terminal_color_14, ["15"] = vim.g.terminal_color_15}, {__index = _8_})
 do end (_2amodule_locals_2a)["view"] = view
 local template = multiline_str("\n      # generated from nvim colorscheme: {{scheme_name}}\n\n      background {{Normal.bg}}\n      foreground {{Normal.fg}}\n      cursor {{Cursor.bg}}\n      cursor_text_color background\n\n      url_color {{13}}\n\n      selection_background {{Visual.bg}}\n      selection_foreground {{Normal.fg}}\n\n      tab_bar_background {{BufferLineBackground.bg}}\n      active_tab_background {{BufferLineBufferSelected.bg}}\n      active_tab_foreground {{BufferLineBufferSelected.fg}}\n      active_tab_font_style bold-italic\n      inactive_tab_background {{BufferLineBackground.bg}}\n      inactive_tab_foreground {{BufferLineBackground.fg}}\n      inactive_tab_font_style normal\n\n      color0 {{0}}\n      color1 {{1}}\n      color2 {{2}}\n      color3 {{3}}\n      color4 {{4}}\n      color5 {{5}}\n      color6 {{6}}\n      color7 {{7}}\n      color8 {{8}}\n      color9 {{9}}\n      color10 {{10}}\n      color11 {{11}}\n      color12 {{12}}\n      color13 {{13}}\n      color14 {{14}}\n      color15 {{15}}\n    ")
 do end (_2amodule_locals_2a)["template"] = template

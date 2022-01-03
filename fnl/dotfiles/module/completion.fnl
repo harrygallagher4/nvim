@@ -77,5 +77,3 @@
 (snoremap :<tab> "<cmd>lua require'luasnip'.jump(1)<cr>" :silent true)
 (snoremap :<s-tab> "<cmd>lua require'luasnip'.jump(-1)<cr>" :silent true)
 
-; (def- zzzzzzzzzz 0)
-

@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, nvim, _, _0 = require("aniseed.core"), require("aniseed.nvim"), nil, nil
 _2amodule_locals_2a["a"] = a
@@ -39,12 +39,16 @@ _2amodule_locals_2a["match-line"] = match_line
 local function url(...)
   if (4 == a.count({...})) then
     return string.format("https://github.com/%s/%s/compare/%s...%s", ...)
+  else
+    return nil
   end
 end
 _2amodule_locals_2a["url"] = url
 local function open_url_21(url0)
   if not a["nil?"](url0) then
     return nvim.command(string.format("silent !%s '%s'", config.cmd, url0))
+  else
+    return nil
   end
 end
 _2amodule_locals_2a["open-url!"] = open_url_21
@@ -53,13 +57,13 @@ local function do_line()
 end
 _2amodule_locals_2a["do-line"] = do_line
 local function init()
-  return vim.keymap.nnoremap({"o", do_line, buffer = true})
+  return vim.keymap.nnoremap({buffer = true, "o", do_line})
 end
 _2amodule_2a["init"] = init
-local a_5_auto = require("aniseed.core")
-local s_6_auto = require("aniseed.string")
-local v_7_auto = require("aniseed.nvim")
-if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_auto.last(s_6_auto.split(v_7_auto.buf_get_name(0), "/"))) then
+local a_2_auto = require("aniseed.core")
+local s_3_auto = require("aniseed.string")
+local v_4_auto = require("aniseed.nvim")
+if ((a_2_auto.last(s_3_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_2_auto.last(s_3_auto.split(v_4_auto.buf_get_name(0), "/"))) then
   local _4_
   do
     local m = {match_str(" \226\156\147 oopsie woopsie")}
@@ -79,4 +83,6 @@ if ((a_5_auto.last(s_6_auto.split(_2amodule_name_2a, "%.")) .. ".fnl") == a_5_au
     end
   end
   return url(match_str(" \226\156\147 Updated L3MON4D3/LuaSnip/test: 51a4a92..d076884")), url(match_str(" \226\156\147 Updated L3MON4D3/LuaSnip: 51a4a92..d076884")), url(match_str(" \226\156\147 xxxxxxx L3MON4D3/LuaSnip: 51a4a92..d076884")), open_url_21(url(match_str(" \226\156\147 invalid"))), _4_, _6_, a.count({match_str(" \226\156\147 Updated nvim-treesitter/nvim-treesitter: 2abad14..1d5f928")})
+else
+  return nil
 end

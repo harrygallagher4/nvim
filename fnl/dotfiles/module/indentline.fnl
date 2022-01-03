@@ -16,7 +16,6 @@
    :buftype_exclude
    ["terminal" "prompt"]})
 (each [k v (pairs gs)] (tset vim.g (.. :indent_blankline_ k) v))
-; let g:indent_blankline_context_patterns=['attrset', 'list', 'let', 'indented_string']
 
 (tset vim.o :list true)
 (tset vim.o :listchars (table.concat ["eol:↴" "tab:  " "trail:⋅" "nbsp:_"] ","))

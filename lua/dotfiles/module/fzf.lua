@@ -7,12 +7,12 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, nvim = require("aniseed.core"), require("aniseed.nvim")
 do end (_2amodule_locals_2a)["a"] = a
 _2amodule_locals_2a["nvim"] = nvim
-nvim.g.fzf_layout = {window = {border = "sharp", height = 0.6, highlight = "VertSplit", width = 0.9}}
+nvim.g.fzf_layout = {window = {width = 0.9, height = 0.6, highlight = "VertSplit", border = "sharp"}}
 nvim.g.fzf_action = {["ctrl-i"] = "vsplit", ["ctrl-o"] = "split"}
 return nil

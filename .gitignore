@@ -1,4 +1,4 @@
 .pack.old/
 .backup/
 .undofiles/
-
+.DS_Store

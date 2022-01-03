@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, ls, nvim, str, util, _, _0 = require("aniseed.core"), require("luasnip"), require("aniseed.nvim"), require("aniseed.string"), require("dotfiles.util"), nil, nil
 _2amodule_locals_2a["a"] = a
@@ -48,6 +48,6 @@ local snips
 local function _1_(args)
   return {(a["get-in"](args, {1, "captures", 1}) .. " = ")}
 end
-snips = {all = {vsc({trig = "sniptest"}, "snippet ${0:sniptest} inserted!")}, fennel = {s({dscr = "Aniseed module definition", name = "Module (dynamic)", trig = "module"}, {t({"(module "}), d(1, module_name_snip, {}), t({"", "  {require {"}), i(2, {"a aniseed.core"}), t({"}"}), t({"", "   require-macros ["}), i(3, {"dotfiles.macros"}), t({"]})", ""}), i(0)})}, nix = {s({dscr = "Nix attribute name", name = "Attribute", regTrig = true, trig = "=([%w%.]+)", wordTrig = true}, {F(_1_, {}), i(0), t({";"})})}, rust = {vsc({trig = "fn"}, "/// $1\nfn $2($3) ${4:-> $5 }\\{\n\9$0\n\\}")}}
+snips = {all = {vsc({trig = "sniptest"}, "snippet ${0:sniptest} inserted!")}, nix = {s({name = "Attribute", dscr = "Nix attribute name", trig = "=([%w%.]+)", regTrig = true, wordTrig = true}, {F(_1_, {}), i(0), t({";"})})}, rust = {vsc({trig = "fn"}, "/// $1\nfn $2($3) ${4:-> $5 }\\{\n\9$0\n\\}")}, fennel = {s({name = "Module (dynamic)", dscr = "Aniseed module definition", trig = "module"}, {t({"(module "}), d(1, module_name_snip, {}), t({"", "  {require {"}), i(2, {"a aniseed.core"}), t({"}"}), t({"", "   require-macros ["}), i(3, {"dotfiles.macros"}), t({"]})", ""}), i(0)})}}
 _2amodule_locals_2a["snips"] = snips
 return a.assoc(ls, "snippets", snips)

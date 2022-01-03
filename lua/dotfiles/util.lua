@@ -7,8 +7,8 @@ do
 end
 local _2amodule_locals_2a
 do
-  _2amodule_2a["_LOCALS"] = {}
-  _2amodule_locals_2a = (_2amodule_2a)._LOCALS
+  _2amodule_2a["aniseed/locals"] = {}
+  _2amodule_locals_2a = (_2amodule_2a)["aniseed/locals"]
 end
 local a, env, it, nvim, nvu, preload, _ = require("aniseed.core"), require("aniseed.env"), require("plenary.iterators"), require("aniseed.nvim"), require("aniseed.nvim.util"), require("plenary.reload"), nil
 _2amodule_locals_2a["a"] = a
@@ -36,6 +36,8 @@ local function even_key(_1_)
   local y = _arg_2_[2]
   if (0 == (x % 2)) then
     return y
+  else
+    return nil
   end
 end
 _2amodule_2a["even-key"] = even_key
@@ -45,6 +47,8 @@ local function odd_key(_4_)
   local y = _arg_5_[2]
   if not (0 == (x % 2)) then
     return y
+  else
+    return nil
   end
 end
 _2amodule_2a["odd-key"] = odd_key
@@ -119,26 +123,32 @@ if not a["nil?"](preload.reload_module) then
     return require(m)
   end
   _G["reload"] = _10_
+else
 end
 local function lspstatus(bufnr)
   return a.get(a.first(vim.lsp.buf_get_clients((bufnr or 0))), "name", "None")
 end
 _2amodule_2a["lspstatus"] = lspstatus
 local function lsp_buf_get_active_clients(bufnr)
-  local tbl_12_auto = {}
+  local tbl_15_auto = {}
+  local i_16_auto = #tbl_15_auto
   for _0, client in ipairs(vim.lsp.get_active_clients()) do
-    local _12_
+    local val_17_auto
     do
       local buffers = vim.lsp.get_buffers_by_client_id(client.id)
       if vim.tbl_contains(buffers, (bufnr or nvim.get_current_buf())) then
-        _12_ = client
+        val_17_auto = client
       else
-      _12_ = nil
+        val_17_auto = nil
       end
     end
-    tbl_12_auto[(#tbl_12_auto + 1)] = _12_
+    if (nil ~= val_17_auto) then
+      i_16_auto = (i_16_auto + 1)
+      do end (tbl_15_auto)[i_16_auto] = val_17_auto
+    else
+    end
   end
-  return tbl_12_auto
+  return tbl_15_auto
 end
 _2amodule_2a["lsp-buf-get-active-clients"] = lsp_buf_get_active_clients
 local function lsp_buf_get_active_client(bufnr)
@@ -155,6 +165,7 @@ local function stop_lsp()
         vim.lsp.diagnostic.clear(buf, client.id)
       end
       vim.lsp.stop_client(client.id)
+    else
     end
   end
   return nil
@@ -164,4 +175,6 @@ nvu["fn-bridge"]("LspStatus", "dotfiles.util", "lspstatus")
 nvu["fn-bridge"]("StopLsp", "dotfiles.util", "stop_lsp")
 if a["nil?"](a.get(vim.api.nvim_get_commands({builtin = false}), "StopLsp")) then
   return nvim.ex.command_("StopLsp call StopLsp()")
+else
+  return nil
 end
