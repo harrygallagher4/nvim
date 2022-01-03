@@ -5,6 +5,19 @@
 .undofiles/
 
 lua/**/*
-!lua/nvim.lua
+!lua/plugins/
 !lua/plugins/*
+
+!lua/nvim.lua
+!lua/snips.lua
+!lua/test.lua
+!lua/evilline.lua
+!lua/harryg/
+!lua/harryg/colorscheme.lua
+!lua/harryg/colorutils.lua
+!lua/harryg/lspconfig.lua
+!lua/harryg/lushhsluv.lua
+!lua/dotfiles/
+!lua/dotfiles/etc/
+!lua/dotfiles/etc/neorg_ts_setup.lua
 

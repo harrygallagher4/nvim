@@ -14,7 +14,7 @@ nnoremap <buffer> <silent> k <cmd>silent normal N0<cr>
 ```vim
 redir @a | verbose autocmd
 redir END
-"ap
+normal \"ap
 onoremap <silent> <buffer> } /^\w<cr>
 set foldmethod=manual
 set foldopen=all
@@ -24,7 +24,7 @@ nnoremap <buffer> j zjzo[z
 nnoremap <buffer> k zkzo[z
 ```
 
-
+```fennel
 ;(assoc-in!
 ;  nvim.g [:lf#layout]
 ;  {:window
@@ -32,14 +32,15 @@ nnoremap <buffer> k zkzo[z
 ;    :height 0.6666
 ;    :highlight "Function"
 ;    :border "horizontal"})
+```
 
+```vim
 " nnoremap <silent><esc>  <esc>:nohlsearch<CR><esc>
-
 echo luaeval("require'dotfiles.util.completion'.map_k()")
-
-expand
-escape
-feedkeys
+" expand
+" escape
+" feedkeys
+```
 
 ```lua
 require'nvim-web-devicons'.setup {
@@ -74,7 +75,7 @@ require'nvim-web-devicons'.setup {
     {:noremap true}))
 ```
 
-```vimscript
+```vim
 call v:lua.vim.dotfiles.test()
 echo g:harryg_test_var
 ```
