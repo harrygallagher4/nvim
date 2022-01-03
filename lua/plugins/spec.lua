@@ -7,7 +7,6 @@ local ex = vim.api.nvim_command
 local fn = vim.fn
 
 local packer_config = {
-    -- disable_commands = true,
     compile_path = util.join_paths(fn.stdpath('config'), 'lua', 'plugins', 'startup.lua'),
     luarocks = {
         python_cmd = 'python3'
@@ -85,11 +84,10 @@ local M = packer.startup { function()
         {
             'ray-x/guihua.lua',
             disable = true,
-            opt = true,
             run = 'cd lua/fzy && make'
         },
-        { 'ray-x/navigator.lua', opt = true, disable = true },
-        { 'ray-x/lsp_signature.nvim', opt = true, disable = true },
+        { 'ray-x/navigator.lua', disable = true },
+        { 'ray-x/lsp_signature.nvim', disable = true },
         'folke/lua-dev.nvim',
         'tami5/lspsaga.nvim',
         'nvim-lua/lsp-status.nvim',
@@ -114,23 +112,21 @@ local M = packer.startup { function()
         }
     }
     use {
-        -- 'vhyrro/neorg', branch = 'unstable',
         'nvim-neorg/neorg',
         config = function()
             require('neorg').setup {
-                -- Tell Neorg what modules to load
                 load = {
-                    ['core.defaults'] = {}, -- Load all the default modules
+                    ['core.defaults'] = {},
                     ['core.neorgcmd'] = {},
-                    ['core.norg.concealer'] = {}, -- Allows for use of icons
-                    ['core.norg.dirman'] = { -- Manage your directories with Neorg
+                    ['core.norg.concealer'] = {},
+                    ['core.norg.dirman'] = {
                         config = {
                             workspaces = {
                                 my_workspace = '~/neorg'
                             }
                         }
                     }
-                },
+                }
             }
         end,
         requires = 'nvim-lua/plenary.nvim'
@@ -208,7 +204,5 @@ local M = packer.startup { function()
 
     }
 end, config = packer_config }
-
--- packer.make_commands()
 
 return M
