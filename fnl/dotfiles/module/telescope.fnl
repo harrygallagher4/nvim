@@ -1,16 +1,13 @@
 (module dotfiles.module.telescope
   {require {a aniseed.core
             str aniseed.string
-            nvim aniseed.nvim
             util dotfiles.util
             keymap astronauta.keymap
             telescope telescope
             builtin telescope.builtin
             actions telescope.actions
-            action-set telescope.actions.set
             p-actions telescope._extensions.project.actions
             themes telescope.themes
-            previewers telescope.previewers
             devicons nvim-web-devicons
             trouble trouble.providers.telescope}
    require-macros [dotfiles.macros]})
