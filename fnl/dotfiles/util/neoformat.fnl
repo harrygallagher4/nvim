@@ -4,8 +4,8 @@
 
 (defn- coerce-to-seq [s]
   (match s
-    (x ? (a.table? x)) x
-    (x ? (a.string? x)) [x]))
+    (where x (a.table? x))  x
+    (where x (a.string? x)) [x]))
 
 (defn- as-seq [[k v]]
   [k (coerce-to-seq v)])
