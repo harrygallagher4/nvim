@@ -1,5 +1,5 @@
 (module init
-    {require {core aniseed.core
+    {require {a aniseed.core
               util dotfiles.util
               theme dotfiles.theme}})
 
@@ -9,7 +9,7 @@
 (theme.init "tokyonight")
 
 (->> (util.glob (.. util.config-path "/lua/dotfiles/module/*.lua"))
-     (core.run!
+     (a.run!
        #(let [(i j f) (string.match $ ".*/(.-)/(.-)/(.-)%.lua")
               mod (require (string.format "%s.%s.%s" i j f))]
           (tset _G.dotfiles.module f mod))))
