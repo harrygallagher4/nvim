@@ -140,6 +140,10 @@ local M = packer.startup { function()
             'Olical/aniseed',
             branch = 'develop',
             module = 'aniseed.env'
+        },
+        {
+            'tsbohc/zest.nvim',
+            module = 'zest',
         }
     }
     use {
