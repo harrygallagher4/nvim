@@ -12,7 +12,7 @@
 
 (defn- match-str [s]
   (let [m [(string.match s updated-pattern)]]
-    (if (not (empty? m))
+    (if (not (a.empty? m))
         (unpack m)
         (string.match s updated-pattern-branch))))
 
@@ -23,7 +23,7 @@
     (string.format "https://github.com/%s/%s/compare/%s...%s" ...)))
 
 (defn- open-url! [url]
-  (when (not (nil? url))
+  (when (not (a.nil? url))
     (nvim.command (string.format "silent !%s '%s'" config.cmd url))))
 
 (defn- do-line [] (open-url! (url (match-line))))
@@ -37,9 +37,9 @@
   (url (match-str " ✓ Updated L3MON4D3/LuaSnip: 51a4a92..d076884"))
   (url (match-str " ✓ xxxxxxx L3MON4D3/LuaSnip: 51a4a92..d076884"))
   (open-url! (url (match-str " ✓ invalid")))
-  (let [m [(match-str " ✓ oopsie woopsie")]] (if (empty? m) nil m))
-  (let [m [(match-str " ✓ Updated glepnir/lspsaga.nvim: 2bc15f3..2752af4")]] (if (empty? m) nil m))
-  (count [(match-str " ✓ Updated nvim-treesitter/nvim-treesitter: 2abad14..1d5f928")]))
+  (let [m [(match-str " ✓ oopsie woopsie")]] (if (a.empty? m) nil m))
+  (let [m [(match-str " ✓ Updated glepnir/lspsaga.nvim: 2bc15f3..2752af4")]] (if (a.empty? m) nil m))
+  (a.count [(match-str " ✓ Updated nvim-treesitter/nvim-treesitter: 2abad14..1d5f928")]))
 
 ;
 ; astronauta.keymap works with inline functions

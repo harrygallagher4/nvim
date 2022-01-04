@@ -5,8 +5,7 @@
             lspstatus lsp-status
             saga lspsaga
             trouble trouble}
-   require-macros [dotfiles.macros
-                   dotfiles.maps.macros]})
+   require-macros [dotfiles.maps.macros]})
 
 (def- lua-runtime-path
   (a.concat

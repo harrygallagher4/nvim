@@ -1,8 +1,7 @@
 (module dotfiles.core.string
   {require {a aniseed.core
             str aniseed.string
-            core dotfiles.core}
-   require-macros [dotfiles.macros]})
+            core dotfiles.core}})
 
 (defn splitter [pat]
   (fn [s] (str.split s pat)))

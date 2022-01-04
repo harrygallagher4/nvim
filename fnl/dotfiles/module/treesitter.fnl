@@ -1,8 +1,7 @@
 (module dotfiles.module.treesitter
   {require {a aniseed.core
             tsc nvim-treesitter.configs
-            parsers nvim-treesitter.parsers}
-   require-macros [dotfiles.macros]})
+            parsers nvim-treesitter.parsers}})
 
 (def- parser-configs (parsers.get_parser_configs))
 (def- custom-parsers

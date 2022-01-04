@@ -1,7 +1,6 @@
 (module dotfiles.module.lf
   {require {a aniseed.core
-            nvim aniseed.nvim}
-   require-macros [dotfiles.macros]})
+            nvim aniseed.nvim}})
 
 (a.assoc-in vim.g [:lf#replace_netrw] 1)
 

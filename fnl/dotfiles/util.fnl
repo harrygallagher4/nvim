@@ -2,10 +2,9 @@
   {require {a aniseed.core
             nvim aniseed.nvim
             nvu aniseed.nvim.util
-            env aniseed.env
             preload plenary.reload
-            it plenary.iterators}
-   require-macros [dotfiles.macros]})
+            it plenary.iterators}})
+;   require-macros [dotfiles.macros]})
 
 (def config-path (nvim.fn.stdpath "config"))
 
@@ -24,34 +23,12 @@
   (when (not (= 0 (% x 2))) y))
 
 (defn split-seq [t]
-  (let [odd (map-indexed odd-key t)
-        even (map-indexed even-key t)]
+  (let [odd (a.map-indexed odd-key t)
+        even (a.map-indexed even-key t)]
     (unpack
       (if (= (# odd) (# even))
         [odd even]
-        [(butlast odd) even]))))
-
-;
-; (defn zipmap_luafun [...]
-;   (fun.tomap (fun.zip ...)))
-;
-; (def- test-seq [:a :b :c :d :e :f :g :h :i :j :k])
-; (zipmap (split-seq (slice [:lhs :rhs :buffer true :expr true] 3)))
-; (# test-seq)
-; (fun.each print (fun.zip (fun.partition (fn [i x] (print i x) true) (fun.iter "abcdefg"))))
-; (a.filter (fn [x y] (print x y) (not (nil? x))) [:a :b :c :d :e :f :g :h :i :j])
-; (a.map-indexed (fn [[x y]] (when (= 0 (% x 2)) y)) [:a :b :c :d :e :f :g :h :i :j])
-; (a.map-indexed even-key test-seq)
-; (a.map-indexed odd-key test-seq)
-; (a.map-indexed (fn [x y] (pr x y) (if (= 0 (% x 2)) y)) [:a :b :c :d :e :f :g :h :i :j])
-
-; (zipmap [:a :b :c :d] [:e :f :g :h])
-; (fun.tomap (fun.zip [:a :b :c] [:d :e :f]))
-; (slice [:a :b :c :d :e] 2)
-
-; (defn recompile []
-;   (env.init {:module :dummy})
-;   (nvim.ex.echomsg "'compiled'"))
+        [(a.butlast odd) even]))))
 
 (defn expand [path]
   (nvim.fn.expand path))
@@ -76,8 +53,8 @@
 (defn memoize [f]
   (let [results {}]
     (fn memoize-internal [...]
-      (let [key (pr-str [...])
-            result (get results key)]
+      (let [key (a.pr-str [...])
+            result (a.get results key)]
         (if (not result)
           (let [value (f ...)]
             (tset results key value)
@@ -94,7 +71,7 @@
                      (require m))))
 
 (defn lspstatus [bufnr]
-  (get (first (vim.lsp.buf_get_clients (or bufnr 0))) :name :None))
+  (a.get (a.first (vim.lsp.buf_get_clients (or bufnr 0))) :name :None))
 
 ; Uhh... I think vim.lsp.buf_get_clients should work fine
 ; not sure why i wrote this
@@ -105,7 +82,7 @@
         client))))
 
 (defn lsp-buf-get-active-client [bufnr]
-  (first (lsp-buf-get-active-clients bufnr)))
+  (a.first (lsp-buf-get-active-clients bufnr)))
 (def lsp_buf_get_active_client lsp-buf-get-active-client)
 
 (defn stop_lsp []
@@ -115,25 +92,18 @@
         (each [_ buf (ipairs buffers)]
           (vim.lsp.diagnostic.clear buf client.id))
         (vim.lsp.stop_client client.id)))))
-;  (let [client (vim.lsp.get_active_clients)]
-;    (vim.lsp.get_buffers_by_client_id client.id)
-;    (vim.lsp.stop_client client))
 
-; lua vim.lsp.stop_client(vim.lsp.get_active_clients())
-
-; (defn stop_lsp [bufnr]
-;   (let [clients (vim.lsp.buf_get_clients bufnr)]
-;     (when (not (empty? clients))
-;       (vim.lsp.stop_client clients))))
-
-; ((. first (vim.lsp.buf_get_clients 1)) :is_stopped))
+(defn sync-plugins []
+  (preload.reload_module :plugins.spec)
+  ((. (require :plugins.spec) :sync)))
+(def sync_plugins sync-plugins)
 
 (nvu.fn-bridge :LspStatus :dotfiles.util :lspstatus)
 (nvu.fn-bridge :StopLsp :dotfiles.util :stop_lsp)
-; (nvu.fn-bridge :AniseedCompile :dotfiles.util :recompile)
+(nvu.fn-bridge :SyncPlugins :dotfiles.util :sync_plugins)
 
-; (if (nil? (get (vim.api.nvim_get_commands {:builtin false}) :AniseedCompile))
-;   (nvim.ex.command_ "AniseedCompile call AniseedCompile()"))
-(if (nil? (get (vim.api.nvim_get_commands {:builtin false}) :StopLsp))
+(if (a.nil? (a.get (vim.api.nvim_get_commands {:builtin false}) :StopLsp))
   (nvim.ex.command_ "StopLsp call StopLsp()"))
+(if (a.nil? (a.get (vim.api.nvim_get_commands {:builtin false}) :PluginSync))
+  (nvim.ex.command_ "SyncPlugins call SyncPlugins()"))
 

@@ -4,8 +4,7 @@
             nvim aniseed.nvim
             lush lush
             colorizer colorizer}
-   require-macros [dotfiles.macros
-                   dotfiles.highlight.macros]})
+   require-macros [dotfiles.highlight.macros]})
 
 ; (let [info (require "galaxyline.provider_fileinfo")]
 ;   (identity (info.get_current_file_name)))
@@ -38,7 +37,7 @@
 
 (defn resolve-color [color]
   (or (string.match color "#%x%x%x%x%x%x")
-      (get gruvbox color)))
+      (a.get gruvbox color)))
 (defn lushcolor [color]
   (hsl (resolve-color color)))
 
@@ -73,9 +72,9 @@
 (defn- hue [c x] (c.hue x))
 (defn- saturation [c x] (c.saturation x))
 (defn- lightness [c x] (c.lightness x))
-(defn- h [c] (get c :h))
-(defn- s [c] (get c :s))
-(defn- l [c] (get c :l))
+(defn- h [c] (a.get c :h))
+(defn- s [c] (a.get c :s))
+(defn- l [c] (a.get c :l))
 
 
 
@@ -185,12 +184,12 @@
 ;     (string.match hlstr "%Wguibg=([#%w]+)")
 ;     (string.match "GruvboxFg1     xxx guifg=#ebdbb2 guibg=#ffffff fg=1" "%Wguifg=([%w#]+)")
 ;     (string.match "                   links to GruvboxRedBold" "links to (%w+)%c?"))
-;   (str.split (nvim.fn.execute "highlight Directory") "\n")                   
-;   (str.split                                                                 
+;   (str.split (nvim.fn.execute "highlight Directory") "\n")
+;   (str.split
 ;     (first
-;       (filter notblank?                                                 
+;       (filter notblank?
 ;               (str.split (nvim.fn.execute "highlight Directory") "\n")))
-;     "Directory%s+xxx"))                                                     
+;     "Directory%s+xxx"))
 
 ; (comment (let [purple (hsl gruvbox.purple)]
 ;            (-> purple

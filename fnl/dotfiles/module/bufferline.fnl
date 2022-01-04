@@ -2,10 +2,9 @@
   {require {a aniseed.core
             nvim aniseed.nvim
             bl bufferline}
-   require-macros [dotfiles.macros
-                   dotfiles.maps.macros]})
+   require-macros [dotfiles.maps.macros]})
 
-(bl.setup 
+(bl.setup
   {:options
    {:diagnostics  "nvim_lsp"
     :left_trunc_marker " "

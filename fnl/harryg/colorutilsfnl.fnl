@@ -30,12 +30,12 @@
     cmap))
 
 (dbg!
-  (map tostring (get-in (require :melange.colors) [:Melange :lush :g]))
+  (a.map tostring (a.get-in (require :melange.colors) [:Melange :lush :g]))
   (a.map-indexed
     (fn [[k v]]
-      (if (nil? (. v :hex)) (map tostring v)
+      (if (a.nil? (. v :hex)) (a.map tostring v)
           (tostring v)))
-    (get-in (require :melange.colors) [:Melange :lush])))
+    (a.get-in (require :melange.colors) [:Melange :lush])))
 
 (def- deg math.deg)
 (def- rad math.rad)
@@ -120,15 +120,15 @@
 (defn- gradient [c1 c2]
   (var ls [])
   (for [i 0.00 1.01 0.02]
-    (set ls (concat ls [i])))
+    (set ls (a.concat ls [i])))
   (map #(blend-hex c1 c2 $1) ls))
 
 (defn- gradient-n [c1 c2 n]
   (var ls [])
   (let [step (/ 1 (+ n 1))]
     (for [i 1 n 1]
-      (set ls (concat ls [(* i step)]))))
-  (concat [c1] (map #(blend-hex c1 c2 $1) ls) [c2]))
+      (set ls (a.concat ls [(* i step)]))))
+  (a.concat [c1] (a.map #(blend-hex c1 c2 $1) ls) [c2]))
 
 
 ; sample_cyan_xxxxxxxx xxx guifg=#85ADAD guibg=#85ADAD

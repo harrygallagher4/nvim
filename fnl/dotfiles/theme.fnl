@@ -1,7 +1,6 @@
 (module dotfiles.theme
   {require {a aniseed.core
-            lualine lualine}
-   require-macros [dotfiles.macros]})
+            lualine lualine}})
 
 (tset vim.g :tokyonight_style "storm")
 ; (tset vim.g :tokyonight_day_brightness 0.275)

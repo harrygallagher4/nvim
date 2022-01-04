@@ -9,8 +9,7 @@
             p-actions telescope._extensions.project.actions
             themes telescope.themes
             devicons nvim-web-devicons
-            trouble trouble.providers.telescope}
-   require-macros [dotfiles.macros]})
+            trouble trouble.providers.telescope}})
 
 (defn setup_devicons []
   (devicons.setup

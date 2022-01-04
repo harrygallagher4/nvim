@@ -1,7 +1,6 @@
 (module dotfiles.module.indentline
   {require {a aniseed.core
-            packer packer}
-   require-macros [dotfiles.macros]})
+            packer packer}})
 
 (def- gs
   {:char "│"

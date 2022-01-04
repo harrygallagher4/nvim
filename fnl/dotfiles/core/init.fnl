@@ -1,6 +1,5 @@
 (module dotfiles.core
-  {require {a aniseed.core}
-   require-macros [dotfiles.macros]})
+  {require {a aniseed.core}})
 
 (defn min-of [xs]
   (math.min (unpack xs)))

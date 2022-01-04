@@ -4,8 +4,7 @@
             nvim aniseed.nvim
             util dotfiles.util
             ls luasnip}
-   require-macros [dotfiles.macros
-                   dotfiles.snippets.macros]})
+   require-macros [dotfiles.snippets.macros]})
 
 (def s (. ls :s))
 (def t (. ls :t))
@@ -14,7 +13,7 @@
 (def c (. ls :c))
 (def d (. ls :d))
 (def sn (. ls :sn))
-(def vsc (get-in ls [:parser :parse_snippet]))
+(def vsc (a.get-in ls [:parser :parse_snippet]))
 
 (defn- current-module-name []
   (let [file (vim.fn.expand "%:p:~:r")
@@ -38,11 +37,11 @@
    [(s {:name "Attribute" :dscr "Nix attribute name"
         :trig "=([%w%.]+)" :regTrig true :wordTrig true}
        [(f [args] []
-          [(.. (get-in args [1 :captures 1]) " = ")])
+          [(.. (a.get-in args [1 :captures 1]) " = ")])
         (i 0)
         (t [";"])])]
 
-   :rust 
+   :rust
    [(vsc {:trig "fn"}
       "/// $1\nfn $2($3) ${4:-> $5 }\\{\n\t$0\n\\}")]
 
@@ -62,5 +61,5 @@
         (t ["]})" ""])
         (i 0)])]})
 
-(assoc ls :snippets snips)
+(a.assoc ls :snippets snips)
 
