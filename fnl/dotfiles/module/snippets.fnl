@@ -19,10 +19,10 @@
   (let [file (vim.fn.expand "%:p:~:r")
         (start end) (string.find file "/fnl/")]
     (-> file
-      (string.sub end)
-      (string.sub 2)
-      (str.split "/")
-      (table.concat "."))))
+        (string.sub end)
+        (string.sub 2)
+        (str.split "/")
+        (table.concat "."))))
 
 (defn- module-name-snip []
   (sn nil
@@ -31,7 +31,7 @@
 (def- snips
   {:all
    [(vsc {:trig "sniptest"}
-      "snippet ${0:sniptest} inserted!")]
+         "snippet ${0:sniptest} inserted!")]
 
    :nix
    [(s {:name "Attribute" :dscr "Nix attribute name"
@@ -43,7 +43,7 @@
 
    :rust
    [(vsc {:trig "fn"}
-      "/// $1\nfn $2($3) ${4:-> $5 }\\{\n\t$0\n\\}")]
+         "/// $1\nfn $2($3) ${4:-> $5 }\\{\n\t$0\n\\}")]
 
    ;; not using fennel snippets right now because parinfer
    ;; tries to format the buffer while the snippet is expanding

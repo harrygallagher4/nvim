@@ -25,10 +25,9 @@
 (defn split-seq [t]
   (let [odd (a.map-indexed odd-key t)
         even (a.map-indexed even-key t)]
-    (unpack
-      (if (= (# odd) (# even))
-        [odd even]
-        [(a.butlast odd) even]))))
+    (unpack (if (= (# odd) (# even))
+                [odd even]
+                [(a.butlast odd) even]))))
 
 (defn expand [path]
   (nvim.fn.expand path))
@@ -56,19 +55,19 @@
       (let [key (a.pr-str [...])
             result (a.get results key)]
         (if (not result)
-          (let [value (f ...)]
-            (tset results key value)
-            value)
-          result)))))
+            (let [value (f ...)]
+              (tset results key value)
+              value)
+            result)))))
 
 (defn print_inspect [o]
   (print (vim.inspect o)) o)
 (tset _G :pr print_inspect)
 
 (when (not (a.nil? preload.reload_module))
-  (tset _G :reload (fn [m]
-                     (preload.reload_module m)
-                     (require m))))
+      (tset _G :reload (fn [m]
+                         (preload.reload_module m)
+                         (require m))))
 
 (defn lspstatus [bufnr]
   (a.get (a.first (vim.lsp.buf_get_clients (or bufnr 0))) :name :None))
@@ -79,7 +78,7 @@
   (icollect [_ client (ipairs (vim.lsp.get_active_clients))]
     (let [buffers (vim.lsp.get_buffers_by_client_id client.id)]
       (when (vim.tbl_contains buffers (or bufnr (nvim.get_current_buf)))
-        client))))
+            client))))
 
 (defn lsp-buf-get-active-client [bufnr]
   (a.first (lsp-buf-get-active-clients bufnr)))
@@ -89,9 +88,9 @@
   (each [_ client (ipairs (vim.lsp.get_active_clients))]
     (let [buffers (vim.lsp.get_buffers_by_client_id client.id)]
       (when (vim.tbl_contains buffers (nvim.get_current_buf))
-        (each [_ buf (ipairs buffers)]
-          (vim.lsp.diagnostic.clear buf client.id))
-        (vim.lsp.stop_client client.id)))))
+            (each [_ buf (ipairs buffers)]
+              (vim.lsp.diagnostic.clear buf client.id))
+            (vim.lsp.stop_client client.id)))))
 
 (defn sync-plugins []
   (preload.reload_module :plugins.spec)

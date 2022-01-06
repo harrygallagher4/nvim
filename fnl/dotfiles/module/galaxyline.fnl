@@ -76,7 +76,10 @@
 (defn cursor_percentage []
   (let [line (vim.fn.line ".")
         total (vim.fn.line "$")]
-    (match line 1 "top" total "bot" _ (percent line total))))
+    (match line
+           1     "top"
+           total "bot"
+           _     (percent line total))))
 
 ; @Provider
 (defn window_number []

@@ -43,30 +43,29 @@
 
 (defn- check-back-space []
   (let [col (- (vim.fn.col ".") 1)]
-    (if (or (= 0 col) (-> (vim.fn.getline ".")
-                          (: :sub col col)
-                          (: :match "%s")))
+    (if (or (= 0 col)
+            (-> (vim.fn.getline ".")
+                (: :sub col col)
+                (: :match "%s")))
       true false)))
 
 (defn- tab-complete []
-  (if
-    (= 1 (vim.fn.pumvisible))
-    (tc "<c-n>")
-    (ls.jumpable)
-    (tc "<Plug>luasnip-jump-next")
-    (ls.expand_or_jumpable)
-    (tc "<Plug>luasnip-expand-or-jump")
-    (check-back-space)
-    (tc "<tab>")
-    (compe-complete)))
+  (if (= 1 (vim.fn.pumvisible))
+      (tc "<c-n>")
+      (ls.jumpable)
+      (tc "<Plug>luasnip-jump-next")
+      (ls.expand_or_jumpable)
+      (tc "<Plug>luasnip-expand-or-jump")
+      (check-back-space)
+      (tc "<tab>")
+      (compe-complete)))
 
 (defn- shift-tab-complete []
-  (if
-    (= 1 (vim.fn.pumvisible))
-    (tc "<c-p>")
-    (ls.jumpable -1)
-    (tc "<plug>luasnip-jump-prev")
-    (tc "<s-tab>")))
+  (if (= 1 (vim.fn.pumvisible))
+      (tc "<c-p>")
+      (ls.jumpable -1)
+      (tc "<plug>luasnip-jump-prev")
+      (tc "<s-tab>")))
 
 (global map_utils
   {:tab_complete tab-complete

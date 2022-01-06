@@ -24,7 +24,7 @@
 
 (defn- open-url! [url]
   (when (not (a.nil? url))
-    (nvim.command (string.format "silent !%s '%s'" config.cmd url))))
+        (nvim.command (string.format "silent !%s '%s'" config.cmd url))))
 
 (defn- do-line [] (open-url! (url (match-line))))
 

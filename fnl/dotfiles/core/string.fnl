@@ -36,8 +36,8 @@
   (let [indent (common-indent s)
         lines (split "\n" s)]
     (->> lines
-      (a.map (trim-leading-spaces indent))
-      (str.join "\n"))))
+        (a.map (trim-leading-spaces indent))
+        (str.join "\n"))))
 
 (defn multiline-str [s]
   (->> s
