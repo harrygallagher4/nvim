@@ -1,15 +1,27 @@
 (module dotfiles.module.bufferline
   {require {a aniseed.core
-            nvim aniseed.nvim
-            bl bufferline}
+            bufferline bufferline}
    require-macros [dotfiles.maps.macros]})
 
-(bl.setup
+(defn- numbers [{:id id :ordinal ordinal :lower lower :raise raise}]
+  (let [winnr (vim.fn.bufwinnr id)]
+    (if (= -1 winnr)
+        (string.format "%s" id)
+        (string.format "%s%s" (raise id) (lower winnr)))))
+
+(bufferline.setup
   {:options
-   {:diagnostics  "nvim_lsp"
-    :left_trunc_marker " "
-    :modified_icon " "
-    :right_trunc_marker " "}})
+   {:diagnostics "nvim_lsp"
+    :numbers numbers
+    :separator_style "thick"}})
+
+; (comment (bl.setup
+;            {:options
+;             {:diagnostics "nvim_lsp"
+;              :left_trunc_marker " "
+;              :modified_icon " "
+;              :right_trunc_marker " "
+;              :numbers numbers}}))
 
 (nnoremap "<leader>]" "<cmd>:BufferLineCycleNext<cr>")
 (nnoremap "<leader>[" "<cmd>:BufferLineCyclePrev<cr>")
