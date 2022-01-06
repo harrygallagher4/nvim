@@ -1,9 +1,12 @@
 (module dotfiles.module.treesitter
   {require {a aniseed.core
+            str dotfiles.core.string
             tsc nvim-treesitter.configs
             parsers nvim-treesitter.parsers}})
 
 (def- parser-configs (parsers.get_parser_configs))
+(defn- add-parser [name config]
+  (a.assoc parser-configs name config))
 (def- custom-parsers
   {:norg
    {:install_info
@@ -19,29 +22,24 @@
     :files ["src/parser.c"]
     :branch "main"}})
 
-(defn- add-parser [name config]
-  (a.assoc parser_configs name config))
+(each [name config (pairs custom-parsers)]
+  (add-parser name config))
 
-; (require "dotfiles.etc.neorg_ts_setup")
-(add-parser :norg
-  {:install_info
-   {:url "https://github.com/nvim-neorg/tree-sitter-norg"
-    :files ["src/parser.c" "src/scanner.cc"]
-    :branch "main"}})
-(add-parser :norg_meta
-  {:install_info
-   {:url "https://github.com/nvim-neorg/tree-sitter-norg-meta"
-    :files ["src/parser.c"]
-    :branch "main"}})
-(add-parser :norg_table
-  {:install_info
-   {:url "https://github.com/nvim-neorg/tree-sitter-norg-table"
-    :files ["src/parser.c"]
-    :branch "main"}})
+;
+; For some reason nvim-treesitter can't use macOS's
+; built-in compilers
+;
+(def- default-compilers (a.rest (. (require :nvim-treesitter.install) :compilers)))
+(def- okay-compilers
+  (->> default-compilers
+       (a.map    vim.fn.exepath)
+       (a.filter #(< 0 (string.len $)))
+       (a.filter #(a.nil? (string.find $ "/usr/bin")))
+       (a.map    #(a.last (str.split "/" $)))))
+(tset (require :nvim-treesitter.install) :compilers okay-compilers)
 
 (tsc.setup
   {:indent {:enable false}
-   ; :ensure_installed "all"
    :highlight {:enable true}
    :textobjects {:enable false}
    :incremental_selection {:enable false
