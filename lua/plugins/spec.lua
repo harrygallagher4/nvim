@@ -129,6 +129,9 @@ local M = packer.startup { function()
         'lukas-reineke/indent-blankline.nvim', opt = true
     }
     use {
+        'akinsho/toggleterm.nvim'
+    }
+    use {
         'https://gitlab.com/yorickpeterse/nvim-pqf.git', as = 'nvim-pqf',
         config = function () require'pqf'.setup() end
     }
@@ -165,11 +168,16 @@ local M = packer.startup { function()
         },
 
         {
-            'mhinz/vim-sayonara',
-            cmd = {'Sayonara'}
+            'sindrets/winshift.nvim',
+            cmd = 'WinShift'
         },
 
-        { 'windwp/nvim-autopairs', module = 'nvim-autopairs' },
+        {
+            'mhinz/vim-sayonara',
+            cmd = 'Sayonara'
+        },
+
+        { 'windwp/nvim-autopairs', module = 'nvim-autopairs' }
     }
 end, config = packer_config }
 
