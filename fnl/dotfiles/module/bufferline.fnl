@@ -23,9 +23,13 @@
 ;              :right_trunc_marker " "
 ;              :numbers numbers}}))
 
-(nnoremap "<leader>]" "<cmd>:BufferLineCycleNext<cr>")
-(nnoremap "<leader>[" "<cmd>:BufferLineCyclePrev<cr>")
-(nnoremap "<leader><leader>o" "<cmd>:BufferLinePick<cr>")
+(vim.keymap.set :n "<leader>]" "<cmd>:BufferLineCycleNext<cr>")
+(vim.keymap.set :n "<leader>[" "<cmd>:BufferLineCyclePrev<cr>")
+(vim.keymap.set :n "<leader><leader>o" "<cmd>:BufferLinePick<cr>")
+
+; (nnoremap "<leader>]" "<cmd>:BufferLineCycleNext<cr>")
+; (nnoremap "<leader>[" "<cmd>:BufferLineCyclePrev<cr>")
+; (nnoremap "<leader><leader>o" "<cmd>:BufferLinePick<cr>")
 
 ; (def- sample
 ;   {:always_show_bufferline [true false]

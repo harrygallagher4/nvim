@@ -3,7 +3,7 @@
                   (let [a# [lhs rhs] o# [...]]
                     (while (< 0 (length o#))
                       (tset a# (table.remove o# 1) (table.remove o# 1)))
-                    `(,(sym (.. "vim.keymap." f)) ,a#)))
+                    `(,(sym (.. "vim._keymap." f)) ,a#)))
  :tc            (fn [str]
                   (_G.vim.api.nvim_replace_termcodes str true true true))
  :cmap          (fn [...]

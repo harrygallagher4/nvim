@@ -4,7 +4,7 @@
               theme dotfiles.theme}})
 
 (global dotfiles {:module {}})
-(require :astronauta.keymap)
+; (require :astronauta.keymap)
 
 (theme.init "tokyonight")
 

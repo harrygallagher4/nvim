@@ -2,7 +2,6 @@
   {require {a aniseed.core
             str aniseed.string
             util dotfiles.util
-            keymap astronauta.keymap
             telescope telescope
             builtin telescope.builtin
             actions telescope.actions
@@ -11,11 +10,19 @@
             devicons nvim-web-devicons
             trouble trouble.providers.telescope}})
 
+; (setup {:default true
+;         :override {:fnl {:icon ""
+;                          :color "#7bc45c"
+;                          :name "fennel"}}})
+
 (defn setup_devicons []
   (devicons.setup
-    {:override
-     {:fnl    {:icon "" :color "#e6b439" :name "Fennel"}
-      :fennel {:icon "" :color "#e6b439" :name "Fennel"}}}))
+    {:default true
+     :override
+     {:fnl
+      {:icon "" :color "#e6b439" :name "fennel"}}}))
+      ;{:icon "" :color "#7bc45c" :name "fennel"}
+      ;:fennel {:icon "" :color "#e6b439" :name "Fennel"}}}))
 (setup_devicons)
 (tset _G :fix_devicons setup_devicons)
 
@@ -120,5 +127,5 @@
      :<a-p>         #(telescope.extensions.project.project
                        (a.merge projects {:attach_mappings project-maps}))})
   (each [left right (pairs maps)]
-    (vim.keymap.nnoremap [left right])))
+    (vim._keymap.nnoremap [left right])))
 

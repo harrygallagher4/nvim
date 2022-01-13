@@ -6,7 +6,7 @@
             it plenary.iterators}})
 ;   require-macros [dotfiles.macros]})
 
-(def config-path (nvim.fn.stdpath "config"))
+(def config-path (vim.fn.stdpath "config"))
 
 (def unpack (or (rawget _G :unpack) table.unpack))
 
@@ -30,13 +30,13 @@
                 [(a.butlast odd) even]))))
 
 (defn expand [path]
-  (nvim.fn.expand path))
+  (vim.fn.expand path))
 
 (defn glob [path]
-  (nvim.fn.glob path true true true))
+  (vim.fn.glob path true true true))
 
 (defn exists? [path]
-  (= (nvim.fn.filereadable path) 1))
+  (= (vim.fn.filereadable path) 1))
 
 (defn lua-file [path]
   (nvim.ex.luafile path))
@@ -77,7 +77,7 @@
 (defn lsp-buf-get-active-clients [bufnr]
   (icollect [_ client (ipairs (vim.lsp.get_active_clients))]
     (let [buffers (vim.lsp.get_buffers_by_client_id client.id)]
-      (when (vim.tbl_contains buffers (or bufnr (nvim.get_current_buf)))
+      (when (vim.tbl_contains buffers (or bufnr (vim.api.nvim_get_current_buf)))
             client))))
 
 (defn lsp-buf-get-active-client [bufnr]
@@ -87,7 +87,7 @@
 (defn stop_lsp []
   (each [_ client (ipairs (vim.lsp.get_active_clients))]
     (let [buffers (vim.lsp.get_buffers_by_client_id client.id)]
-      (when (vim.tbl_contains buffers (nvim.get_current_buf))
+      (when (vim.tbl_contains buffers (vim.api.nvim_get_current_buf))
             (each [_ buf (ipairs buffers)]
               (vim.lsp.diagnostic.clear buf client.id))
             (vim.lsp.stop_client client.id)))))

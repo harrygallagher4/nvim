@@ -1,6 +1,5 @@
 (module dotfiles.maps.ft_packer
-  {require {a aniseed.core
-            nvim aniseed.nvim}
+  {require {a aniseed.core}
    require-macros [dotfiles.macros
                    dotfiles.maps.macros]})
 
@@ -16,21 +15,22 @@
         (unpack m)
         (string.match s updated-pattern-branch))))
 
-(defn- match-line [] (match-str (nvim.get_current_line)))
+(defn- match-line [] (match-str (vim.api.nvim_get_current_line)))
 
 (defn- url [...]
-  (if (= 4 (count [...]))
+  (if (= 4 (a.count [...]))
     (string.format "https://github.com/%s/%s/compare/%s...%s" ...)))
 
 (defn- open-url! [url]
   (when (not (a.nil? url))
-        (nvim.command (string.format "silent !%s '%s'" config.cmd url))))
+        (vim.cmd (string.format "silent !%s '%s'" config.cmd url))))
 
 (defn- do-line [] (open-url! (url (match-line))))
 
 (defn init []
   ; (vim.keymap.nnoremap {1 "o" 2 do-line :buffer true})
-  (nnoremap "o" do-line :buffer true))
+  ; (nnoremap "o" do-line :buffer true)
+  (vim.keymap.set "n" "o" do-line {:buffer true}))
 
 (dbg!
   (url (match-str " ✓ Updated L3MON4D3/LuaSnip/test: 51a4a92..d076884"))

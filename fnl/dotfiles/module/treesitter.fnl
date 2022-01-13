@@ -14,13 +14,15 @@
      :files ["src/parser.c" "src/scanner.cc"]
      :branch "main"}}
    :norg_meta
-   {:url "https://github.com/nvim-neorg/tree-sitter-norg-meta"
-    :files ["src/parser.c"]
-    :branch "main"}
+   {:install_info
+    {:url "https://github.com/nvim-neorg/tree-sitter-norg-meta"
+     :files ["src/parser.c"]
+     :branch "main"}}
    :norg_table
-   {:url "https://github.com/nvim-neorg/tree-sitter-norg-table"
-    :files ["src/parser.c"]
-    :branch "main"}})
+   {:install_info
+    {:url "https://github.com/nvim-neorg/tree-sitter-norg-table"
+     :files ["src/parser.c"]
+     :branch "main"}}})
 
 (each [name config (pairs custom-parsers)]
   (add-parser name config))
@@ -29,7 +31,7 @@
 ; For some reason nvim-treesitter can't use macOS's
 ; built-in compilers
 ;
-(def- default-compilers (a.rest (. (require :nvim-treesitter.install) :compilers)))
+(defonce- default-compilers (a.rest (. (require :nvim-treesitter.install) :compilers)))
 (def- okay-compilers
   (->> default-compilers
        (a.map    vim.fn.exepath)
@@ -54,7 +56,7 @@
                             :goto_next_usage "<c-j>"
                             :goto_definition "gnd"
                             :list_definitions "gnD"}}
-              :highlight_current_scope {:enable true}
+              :highlight_current_scope {:enable false}
               :highlight_definitions {:enable true}
               :smart_rename {:enable true
                              :keymaps

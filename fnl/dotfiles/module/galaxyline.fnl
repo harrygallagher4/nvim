@@ -1,8 +1,6 @@
 (module dotfiles.module.galaxyline
   {require {a aniseed.core
             str aniseed.string
-            nvim aniseed.nvim
-;            fileinfo galaxyline.provider_fileinfo
             devicons nvim-web-devicons}})
 
 ; (vim.api.nvim_get_runtime_file "lua/packer.lua" false)
@@ -28,21 +26,21 @@
     [_ _ _ _] nil))
 
 (defn get_filetype_icon []
-  (let [(icon group) (devicons.get_icon nvim.bo.filetype)]
+  (let [(icon group) (devicons.get_icon vim.bo.filetype)]
     (or icon "?")))
 
 (defn get_filetype_icon_group []
-  (let [(icon group) (devicons.get_icon nvim.bo.filetype)]
+  (let [(icon group) (devicons.get_icon vim.bo.filetype)]
     (or group "Normal")))
 
 (defn get_filetype_icon_fg []
-  (let [(icon group) (devicons.get_icon nvim.bo.filetype)]
+  (let [(icon group) (devicons.get_icon vim.bo.filetype)]
     (if (not (nil? group))
         (string.format "#%x" (a.get (vim.api.nvim_get_hl_by_name group true) :foreground 0))
         "#ffffff")))
 
 (defn get_filetype_icon_bg []
-  (let [(icon group) (devicons.get_icon nvim.bo.filetype)]
+  (let [(icon group) (devicons.get_icon vim.bo.filetype)]
     (if (not (a.nil? group))
         (string.format "#%x" (a.get (vim.api.nvim_get_hl_by_name group true) :background 0))
         "#ffffff")))

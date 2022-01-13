@@ -1,9 +1,10 @@
 (module dotfiles.module.lsp
   {require {a aniseed.core
-            nvim aniseed.nvim
             lsp lspconfig
             lspstatus lsp-status
             saga lspsaga
+            cmp-lsp cmp_nvim_lsp
+            completion dotfiles.module.completion
             trouble trouble}
    require-macros [dotfiles.maps.macros]})
 
@@ -11,6 +12,9 @@
   (a.concat
     ["lua/?.lua" "lua/?/init.lua"]
     (vim.split package.path ";")))
+
+(def- capabilities
+  (cmp-lsp.update_capabilities (vim.lsp.protocol.make_client_capabilities)))
 
 (trouble.setup
   {:auto_preview false
@@ -37,7 +41,11 @@
     (vnoremap :<leader>f  vim.lsp.buf.range_formatting              :buffer true)))
 
 (defn- setup [server config]
-  ((a.get-in lsp [server :setup]) config))
+  (let [default-config {: capabilities : on_attach}]
+    ((a.get-in lsp [server :setup])
+     (if (a.nil? config)
+         default-config
+         (vim.tbl_extend "force" default-config config)))))
 
 ;
 ; set things up
@@ -47,17 +55,16 @@
 (saga.init_lsp_saga)
 
 ; (setup :rnix        {: on_attach})
-(setup :svelte      {: on_attach})
-(setup :denols      {: on_attach})
-(setup :tsserver    {: on_attach})
-(setup :clojure_lsp {: on_attach})
-(setup :jsonls      {: on_attach})
-(setup :bashls      {: on_attach})
-(setup :yamlls      {: on_attach})
-(setup :vimls       {: on_attach})
+(setup :svelte)
+(setup :denols)
+(setup :tsserver)
+(setup :clojure_lsp)
+(setup :jsonls)
+(setup :bashls)
+(setup :yamlls)
+(setup :vimls)
 (setup :sumneko_lua
-       {: on_attach
-        :settings
+       {:settings
         {:Lua
          {:runtime {:version "LuaJIT" :path lua-runtime-path}
           :diagnostics {:globals ["vim"]}

@@ -1,7 +1,6 @@
 (module dotfiles.module.snippets
   {require {a aniseed.core
             str aniseed.string
-            nvim aniseed.nvim
             util dotfiles.util
             ls luasnip}
    require-macros [dotfiles.snippets.macros]})

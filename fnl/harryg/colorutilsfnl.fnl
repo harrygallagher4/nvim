@@ -1,7 +1,6 @@
 (module harryg.colorutilsfnl
   {require {a aniseed.core
             str aniseed.string
-            nvim aniseed.nvim
             lush lush
             hsluv hsluv
             u harryg.colorutils

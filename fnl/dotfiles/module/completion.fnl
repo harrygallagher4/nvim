@@ -1,78 +1,64 @@
 (module dotfiles.module.completion
   {require {a aniseed.core
-            nvim aniseed.nvim
             lspkind lspkind
-            compe compe
+            cmp cmp
             ls luasnip}
    require-macros [dotfiles.maps.macros]})
-(set nvim.o.completeopt "menuone,noselect")
 
+(set vim.o.completeopt "menu,menuone,noselect")
 (lspkind.init {})
 
-(compe.setup
-  {:enabled true
-   :autocomplete true
-   :debug false
-   :min_length 1
-   :preselect "enable"
-   :throttle_time 80
-   :source_timeout 200
-   :incomplete_delay 400
-   :max_abbr_width 100
-   :max_kind_width 100
-   :max_menu_width 100
-   :documentation true
+(def- m cmp.mapping)
+(def- s cmp.config.sources)
+(def- expandable-or-jumpable? ls.expand_or_jumpable)
+(defn- backwards-jumpable? [] (ls.jumpable -1))
+(def- visible? cmp.visible)
+(defn- has-word-before? []
+  (let [[line col] (vim.api.nvim_win_get_cursor 0)
+        [s] (vim.api.nvim_buf_get_lines 0 (- line 1) line true)]
+    (and (~= col 0)
+         (-> s
+             (string.sub col col)
+             (string.match "%s")
+             (a.nil?)))))
 
-   :source
-   {:path true
-    :buffer {:dup false}
-    :calc false
-    :omni false
-    :vsnip false
-    :nvim_lsp true
-    :nvim_lua true
-    :spell false
-    :tags false
-    :snippets_nvim false
-    :treesitter false
-    :conjure true
-    :luasnip true
-    :neorg true}})
+(cmp.setup
+  {:experimental
+   {:native_menu false
+    :ghost_text true}
 
-(def- compe-complete (. vim.fn :compe#complete))
+   :formatting
+   {:format (lspkind.cmp_format)}
 
-(defn- check-back-space []
-  (let [col (- (vim.fn.col ".") 1)]
-    (if (or (= 0 col)
-            (-> (vim.fn.getline ".")
-                (: :sub col col)
-                (: :match "%s")))
-      true false)))
+   :snippet
+   {:expand
+    (fn [{: body}] (ls.lsp_expand body))}
 
-(defn- tab-complete []
-  (if (= 1 (vim.fn.pumvisible))
-      (tc "<c-n>")
-      (ls.jumpable)
-      (tc "<Plug>luasnip-jump-next")
-      (ls.expand_or_jumpable)
-      (tc "<Plug>luasnip-expand-or-jump")
-      (check-back-space)
-      (tc "<tab>")
-      (compe-complete)))
+   :sources
+   (s [{:name "nvim_lsp"}
+       {:name "conjure"}
+       {:name "luasnip"}]
+      [{:name "buffer"}])
 
-(defn- shift-tab-complete []
-  (if (= 1 (vim.fn.pumvisible))
-      (tc "<c-p>")
-      (ls.jumpable -1)
-      (tc "<plug>luasnip-jump-prev")
-      (tc "<s-tab>")))
+   :mapping
+   {:<c-space> (m (m.complete) [:i :c])
+    :<c-e>     (m {:i (m.abort) :c (m.close)})
+    :<c-p>     (m (m.scroll_docs -4) [:i :c])
+    :<c-n>     (m (m.scroll_docs 4) [:i :c])
+    :<cr>      (m.confirm {:select true})
+    :<tab>
+    (m (fn [fallback]
+         (if (visible?) (cmp.select_next_item)
+             (expandable-or-jumpable?) (ls.expand_or_jump)
+             (has-word-before?) (cmp.complete)
+             (fallback))))
+    :<s-tab>
+    (m (fn [fallback]
+         (if (visible?) (cmp.select_prev_item)
+             (backwards-jumpable?) (ls.jump -1)
+             (fallback))))}})
 
-(global map_utils
-  {:tab_complete tab-complete
-   :s_tab_complete shift-tab-complete})
-
-(imap :<tab> "v:lua.map_utils.tab_complete()" :expr true)
-(imap :<s-tab> "v:lua.map_utils.s_tab_complete()" :expr true)
-(snoremap :<tab> "<cmd>lua require'luasnip'.jump(1)<cr>" :silent true)
-(snoremap :<s-tab> "<cmd>lua require'luasnip'.jump(-1)<cr>" :silent true)
+; complete from buffer when searching
+(cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
+(cmp.setup.cmdline ":" {:sources (cmp.config.sources [{:name "path"}] [{:name "cmdline"}])})
 

@@ -1,6 +1,5 @@
 (module dotfiles.util.neoformat
-  {require {a aniseed.core
-            nvim aniseed.nvim}})
+  {require {a aniseed.core}})
 
 (defn- coerce-to-seq [s]
   (match s

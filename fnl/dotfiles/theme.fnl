@@ -1,8 +1,9 @@
 (module dotfiles.theme
   {require {a aniseed.core
+            nvim aniseed.nvim
             lualine lualine}})
 
-(tset vim.g :tokyonight_style "storm")
+(tset vim.g :tokyonight_style "night")
 ; (tset vim.g :tokyonight_day_brightness 0.275)
 (tset vim.g :material_style "deep ocean")
 (tset vim.g :material_contrast true)

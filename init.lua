@@ -1,5 +1,3 @@
-_G.nvim = require'nvim'
-
 vim.g.loaded_python_provider = 0
 vim.g.python3_host_prog = '/usr/local/bin/python3'
 vim.g.node_host_prog = '/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js'
@@ -13,5 +11,7 @@ vim.g.cursorhold_updatetime = 100
 vim.cmd 'source ~/.config/nvim/rc.vim'
 
 require'plugins.startup'
+-- _G.nvim = require'aniseed.deps.nvim'
+require'astronauta.keymap'
 require'aniseed.env'.init()
 
