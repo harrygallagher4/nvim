@@ -1,1 +1,0 @@
-" setlocal laststatus=0
