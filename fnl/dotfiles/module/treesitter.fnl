@@ -41,10 +41,10 @@
 (tset (require :nvim-treesitter.install) :compilers okay-compilers)
 
 (tsc.setup
-  {:indent {:enable false}
+  {:indent {:enable true}
    :highlight {:enable true}
    :textobjects {:enable false}
-   :incremental_selection {:enable false
+   :incremental_selection {:enable true
                            :keymaps
                            {:init_selection "gnn"
                             :node_incremental "grn"
@@ -62,27 +62,12 @@
                              :keymaps
                              {:smart_rename "grr"}}}
    :rainbow {:enable true}
-   :playground {:enable true
+   :playground {:enable false
                 :updatetime 10
                 :persist_queries true}
-   :query_linter {:enable true
+   :query_linter {:enable false
                   :use_virtual_text true
                   :lint_events [:BufWrite :CursorHold]}})
 
-; (add-parser :fennel
-;   {:install_info
-;    {:url "~/Projects/tree-sitter/grammars/tree-sitter-fennel"
-;     :files ["src/tree_sitter/parser.h" "src/parser.c"]}})
+*module*
 
-; (tsc.setup
-;   {:playground
-;    {:enable true
-;     :updatetime 25
-;     :persist_queries false}
-;    :query_linter
-;    {:enable false
-;     :use_virtual_text true
-;     :lint_events [:BufWrite :CursorHold]}})
-
-; (get-in parser_configs [:fennel])
-; :ensure_installed "all"

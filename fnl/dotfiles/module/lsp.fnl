@@ -16,9 +16,7 @@
 (def- capabilities
   (cmp-lsp.update_capabilities (vim.lsp.protocol.make_client_capabilities)))
 
-(trouble.setup
-  {:auto_preview false
-   :height 8})
+(trouble.setup {:auto_preview false :height 8})
 
 (defn- on_attach [client]
   (lspstatus.on_attach client)
@@ -70,4 +68,6 @@
           :diagnostics {:globals ["vim"]}
           :workspace {:library (vim.api.nvim_get_runtime_file "" true)}
           :telemetry {:enable false}}}})
+
+*module*
 

@@ -23,3 +23,5 @@
 
 (vim.keymap.set [:n :t] "<a-`>" smarter-toggle)
 
+*module*
+

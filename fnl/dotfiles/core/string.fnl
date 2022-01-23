@@ -3,6 +3,13 @@
             str aniseed.string
             core dotfiles.core}})
 
+(defn chars [s]
+  (vim.split s ""))
+
+(defn formatter [...]
+  (let [args [...]]
+    (fn [s] (string.format s (unpack args)))))
+
 (defn splitter [pat]
   (fn [s] (str.split s pat)))
 

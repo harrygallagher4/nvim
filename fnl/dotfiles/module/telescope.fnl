@@ -1,37 +1,22 @@
 (module dotfiles.module.telescope
   {require {a aniseed.core
             str aniseed.string
+            maps dotfiles.maps
             util dotfiles.util
             telescope telescope
             builtin telescope.builtin
             actions telescope.actions
             p-actions telescope._extensions.project.actions
             themes telescope.themes
-            devicons nvim-web-devicons
             trouble trouble.providers.telescope}})
-
-; (setup {:default true
-;         :override {:fnl {:icon ""
-;                          :color "#7bc45c"
-;                          :name "fennel"}}})
-
-(defn setup_devicons []
-  (devicons.setup
-    {:default true
-     :override
-     {:fnl
-      {:icon "" :color "#e6b439" :name "fennel"}}}))
-      ;{:icon "" :color "#7bc45c" :name "fennel"}
-      ;:fennel {:icon "" :color "#e6b439" :name "Fennel"}}}))
-(setup_devicons)
-(tset _G :fix_devicons setup_devicons)
 
 (def- compiled-fnl
   (a.map
-    (fn [s] (string.gsub s ".fnl$" ".lua"))
+    #(-> $
+         (string.gsub ".fnl$" ".lua")
+         (string.gsub "/fnl/" "/lua/"))
     (util.glob (.. util.config-path "/fnl/**/*.fnl"))))
 
-; :borderchars [" " " " " " " " " " " " " " " "]
 (telescope.setup
   {:defaults
    {:prompt_prefix "❯ "
@@ -114,18 +99,17 @@
        ;   (km "i" :<c-p> (+ actions.close #(builtin.oldfiles (oldfiles-theme false))))
        ;  true})))
 
-(do
-  (def- maps
-    {:<c-p>         #(builtin.oldfiles (oldfiles-theme (cwd-project)))
-     :<leader><c-p> #(builtin.oldfiles (oldfiles-theme false))
-     :<leader>p     #(builtin.find_files)
-     :<leader>t     #(builtin.live_grep)
-     "<leader>;"    #(builtin.commands nopreview)
-     :<leader>:     #(builtin.command_history nopreview)
-     :<leader>o     #(builtin.buffers)
-     :<leader>lm    #(builtin.reloader)
-     :<a-p>         #(telescope.extensions.project.project
-                       (a.merge projects {:attach_mappings project-maps}))})
-  (each [left right (pairs maps)]
-    (vim._keymap.nnoremap [left right])))
+(maps.map-multi :n
+  [["<leader>p"     #(builtin.oldfiles (oldfiles-theme (cwd-project)))]
+   ["<leader><c-p>" #(builtin.oldfiles (oldfiles-theme false))]
+   ["<c-p>"         #(builtin.find_files)]
+   ["<leader>t"     #(builtin.live_grep)]
+   ["<leader>;"     #(builtin.commands nopreview)]
+   ["<leader>:"     #(builtin.command_history nopreview)]
+   ["<leader>o"     #(builtin.buffers)]
+   ["<leader>lm"    #(builtin.reloader)]
+   ["<a-p>"         #(telescope.extensions.project.project
+                      (a.merge projects {:attach_mappings project-maps}))]])
+
+*module*
 

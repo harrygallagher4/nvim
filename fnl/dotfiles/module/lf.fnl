@@ -11,3 +11,5 @@
       :highlight "TelescopeBorder"
       :border "rounded"}})
 
+*module*
+

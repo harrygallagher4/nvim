@@ -1,9 +1,9 @@
 (module dotfiles.module.completion
   {require {a aniseed.core
             lspkind lspkind
+            ls luasnip
             cmp cmp
-            ls luasnip}
-   require-macros [dotfiles.maps.macros]})
+            ctx cmp.config.context}})
 
 (set vim.o.completeopt "menu,menuone,noselect")
 (lspkind.init {})
@@ -40,25 +40,36 @@
        {:name "luasnip"}]
       [{:name "buffer"}])
 
+   ; wonder if this slows down cmp?
+   :enabled
+   #(and
+      (not (ctx.in_treesitter_capture "comment"))
+      (not (ctx.in_syntax_group "Comment")))
+
    :mapping
    {:<c-space> (m (m.complete) [:i :c])
     :<c-e>     (m {:i (m.abort) :c (m.close)})
     :<c-p>     (m (m.scroll_docs -4) [:i :c])
     :<c-n>     (m (m.scroll_docs 4) [:i :c])
     :<cr>      (m.confirm {:select true})
+    :<esc>     (m #(if (visible?) (cmp.abort) ($)) [:i :c])
     :<tab>
     (m (fn [fallback]
          (if (visible?) (cmp.select_next_item)
              (expandable-or-jumpable?) (ls.expand_or_jump)
              (has-word-before?) (cmp.complete)
-             (fallback))))
+             (fallback)))
+       [:i :s])
     :<s-tab>
     (m (fn [fallback]
          (if (visible?) (cmp.select_prev_item)
              (backwards-jumpable?) (ls.jump -1)
-             (fallback))))}})
+             (fallback)))
+       [:i :s])}})
 
 ; complete from buffer when searching
 (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
 (cmp.setup.cmdline ":" {:sources (cmp.config.sources [{:name "path"}] [{:name "cmdline"}])})
+
+*module*
 

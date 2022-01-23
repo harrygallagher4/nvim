@@ -1,17 +1,29 @@
-vim.g.loaded_python_provider = 0
-vim.g.python3_host_prog = '/usr/local/bin/python3'
-vim.g.node_host_prog = '/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js'
-vim.o.termguicolors = true
-if vim.g.uivonim == 1 or vim.g.goneovim == 1 then
-    vim.o.guifont = "Iosevka Nerd Font:h15"
-    vim.o.linespace = 3
+-- yanked directly from @Olical/dotfiles
+local execute = vim.api.nvim_command
+local fn = vim.fn
+local pack_path = fn.stdpath("data") .. "/site/pack"
+local fmt = string.format
+
+function EnsurePlugin (user, repo)
+  local install_path = fmt("%s/packer/start/%s", pack_path, repo)
+  if fn.empty(fn.glob(install_path)) > 0 then
+    execute(fmt("!git clone https://github.com/%s/%s %s", user, repo, install_path))
+    execute(fmt("packadd %s", repo))
+  end
 end
-vim.g.cursorhold_updatetime = 100
 
-vim.cmd 'source ~/.config/nvim/rc.vim'
+-- Bootstrap essential plugins required for installing and loading the rest.
+EnsurePlugin("wbthomason", "packer.nvim")
+EnsurePlugin("Olical", "aniseed")
+EnsurePlugin("lewis6991", "impatient.nvim")
 
+-- `init` module is just empty so:
+--   1. fennel is compiled
+--   2. packer startup sets luarocks path
+--   3. impatient runs and caches compiled fennel + luarocks
+--   4. dotfiles.init runs
+require'aniseed.env'.init { module = 'init', compile = true }
 require'plugins.startup'
--- _G.nvim = require'aniseed.deps.nvim'
-require'astronauta.keymap'
-require'aniseed.env'.init()
+require'impatient'
+require'dotfiles.init'
 

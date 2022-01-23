@@ -4,7 +4,6 @@
             nvu aniseed.nvim.util
             preload plenary.reload
             it plenary.iterators}})
-;   require-macros [dotfiles.macros]})
 
 (def config-path (vim.fn.stdpath "config"))
 
@@ -17,10 +16,9 @@
   (: (it.zip ...) :tomap))
 
 (defn even-key [[x y]]
-  (when (= 0 (% x 2)) y))
-
+  (if (= 0 (% x 2)) y))
 (defn odd-key [[x y]]
-  (when (not (= 0 (% x 2))) y))
+  (if (not (= 0 (% x 2))) y))
 
 (defn split-seq [t]
   (let [odd (a.map-indexed odd-key t)
@@ -28,6 +26,11 @@
     (unpack (if (= (# odd) (# even))
                 [odd even]
                 [(a.butlast odd) even]))))
+
+(defn cmd [s ...]
+  (if ...
+    (vim.cmd (string.format s ...))
+    (vim.cmd s)))
 
 (defn expand [path]
   (vim.fn.expand path))
@@ -41,14 +44,6 @@
 (defn lua-file [path]
   (nvim.ex.luafile path))
 
-(defn- oset-arg [x y z]
-  (if z (.. x y z)
-      y (.. x := y)
-      x))
-
-(defn oset! [x y z]
-  (nvim.ex.set (oset-arg x y z)))
-
 (defn memoize [f]
   (let [results {}]
     (fn memoize-internal [...]
@@ -60,9 +55,9 @@
               value)
             result)))))
 
-(defn print_inspect [o]
+(defn print-inspect [o]
   (print (vim.inspect o)) o)
-(tset _G :pr print_inspect)
+(tset _G :pr print-inspect)
 
 (when (not (a.nil? preload.reload_module))
       (tset _G :reload (fn [m]
@@ -105,4 +100,6 @@
   (nvim.ex.command_ "StopLsp call StopLsp()"))
 (if (a.nil? (a.get (vim.api.nvim_get_commands {:builtin false}) :PluginSync))
   (nvim.ex.command_ "SyncPlugins call SyncPlugins()"))
+
+*module*
 

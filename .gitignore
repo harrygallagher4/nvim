@@ -8,6 +8,7 @@ lua/**/*
 
 !lua/plugins/
 !lua/plugins/spec.lua
+!lua/plugins/lab.lua
 
 !lua/nvim.lua
 !lua/snips.lua

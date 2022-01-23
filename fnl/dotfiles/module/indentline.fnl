@@ -13,12 +13,11 @@
    :filetype_exclude
    ["" "help" "fennel" "packer" "lspinfo" "tsplayground" "query" "scheme" "Trouble"]
    :buftype_exclude
-   ["terminal" "prompt"]})
+   ["terminal" "prompt" "toggleterm"]})
 (each [k v (pairs gs)]
   (tset vim.g (.. :indent_blankline_ k) v))
 
-(tset vim.o :list true)
-(tset vim.o :listchars (table.concat ["eol:↴" "tab:  " "trail:⋅" "nbsp:_"] ","))
+; (packer.loader "indent-blankline.nvim")
 
-(packer.loader "indent-blankline.nvim")
+*module*
 

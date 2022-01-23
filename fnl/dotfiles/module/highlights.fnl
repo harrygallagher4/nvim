@@ -2,7 +2,7 @@
   {require {a aniseed.core
             str aniseed.string
             nvim aniseed.nvim
-            lush lush
+            ; lush lush
             colorizer colorizer}
    require-macros [dotfiles.highlight.macros]})
 
@@ -22,7 +22,8 @@
             (str.split "}, ")
             (#(str.join "},\n" $)))))))
 
-(def- hsl lush.hsl)
+(def- hsl nil)
+; (def- hsl lush.hsl)
 
 (def
   gruvbox
