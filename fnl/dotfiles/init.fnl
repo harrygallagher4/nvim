@@ -7,6 +7,11 @@
 (require :dotfiles.maps)
 (require :dotfiles.theme)
 
+; TODO: decide if I should replace explicit
+; module load-order with the old require-all
+; method. Modules that need to be loaded
+; after another can be handled by requiring
+; the earlier module from the later one
 (init-module :devicons)
 (init-module :bufferline)
 (init-module :lsp)
