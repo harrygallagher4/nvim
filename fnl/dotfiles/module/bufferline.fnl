@@ -15,7 +15,10 @@
     :separator_style "thick"}})
 
 (maps.map-multi :n
-  [["<leader>]" "<cmd>BufferLineCycleNext<cr>"]
+  [["<a-i>" "<cmd>BufferLineCycleNext<cr>"]
+   ["<a-o>" "<cmd>BufferLineCyclePrev<cr>"]
+   ["<a-b>" "<cmd>BufferLinePick<cr>"]
+   ["<leader>]" "<cmd>BufferLineCycleNext<cr>"]
    ["<leader>[" "<cmd>BufferLineCyclePrev<cr>"]
    ["<leader><leader>o" "<cmd>BufferLinePick<cr>"]])
 
