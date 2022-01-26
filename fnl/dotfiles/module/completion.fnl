@@ -5,7 +5,7 @@
             cmp cmp
             ctx cmp.config.context}})
 
-(set vim.o.completeopt "menu,menuone,noselect")
+; (set vim.o.completeopt "menu,menuone,noselect")
 (lspkind.init {})
 
 (def- m cmp.mapping)
@@ -37,14 +37,15 @@
    :sources
    (s [{:name "nvim_lsp"}
        {:name "conjure"}
-       {:name "luasnip"}]
+       {:name "luasnip"}
+       {:name "path" :trigger_characters ["/"]}]
       [{:name "buffer"}])
 
    ; wonder if this slows down cmp?
    :enabled
-   #(and
-      (not (ctx.in_treesitter_capture "comment"))
-      (not (ctx.in_syntax_group "Comment")))
+   #(if (= "c" (. (vim.api.nvim_get_mode) :mode)) true
+        (and (not (ctx.in_treesitter_capture "comment"))
+             (not (ctx.in_syntax_group "Comment"))))
 
    :mapping
    {:<c-space> (m (m.complete) [:i :c])
@@ -70,6 +71,4 @@
 ; complete from buffer when searching
 (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
 (cmp.setup.cmdline ":" {:sources (cmp.config.sources [{:name "path"}] [{:name "cmdline"}])})
-
-*module*
 
