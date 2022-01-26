@@ -39,6 +39,9 @@
    [:nvo :L  :$]
    [:nvo ";" ":"]
 
+   [:s "<c-a>" "<c-o>A"]
+   [:s "<c-p>" "<c-o>o"]
+
    [:n "<left>"  "<cmd>wincmd <<cr><cmd>echo winwidth(0)<cr>"]
    [:n "<right>" "<cmd>wincmd ><cr><cmd>echo winwidth(0)<cr>"]
    [:n "<up>"    "<cmd>wincmd +<cr><cmd>echo winheight(0)<cr>"]
