@@ -27,7 +27,7 @@
    :lewis6991/impatient.nvim {}
 
    :tjdevries/astronauta.nvim {:commit "edc19d30a3c51a8c3fc3f606008e5b4238821f1e"
-                               :config (fn [] (require :astronauta.keymap))}
+                               :config #(require :astronauta.keymap)}
 
    :nvim-lua/plenary.nvim {}
    :nvim-lua/popup.nvim {}
@@ -40,10 +40,12 @@
    :hoob3rt/lualine.nvim {}
    :akinsho/nvim-bufferline.lua {}
    :lukas-reineke/indent-blankline.nvim {}
+   :lewis6991/gitsigns.nvim {:requires ["plenary.nvim"]}
 
    :onsails/lspkind-nvim {}
    :tami5/lspsaga.nvim {}
    :nvim-lua/lsp-status.nvim {}
+   :j-hui/fidget.nvim {}
    :folke/trouble.nvim {}
    :neovim/nvim-lspconfig {}
 
@@ -79,7 +81,7 @@
 
    :akinsho/toggleterm.nvim {}
 
-   :luukvbaal/stabilize.nvim {:config (fn [] ((. (require :stabilize) :setup)))}
+   :luukvbaal/stabilize.nvim {:config #((. (require :stabilize) :setup))}
 
    :tpope/vim-commentary {}
    :tpope/vim-repeat {}

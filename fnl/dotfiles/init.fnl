@@ -19,10 +19,14 @@
 (init-module :completion)
 (init-module :treesitter)
 (init-module :telescope)
-(init-module :neorg)
+; order doesn't matter
+(init-module :conjure)
+(init-module :gitsigns)
 (init-module :indentline)
-(init-module :toggleterm)
 (init-module :lf)
+(init-module :neoformat)
+(init-module :neorg)
+(init-module :toggleterm)
 
 (defn init_post [])
 

@@ -52,10 +52,11 @@
 (oset :equalalways false)
 (oset :wrap false)
 (oset :number)
+(oset :numberwidth 3)
 (oset :pumheight 8)
 (oset :scrolloff 3)
 (oset :showcmd)
-(oset :signcolumn "number")
+(oset :signcolumn "auto")
 (oset :smartcase)
 (oset :smarttab)
 (oset :splitbelow)
@@ -69,7 +70,7 @@
 ; (oset :foldmethod "expr")
 ; (oset :foldexpr ((. vim.fn "nvim_treesitter#foldexpr")))
 
-(oset :completeopt [:menuone :noinsert :noselect])
+(oset :completeopt [:menu :menuone :noinsert :noselect])
 (oset+ :shortmess :c)
 
 (set vim.env.FZF_DEFAULT_OPTS (.. vim.env.FZF_DEFAULT_OPTS " --margin=0,0"))
