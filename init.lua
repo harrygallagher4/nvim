@@ -1,21 +1,24 @@
--- yanked directly from @Olical/dotfiles
+-- adapted from @Olical/dotfiles, added support for non-github plugins
 local execute = vim.api.nvim_command
 local fn = vim.fn
 local pack_path = fn.stdpath("data") .. "/site/pack"
 local fmt = string.format
 
-function EnsurePlugin (user, repo)
-  local install_path = fmt("%s/packer/start/%s", pack_path, repo)
-  if fn.empty(fn.glob(install_path)) > 0 then
-    execute(fmt("!git clone https://github.com/%s/%s %s", user, repo, install_path))
-    execute(fmt("packadd %s", repo))
-  end
+function Plugin(s)
+    local repo = table.remove(vim.split(s, '/'))
+    local url = (string.match(s,'^[^/]+/[^/]+$') and fmt('https://github.com/%s',s)) or s
+    local install_path = fmt('%s/packer/start/%s', pack_path, repo)
+    if fn.empty(fn.glob(install_path)) == 1 then
+        execute(fmt('"echomsg installing plugin %s..."', s))
+        execute(fmt('!git clone %s %s', url, install_path))
+        execute(fmt('packadd %s', repo))
+    end
 end
 
 -- Bootstrap essential plugins required for installing and loading the rest.
-EnsurePlugin("wbthomason", "packer.nvim")
-EnsurePlugin("Olical", "aniseed")
-EnsurePlugin("lewis6991", "impatient.nvim")
+Plugin('wbthomason/packer.nvim')
+Plugin('Olical/aniseed')
+Plugin('lewis6991/impatient.nvim')
 
 -- `init` module is just empty so:
 --   1. fennel is compiled
