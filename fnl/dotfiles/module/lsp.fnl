@@ -1,11 +1,11 @@
 (module dotfiles.module.lsp
   {require {a aniseed.core
             lsp lspconfig
-            lspstatus lsp-status
             saga lspsaga
             cmp-lsp cmp_nvim_lsp
             completion dotfiles.module.completion
-            trouble trouble}
+            trouble trouble
+            fidget dotfiles.module.fidget}
    require-macros [dotfiles.maps.macros]})
 
 (def- lua-runtime-path
@@ -19,7 +19,6 @@
 (trouble.setup {:auto_preview false :height 8})
 
 (defn- on_attach [client]
-  (lspstatus.on_attach client)
   (nnoremap :K            vim.lsp.buf.hover                         :buffer true)
   (nnoremap :<c-l>        vim.lsp.buf.signature_help                :buffer true)
   (inoremap :<c-l>        vim.lsp.buf.signature_help                :buffer true)
@@ -49,7 +48,7 @@
 ; set things up
 ; =============
 
-(lspstatus.register_progress)
+(fidget.setup)
 (saga.init_lsp_saga)
 
 ; (setup :rnix        {: on_attach})
@@ -68,6 +67,4 @@
           :diagnostics {:globals ["vim"]}
           :workspace {:library (vim.api.nvim_get_runtime_file "" true)}
           :telemetry {:enable false}}}})
-
-*module*
 
