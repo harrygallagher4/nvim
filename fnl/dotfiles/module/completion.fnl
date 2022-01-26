@@ -37,7 +37,6 @@
    :sources
    (s [{:name "nvim_lsp"}
        {:name "conjure"}
-       {:name "luasnip"}
        {:name "path" :trigger_characters ["/"]}]
       [{:name "buffer"}])
 
@@ -54,19 +53,17 @@
     :<c-n>     (m (m.scroll_docs 4) [:i :c])
     :<cr>      (m.confirm {:select true})
     :<esc>     (m #(if (visible?) (cmp.abort) ($)) [:i :c])
-    :<tab>
-    (m (fn [fallback]
-         (if (visible?) (cmp.select_next_item)
-             (expandable-or-jumpable?) (ls.expand_or_jump)
-             (has-word-before?) (cmp.complete)
-             (fallback)))
-       [:i :s])
-    :<s-tab>
-    (m (fn [fallback]
-         (if (visible?) (cmp.select_prev_item)
-             (backwards-jumpable?) (ls.jump -1)
-             (fallback)))
-       [:i :s])}})
+    :<tab>     (m (fn [fallback]
+                    (if (visible?) (cmp.select_next_item)
+                        (expandable-or-jumpable?) (ls.expand_or_jump)
+                        (has-word-before?) (cmp.complete)
+                        (fallback)))
+                  [:i :s])
+    :<s-tab>   (m (fn [fallback]
+                    (if (visible?) (cmp.select_prev_item)
+                        (backwards-jumpable?) (ls.jump -1)
+                        (fallback)))
+                  [:i :s])}})
 
 ; complete from buffer when searching
 (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
