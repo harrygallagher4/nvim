@@ -16,12 +16,14 @@
 
 (defn- current-module-name []
   (let [file (vim.fn.expand "%:p:~:r")
+        basename (vim.fn.expand "%:t:r")
         (start end) (string.find file "/fnl/")]
-    (-> file
-        (string.sub end)
-        (string.sub 2)
-        (str.split "/")
-        (table.concat "."))))
+    (if (and start end) (-> file
+                            (string.sub end)
+                            (string.sub 2)
+                            (str.split "/")
+                            (table.concat "."))
+        basename)))
 
 (defn- module-name-snip []
   (sn nil
@@ -29,8 +31,7 @@
 
 (def- snips
   {:all
-   [(vsc {:trig "sniptest"}
-         "snippet ${0:sniptest} inserted!")]
+   []
 
    :nix
    [(s {:name "Attribute" :dscr "Nix attribute name"
@@ -40,16 +41,12 @@
         (i 0)
         (t [";"])])]
 
-   :rust
-   [(vsc {:trig "fn"}
-         "/// $1\nfn $2($3) ${4:-> $5 }\\{\n\t$0\n\\}")]
-
    ;; not using fennel snippets right now because parinfer
    ;; tries to format the buffer while the snippet is expanding
    ;; which messes up luasnip somehow
    :fennel
    [(s {:name "Module (dynamic)" :dscr "Aniseed module definition"
-        :trig "module"}
+        :trig "%(?module%)?" :regTrig true}
        [(t ["(module "])
         (d 1 module-name-snip [])
         (t ["" "  {require {"])
