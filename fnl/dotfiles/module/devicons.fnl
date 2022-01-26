@@ -12,5 +12,3 @@
 (setup-devicons)
 (tset _G :fix_devicons setup-devicons)
 
-*module*
-

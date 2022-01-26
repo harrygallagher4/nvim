@@ -62,5 +62,3 @@
 
 (a.assoc ls :snippets snips)
 
-*module*
-

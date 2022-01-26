@@ -60,5 +60,3 @@
 
 (init colorscheme)
 
-*module*
-

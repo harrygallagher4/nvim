@@ -12,5 +12,3 @@
      {:ctrl-i :vsplit
       :ctrl-o :split})
 
-*module*
-

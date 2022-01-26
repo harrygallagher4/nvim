@@ -101,5 +101,3 @@
 (if (a.nil? (a.get (vim.api.nvim_get_commands {:builtin false}) :PluginSync))
   (nvim.ex.command_ "SyncPlugins call SyncPlugins()"))
 
-*module*
-

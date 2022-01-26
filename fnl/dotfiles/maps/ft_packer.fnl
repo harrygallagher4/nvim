@@ -28,5 +28,3 @@
 (defn init []
   (vim.keymap.set "n" "o" do-line {:buffer true}))
 
-*module*
-

@@ -17,7 +17,3 @@
 (each [k v (pairs gs)]
   (tset vim.g (.. :indent_blankline_ k) v))
 
-; (packer.loader "indent-blankline.nvim")
-
-*module*
-

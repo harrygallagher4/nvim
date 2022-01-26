@@ -69,5 +69,3 @@
                   :use_virtual_text true
                   :lint_events [:BufWrite :CursorHold]}})
 
-*module*
-

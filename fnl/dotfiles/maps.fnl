@@ -68,10 +68,7 @@
          [:t (f "<c-w><c-%s>" $) (f "<cmd>wincmd %s<cr>" $) {:remap false}]]
        (str.chars "hjklsvcq")))])
 
-
 (map-multi mappings)
-
-*module*
 
 ; (let [ks (vim.tbl_keys (vim.api.nvim_get_all_options_info))]
 ;   (table.sort ks #(< (string.byte $1) (string.byte $2)))

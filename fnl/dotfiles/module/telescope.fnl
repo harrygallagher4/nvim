@@ -111,5 +111,3 @@
    ["<a-p>"         #(telescope.extensions.project.project
                       (a.merge projects {:attach_mappings project-maps}))]])
 
-*module*
-

@@ -75,5 +75,3 @@
 
 (set vim.env.FZF_DEFAULT_OPTS (.. vim.env.FZF_DEFAULT_OPTS " --margin=0,0"))
 
-*module*
-

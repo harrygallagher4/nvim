@@ -17,5 +17,3 @@
      {:workspaces
       {:home "~/neorg"}}}}})
 
-*module*
-
