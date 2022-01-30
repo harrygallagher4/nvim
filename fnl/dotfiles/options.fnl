@@ -12,7 +12,6 @@
   (: (. vim.opt optname) :append value))
 
 
-
 (gset :loaded_python_provider 0)
 (gset :python3_host_prog "/usr/local/bin/python3")
 (gset :node_host_prog "/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js")

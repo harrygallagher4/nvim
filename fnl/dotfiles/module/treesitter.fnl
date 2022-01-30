@@ -1,6 +1,6 @@
 (module dotfiles.module.treesitter
   {require {a aniseed.core
-            str dotfiles.core.string
+            str dotfiles.util.string
             tsc nvim-treesitter.configs
             parsers nvim-treesitter.parsers}})
 

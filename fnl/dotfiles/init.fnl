@@ -1,4 +1,4 @@
-(module dotfiles.init)
+(module dotfiles)
 
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
@@ -33,7 +33,7 @@
 (vim.cmd
   " augroup dotfiles
     autocmd!
-    autocmd VimEnter * lua require'dotfiles.init'.init_post()
+    autocmd VimEnter * lua require'dotfiles'.init_post()
     augroup END")
 
 ; (let [wrap-module

@@ -28,5 +28,5 @@ Plugin('lewis6991/impatient.nvim')
 require'aniseed.env'.init { module = 'init', compile = true }
 require'plugins.startup'
 require'impatient'
-require'dotfiles.init'
+require'dotfiles'
 

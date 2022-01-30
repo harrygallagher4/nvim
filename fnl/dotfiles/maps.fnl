@@ -1,6 +1,6 @@
 (module dotfiles.maps
   {require {a aniseed.core
-            str dotfiles.core.string
+            str dotfiles.util.string
             : luadev}})
 ; `mapping` refers to a table of `vim.keymap.set` arguments
 
@@ -32,7 +32,7 @@
 (def- mappings
   [[:n :<leader>w     "<cmd>update<cr>" {:silent true}]
    [:n :<leader><tab> "<cmd>buffer # <cr>" {:silent true}]
-   [:n "<leader>,"    "<cmd>e ~/.config/nvim/lua/plugins/spec.lua<cr>" {:silent true}]
+   [:n "<leader>,"    "<cmd>e ~/.config/nvim/fnl/dotfiles/plugins.fnl<cr>" {:silent true}]
    [:n "<leader>cd"   "<cmd>cd %:h<cr>:pwd<cr>"]
 
    [:nvo :H  :^]

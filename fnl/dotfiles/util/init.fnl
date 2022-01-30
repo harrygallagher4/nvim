@@ -7,6 +7,10 @@
 
 (def config-path (vim.fn.stdpath "config"))
 
+;
+; general utils
+; ----------------------------------------
+
 (def unpack (or (rawget _G :unpack) table.unpack))
 
 (defn slice [t s e]
@@ -14,6 +18,12 @@
 
 (defn zipmap [...]
   (: (it.zip ...) :tomap))
+
+(defn min-of [xs]
+  (math.min (unpack xs)))
+
+(defn max-of [xs]
+  (math.min (unpack xs)))
 
 (defn even-key [[x y]]
   (if (= 0 (% x 2)) y))
@@ -26,6 +36,10 @@
     (unpack (if (= (# odd) (# even))
                 [odd even]
                 [(a.butlast odd) even]))))
+
+;
+; vim utils
+; ----------------------------------------
 
 (defn cmd [s ...]
   (if ...

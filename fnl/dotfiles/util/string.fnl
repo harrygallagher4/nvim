@@ -1,7 +1,7 @@
-(module dotfiles.core.string
+(module dotfiles.util.string
   {require {a aniseed.core
             str aniseed.string
-            core dotfiles.core}})
+            util dotfiles.util}})
 
 (defn chars [s]
   (vim.split s ""))
@@ -29,7 +29,7 @@
        (split "\n")
        (a.map #(string.match $ "^(%s+)%S"))
        (a.map string.len)
-       (core.min-of)))
+       (util.min-of)))
 
 (defn trim-leading-spaces [indent input]
   (let [f (fn [s] (if (string.match s (.. "^" (string.rep "%s" indent)))
