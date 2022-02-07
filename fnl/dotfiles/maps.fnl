@@ -32,8 +32,10 @@
 (def- mappings
   [[:n :<leader>w     "<cmd>update<cr>" {:silent true}]
    [:n :<leader><tab> "<cmd>buffer # <cr>" {:silent true}]
-   [:n "<leader>,"    "<cmd>e ~/.config/nvim/fnl/dotfiles/plugins.fnl<cr>" {:silent true}]
    [:n "<leader>cd"   "<cmd>cd %:h<cr>:pwd<cr>"]
+   [:n "<leader>,"    "<cmd>e ~/.config/nvim/fnl/dotfiles/plugins.fnl<cr>" {:silent true}]
+
+   [:n "<leader><leader>P" #((. (require :dotfiles.plugins) :packer :sync))]
 
    [:nvo :H  :^]
    [:nvo :L  :$]

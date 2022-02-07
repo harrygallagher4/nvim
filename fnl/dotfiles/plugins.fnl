@@ -1,5 +1,5 @@
 (module dotfiles.plugins
-  {require {: packer
+  {require {p packer
             a aniseed.core
             util packer.util}})
 
@@ -128,13 +128,14 @@
                    (a.merge [k] v)))))
 
 (defn- startup [config plugin-spec rocks-spec]
-  (packer.startup
+  (p.startup
     {1 (fn [use use_rocks]
          (each [k v (ipairs rocks-spec)] (use_rocks v))
          (each [k v (ipairs plugin-spec)] (use v)))
      :config config}))
 
-(startup packer-config
-         (-> plugin-list (plugin-list-to-map) (plugin-map-to-spec))
-         rocks)
+(def packer
+  (startup packer-config
+           (-> plugin-list (plugin-list-to-map) (plugin-map-to-spec))
+           rocks))
 
