@@ -25,6 +25,8 @@
    :nvim-lua/popup.nvim
    :romgrk/fzy-lua-native {:run "make"}
 
+   :andweeb/presence.nvim
+
    :antoinemadec/FixCursorHold.nvim
    "~/.config/nvim/localplugin" {:as "harryg"}
    :kyazdani42/nvim-web-devicons
@@ -33,6 +35,7 @@
    :akinsho/nvim-bufferline.lua
    :lukas-reineke/indent-blankline.nvim
    :lewis6991/gitsigns.nvim {:requires ["plenary.nvim"]}
+   :rcarriga/nvim-notify
 
    :onsails/lspkind-nvim
    :tami5/lspsaga.nvim

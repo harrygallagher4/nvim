@@ -3,6 +3,8 @@
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
 
+(tset vim :notify (require :notify))
+
 (require :dotfiles.options)
 (require :dotfiles.maps)
 (require :dotfiles.theme)
@@ -27,6 +29,7 @@
 (init-module :neoformat)
 (init-module :neorg)
 (init-module :toggleterm)
+(init-module :presence)
 
 (defn init_post [])
 
