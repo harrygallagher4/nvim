@@ -24,19 +24,16 @@
 
 (cmp.setup
   {:experimental
-   {:native_menu false
-    :ghost_text true}
+   {:ghost_text true}
 
    :formatting
    {:format (lspkind.cmp_format)}
 
    :snippet
-   {:expand
-    (fn [{: body}] (ls.lsp_expand body))}
+   {:expand (fn [{: body}] (ls.lsp_expand body))}
 
    :sources
    (s [{:name "nvim_lsp"}
-       {:name "conjure"}
        {:name "path" :trigger_characters ["/"]}]
       [{:name "buffer"}])
 
@@ -65,7 +62,14 @@
                         (fallback)))
                   [:i :s])}})
 
+(cmp.setup.filetype
+  "fennel"
+  {:sources
+   (s [{:name "conjure"}
+       {:name "path" :trigger_characters ["/"]}]
+      [{:name "buffer"}])})
+
 ; complete from buffer when searching
 (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
-(cmp.setup.cmdline ":" {:sources (cmp.config.sources [{:name "path"}] [{:name "cmdline"}])})
+(cmp.setup.cmdline ":" {:sources (s [{:name "path"}] [{:name "cmdline"}])})
 
