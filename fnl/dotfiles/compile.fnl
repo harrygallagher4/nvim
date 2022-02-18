@@ -46,3 +46,12 @@
 (defn aniseed-compile! []
   (env.init {:module "init" :compile true}))
 
+; this isn't used anywhere but I thought I'd make a function out of it
+; (aniseed-reload "dotfiles" "^dotfiles%..+") uncaches `dotfiles` and
+; all `dotfiles.*` modules, then requires `dotfiles`
+(defn aniseed-reload [mod prefix-pattern]
+  (each [k _ (ipairs package.loaded)]
+    (when (or (= mod k) (string.match k prefix-pattern))
+      (tset package.loaded k nil)))
+  (env.init {:module mod :compile true}))
+
