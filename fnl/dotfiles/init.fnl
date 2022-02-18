@@ -1,4 +1,5 @@
-(module dotfiles)
+(module dotfiles
+  {autoload {cmds dotfiles.commands}})
 
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
@@ -30,8 +31,12 @@
 (init-module :neorg)
 (init-module :toggleterm)
 (init-module :presence)
+(init-module :conjure)
 
-(defn init_post [])
+(defn init_post []
+  (cmds.mod-cmd! :FnlClean :dotfiles.compile :clean!)
+  (cmds.mod-cmd! :FnlCompileAll :dotfiles.compile :compile-all!)
+  (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))
 
 (vim.cmd
   " augroup dotfiles
