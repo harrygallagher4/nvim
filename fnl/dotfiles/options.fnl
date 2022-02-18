@@ -16,6 +16,8 @@
 (gset :python3_host_prog "/usr/local/bin/python3")
 (gset :node_host_prog "/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js")
 (gset :cursorhold_updatetime 100)
+(gset :do_filetype_lua 1)
+(gset :did_load_filetypes 0)
 
 (gset :mapleader " ")
 
