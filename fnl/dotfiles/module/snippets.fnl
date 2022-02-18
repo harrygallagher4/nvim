@@ -43,7 +43,7 @@
 
    ;; not using fennel snippets right now because parinfer
    ;; tries to format the buffer while the snippet is expanding
-   ;; which messes up luasnip somehow
+   ;; which messes with extmarks
    :fennel
    [(s {:name "Module (dynamic)" :dscr "Aniseed module definition"
         :trig "%(?module%)?" :regTrig true}
@@ -55,7 +55,24 @@
         (t ["" "   require-macros ["])
         (i 3 ["dotfiles.macros"])
         (t ["]})" ""])
-        (i 0)])]})
+        (i 0)])
+
+    (s {:trig "let" :wordTrig true :name "Let" :dscr "Fennel let"}
+       [(t ["(let "])
+        (t ["["]) (i 1) (t ["]"])
+        (t ["" "  ("]) (i 0) (t ["))"])])
+
+    (s {:trig "fn" :wordTrig true :name "Function" :dscr "Fennel function"}
+       [(t ["(fn "])
+        (i 1) (t " ")
+        (t ["["]) (i 2) (t ["]"])
+        (t ["" "  ("]) (i 0) (t ["))"])])
+
+    (s {:trig "defn" :wordTrig true :name "Aniseed function" :dscr "Aniseed function"}
+       [(t ["(defn "])
+        (i 1) (t " ")
+        (t ["["]) (i 2) (t ["]"])
+        (t ["" "  ("]) (i 0) (t ["))"])])]})
 
 (a.assoc ls :snippets snips)
 
