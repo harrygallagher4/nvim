@@ -3,10 +3,12 @@
             str aniseed.string
             maps dotfiles.maps
             util dotfiles.util
+            cmds dotfiles.commands
             telescope telescope
             builtin telescope.builtin
             actions telescope.actions
-            p-actions telescope._extensions.project.actions
+            project telescope._extensions.project.actions
+            project-utils telescope._extensions.project.utils
             themes telescope.themes
             trouble trouble.providers.telescope}})
 
@@ -19,15 +21,15 @@
 
 (telescope.setup
   {:defaults
-   {:prompt_prefix "❯ "
+   {:prompt_prefix "   "
     :selection_caret "❯ "
     :sorting_strategy "ascending"
     :layout_strategy "horizontal"
     :border true
-    :path_display ["shorten"]
+    :path_display ["smart"]
+    :dynamic_preview_title true
     :layout_config {:vertical {:width 0.8 :height 0.6 :mirror true}
-                    :mirror false :width 0.92 :height 0.92
-                    :horizontal {:prompt_position "top" :preview_width 80}}
+                    :horizontal {:prompt_position "top" :preview_width 0.5625}}
     :mappings {:i {:<esc> actions.close
                    :<c-j> actions.move_selection_next
                    :<c-k> actions.move_selection_previous
@@ -45,13 +47,19 @@
 (telescope.load_extension "fzf")
 (telescope.load_extension "project")
 (telescope.load_extension "ghq")
-; (telescope.load_extension "packer")
+(telescope.load_extension "zoxide")
 
-(def- projects
+(defn- num-projects [] (length (project-utils.get_projects)))
+(defn- projects-width []
+  (->> (project-utils.get_projects)
+       (a.map #(+ ($.path:len) ($.title:len)))
+       (unpack)
+       (math.max)))
+(defn- projects-theme []
   {:display_type "full"
    :layout_config
-   {:width 60
-    :height 16}})
+   {:width (+ 10 (projects-width))
+    :height (+ 5 (num-projects))}})
 
 (def- nopreview
   (themes.get_dropdown
@@ -62,10 +70,10 @@
       :height 0.6667}}))
 
 (defn- project-maps [_ keymap]
-  (keymap "i" :<c-p> p-actions.recent_project_files)
-  (keymap "i" :<c-t> p-actions.search_in_project_files)
-  (keymap "i" :<c-o> p-actions.find_project_files)
-  (keymap "i" :<c-w> p-actions.change_working_directory)
+  (keymap "i" :<c-p> project.recent_project_files)
+  (keymap "i" :<c-t> project.search_in_project_files)
+  (keymap "i" :<c-o> project.find_project_files)
+  (keymap "i" :<c-w> project.change_working_directory)
   true)
 
 (def project-file (.. (vim.fn.stdpath "data") "/telescope-projects.txt"))
@@ -76,7 +84,8 @@
        (a.filter #(not (str.blank? $)))
        (a.map #(str.split $ "="))
        (a.map #{(a.second $) (a.first $)})
-       (#(a.merge (unpack $)))))
+       (unpack)
+       (a.merge)))
 
 (defn dir-project-name [dir]  (a.get (get-projects) dir))
 (defn is-project? [dir]       (not (a.nil? (dir-project-name dir))))
@@ -109,5 +118,22 @@
    ["<leader>o"     #(builtin.buffers)]
    ["<leader>lm"    #(builtin.reloader)]
    ["<a-p>"         #(telescope.extensions.project.project
-                      (a.merge projects {:attach_mappings project-maps}))]])
+                      (a.merge (projects-theme) {:attach_mappings project-maps}))]])
+
+(defn- setup-packer! []
+  (when (not (. package.loaded :packer.plugin_utils))
+    (let [plugin-utils (require :packer.plugin_utils)
+          packer-config-defaults
+          {:start_dir "/Users/harry/.local/share/nvim/site/pack/packer/start/"
+           :opt_dir "/Users/harry/.local/share/nvim/site/pack/packer/opt/"
+           :git {:default_url_format "https://github.com/%s.git"}}]
+      (plugin-utils.cfg packer-config-defaults)))
+  (when (not telescope.extensions.packer)
+    (telescope.load_extension "packer")))
+
+(defn plugin-picker []
+  (setup-packer!)
+  (telescope.extensions.packer.packer))
+
+(cmds.mod-cmd! :Plugins *module-name* :plugin-picker)
 

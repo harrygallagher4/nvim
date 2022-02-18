@@ -1,7 +1,6 @@
 (module dotfiles.module.lsp
   {require {a aniseed.core
             lsp lspconfig
-            saga lspsaga
             cmp-lsp cmp_nvim_lsp
             completion dotfiles.module.completion
             trouble trouble
@@ -19,6 +18,7 @@
 (trouble.setup {:auto_preview false :height 8})
 
 (defn- on_attach [client]
+  (tset vim.wo :signcolumn "yes")
   (nnoremap :K            vim.lsp.buf.hover                         :buffer true)
   (nnoremap :<c-l>        vim.lsp.buf.signature_help                :buffer true)
   (inoremap :<c-l>        vim.lsp.buf.signature_help                :buffer true)
@@ -49,12 +49,11 @@
 ; =============
 
 (fidget.setup)
-(saga.init_lsp_saga)
 
 ; (setup :rnix        {: on_attach})
 (setup :svelte)
 (setup :denols)
-(setup :tsserver)
+; (setup :tsserver)
 (setup :clojure_lsp)
 (setup :jsonls)
 (setup :bashls)

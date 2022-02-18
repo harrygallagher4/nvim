@@ -38,8 +38,8 @@
    :rcarriga/nvim-notify
 
    :onsails/lspkind-nvim
-   :tami5/lspsaga.nvim
-   :nvim-lua/lsp-status.nvim
+   :tami5/lspsaga.nvim {:module "lspsaga"}
+   ; :nvim-lua/lsp-status.nvim
    :j-hui/fidget.nvim
    :folke/trouble.nvim
    :neovim/nvim-lspconfig
@@ -49,15 +49,16 @@
    :hrsh7th/cmp-buffer
    :hrsh7th/cmp-path
    :hrsh7th/cmp-cmdline
-   :ray-x/cmp-treesitter
+   ; :ray-x/cmp-treesitter
    :PaterJason/cmp-conjure
-   :saadparwaiz1/cmp_luasnip
+   ; :saadparwaiz1/cmp_luasnip
    :hrsh7th/nvim-cmp
 
    :nvim-telescope/telescope-project.nvim
    :nvim-telescope/telescope-packer.nvim
    :nvim-telescope/telescope-ghq.nvim
-   :nvim-telescope/telescope-fzf-writer.nvim
+   :jvgrootveld/telescope-zoxide
+   ; :nvim-telescope/telescope-fzf-writer.nvim
    :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
    :nvim-telescope/telescope.nvim {:requires ["popup.nvim" "plenary.nvim"]}
 
