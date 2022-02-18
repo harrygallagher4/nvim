@@ -10,7 +10,10 @@
 
 (def- m cmp.mapping)
 (def- s cmp.config.sources)
+(def- expandable? ls.expandable)
 (def- expandable-or-jumpable? ls.expand_or_jumpable)
+(defn- expandable-and-not-selected? []
+  (and (expandable?) (a.nil? (cmp.get_selected_entry))))
 (defn- backwards-jumpable? [] (ls.jumpable -1))
 (def- visible? cmp.visible)
 (defn- has-word-before? []
@@ -23,10 +26,7 @@
              (a.nil?)))))
 
 (cmp.setup
-  {:experimental
-   {:ghost_text true}
-
-   :formatting
+  {:formatting
    {:format (lspkind.cmp_format)}
 
    :snippet
@@ -50,24 +50,22 @@
     :<c-n>     (m (m.scroll_docs 4) [:i :c])
     :<cr>      (m.confirm {:select true})
     :<esc>     (m #(if (visible?) (cmp.abort) ($)) [:i :c])
-    :<tab>     (m (fn [fallback]
-                    (if (visible?) (cmp.select_next_item)
-                        (expandable-or-jumpable?) (ls.expand_or_jump)
-                        (has-word-before?) (cmp.complete)
-                        (fallback)))
-                  [:i :s])
-    :<s-tab>   (m (fn [fallback]
-                    (if (visible?) (cmp.select_prev_item)
-                        (backwards-jumpable?) (ls.jump -1)
-                        (fallback)))
-                  [:i :s])}})
+    :<tab>     (m #(if (expandable-and-not-selected?) (ls.expand)
+                       (visible?) (cmp.select_next_item)
+                       (expandable-or-jumpable?) (ls.expand_or_jump)
+                       (has-word-before?) (cmp.complete)
+                       ($)) [:i :s])
+    :<s-tab>   (m #(if (visible?) (cmp.select_prev_item)
+                       (backwards-jumpable?) (ls.jump -1)
+                       ($)) [:i :s])}})
 
 (cmp.setup.filetype
   "fennel"
   {:sources
    (s [{:name "conjure"}
-       {:name "path" :trigger_characters ["/"]}]
-      [{:name "buffer"}])})
+       {:name "buffer"}
+       {:name "path" :trigger_characters ["/"]}])})
+      ; [{:name "buffer"}])})
 
 ; complete from buffer when searching
 (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
