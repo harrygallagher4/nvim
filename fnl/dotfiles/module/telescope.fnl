@@ -108,7 +108,7 @@
        ;   (km "i" :<c-p> (+ actions.close #(builtin.oldfiles (oldfiles-theme false))))
        ;  true})))
 
-(maps.map-multi :n
+(maps :n
   [["<leader>p"     #(builtin.oldfiles (oldfiles-theme (cwd-project)))]
    ["<leader><c-p>" #(builtin.oldfiles (oldfiles-theme false))]
    ["<c-p>"         #(builtin.find_files)]

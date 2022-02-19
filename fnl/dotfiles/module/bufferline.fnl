@@ -13,7 +13,7 @@
     :numbers numbers
     :separator_style "thick"}})
 
-(maps.map-multi :n
+(maps :n
   [["<a-i>" "<cmd>BufferLineCycleNext<cr>"]
    ["<a-o>" "<cmd>BufferLineCyclePrev<cr>"]
    ["<a-b>" "<cmd>BufferLinePick<cr>"]

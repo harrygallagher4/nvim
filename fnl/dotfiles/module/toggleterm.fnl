@@ -41,7 +41,7 @@
         (vim.api.nvim_set_current_win (a.first windows))
         (toggleterm.toggle_command "" 0))))
 
-(maps.map-multi :nt
+(maps :nt
   [["<a-`>" smarter-toggle]
    ["<a-G>" (toggle lazygit)]])
 

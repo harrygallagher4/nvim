@@ -77,3 +77,7 @@
 
 (map-multi mappings)
 
+(setmetatable
+  *module*
+  {:__call (fn [_ a b] (map-multi a b))})
+
