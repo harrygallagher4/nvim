@@ -1,0 +1,157 @@
+--------------------------------------------------------------------------------
+:append
+:ascii
+:changes
+:display
+:dl
+:dp
+:earlier
+:file
+:insert
+:k
+:keepalt
+:keepmarks
+:later
+:move
+:mkvimrc [file]
+:mkview
+:options
+:preserve
+:left | :right | :center (aligning text)
+:sbnext | :sball
+:sbmodified
+:scriptnames
+:swapname
+:undolist
+:view
+:windo
+:wall
+:wshada
+:wundo
+:yank
+--------------------------------------------------------------------------------
+:help modifyOtherKeys
+:help index
+:help 'tildeop'
+--------------------------------------------------------------------------------
+
+i_CTRL-T (is there a matching map to indent line?)
+
+z<cr>
+z- / zb
+cc / S
+g<
+gI
+gi (?)
+
+v_o
+
+v_b_A
+
+--------------------------------------------------------------------------------
+
+i_CTRL-T    CTRL-T        insert one shiftwidth of indent in current
+                          line
+
+i_CTRL-D    CTRL-D        delete all indent in the current line
+
+'<        '<              cursor to the first CHAR of the line where
+                          highlighted area starts/started in the
+                          current buffer.
+'>        '>              cursor to the first CHAR of the line where
+                          highlighted area ends/ended in the current
+                          buffer.
+
+'[        '[              cursor to the first CHAR on the line of the
+                          start of last operated text or start of put
+                          text
+']        ']              cursor to the first CHAR on the line of the
+                          end of last operated text or end of put
+                          text
+
+C        ["x]C            change from the cursor position to the end
+                          of the line, and N-1 more lines [into
+                          register x]; synonym for "c$"
+
+S        ["x]S            delete N lines [into register x] and start
+                          insert; synonym for "cc".
+
+`<        `<              cursor to the start of the highlighted area
+`>        `>              cursor to the end of the highlighted area
+
+q:        q:              edit : command-line in command-line window
+q/        q/              edit / command-line in command-line window
+q?        q?              edit ? command-line in command-line window
+
+CTRL-W_f  CTRL-W f        split window and edit file name under the
+                          cursor
+
+g_CTRL-G  g CTRL-G        show information about current cursor
+                          position
+
+g_CTRL-H  g CTRL-H        start Select block mode
+
+g&        g&              repeat last ":s" on all lines
+
+g+        g+              go to newer text state N times
+g,        g,              go to N newer position in change list
+g-        g-              go to older text state N times
+
+g<        g<              display previous command output
+
+gI        gI              like "I", but always start in column 1
+
+gJ        gJ              join lines without inserting space
+
+gP        ["x]gP          put the text [from register x] before the
+                          cursor N times, leave the cursor after it
+
+gV        gV              don't reselect the previous Visual area
+                          when executing a mapping or menu in Select
+                          mode
+
+g_        g_              cursor to the last CHAR N - 1 lines lower
+
+ga        ga              print ascii value of character under the
+                          cursor
+
+gi        gi              like "i", but first move to the |'^| mark
+
+gp        ["x]gp          put the text [from register x] after the
+                          cursor N times, leave the cursor after it
+
+g@        g@{motion}      call 'operatorfunc'
+
+z<CR>     z<CR>           redraw, cursor line to top of window,
+                          cursor on first non-blank
+
+z-        z-              redraw, cursor line at bottom of window,
+                          cursor on first non-blank
+
+zb        zb              redraw, cursor line at bottom of window
+
+o_v       v               force operator to work charwise
+o_V       V               force operator to work linewise
+o_CTRL-V  CTRL-V          force operator to work blockwise
+
+v_b_A     A               block mode: append same text in all lines,
+                          after the highlighted area
+
+v_b_I     I               block mode: insert same text in all lines,
+                          before the highlighted area
+
+v_o       o               move cursor to other corner of area
+
+c_CTRL-R  CTRL-R {regname}
+                          insert the contents of a register or object
+                          under the cursor as if typed
+
+c_CTRL-R_CTRL-R CTRL-R CTRL-R {regname}
+c_CTRL-R_CTRL-O CTRL-R CTRL-O {regname}
+                          insert the contents of a register or object
+                          under the cursor literally
+
+c_CTRL-\_e    CTRL-\ e {expr} 
+                          replace the command line with the result of
+                          {expr}
+
