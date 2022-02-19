@@ -18,7 +18,6 @@
   (o.gset :conjure#filetype#fennel
     (. conjure-fennel-opts
       (. vim.g :conjure#filetype#fennel))))
-; (def toggle_client toggle-client)
 
 (cmd.mod-cmd! :FnlToggleClient :dotfiles.module.conjure :toggle-client)
 
