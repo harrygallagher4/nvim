@@ -57,6 +57,12 @@
         (t ["]})" ""])
         (i 0)])
 
+    (s {:trig "*mod*" :wordTrig true :name "Module name"
+        :dscr "Inserts would-be aniseed module name for the current file in x.y.z format"}
+       [(f [] []
+           [(current-module-name)])
+        (i 0)])
+
     (s {:trig "let" :wordTrig true :name "Let" :dscr "Fennel let"}
        [(t ["(let "])
         (t ["["]) (i 1) (t ["]"])
