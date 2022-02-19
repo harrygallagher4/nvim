@@ -27,6 +27,10 @@
 (macros-prefix "(print 2)" {:filename *file* :macros :dotfiles.macros})
 (macros-prefix "(print 2)" {:filename *file*})
 
+;; TODO seems like this could be interesting
+(let [mod-mt {:__call (fn [] (_G.pr "testing module metatable!"))}]
+  (setmetatable *module* mod-mt))
+
 ; // aniseed.compile
 
 ; (let [scratch
