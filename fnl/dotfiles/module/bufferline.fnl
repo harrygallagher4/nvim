@@ -2,11 +2,10 @@
   {require {maps dotfiles.maps
             bufferline bufferline}})
 
-(defn- numbers [{:id id :ordinal ordinal :lower lower :raise raise}]
-  (let [winnr (vim.fn.bufwinnr id)]
-    (if (= -1 winnr)
-        (string.format "%s" id)
-        (string.format "%s%s" (raise id) (lower winnr)))))
+(defn- numbers [{: id : ordinal : lower : raise}]
+  (match (vim.fn.bufwinnr id)
+    -1 (string.format "%s" id)
+    nr (string.format "%s%s" (raise id) (lower nr))))
 
 (bufferline.setup
   {:options
