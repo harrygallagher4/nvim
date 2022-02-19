@@ -1,6 +1,12 @@
 (module dotfiles.module.matchparen
   {require {nvim aniseed.nvim
             util dotfiles.util}})
+;;
+;; just realized I committed this file earlier so if someone is reading this:
+;; this module doesn't actually do anything, I was just messing around with
+;; nvim-ts-rainbow to see if I could highlight the parens containing the
+;; cursor easily. results are mixed lol, I might mess with this more
+;;
 
 (def- ns (. (nvim.get_namespaces) :rainbow_ns))
 (def- autocmd-group "rainbow_matchparen")
