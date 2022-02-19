@@ -68,11 +68,12 @@
    [:xo :<leader>/         "<plug>Commentary"]
 
    ; add <c-w>X and <c-w><c-X> maps in terminal mode
-   (unpack
-     (a.mapcat
-       #[[:t (f "<c-w>%s" $)     (f "<cmd>wincmd %s<cr>" $) {:remap false}]
-         [:t (f "<c-w><c-%s>" $) (f "<cmd>wincmd %s<cr>" $) {:remap false}]]
-       (str.chars "hjklsvcq")))])
+   (->>
+     "hjklsvcq"
+     (str.chars)
+     (a.mapcat #[[:t (f "<c-w>%s" $)     (f "<cmd>wincmd %s<cr>" $) {:remap false}]
+                 [:t (f "<c-w><c-%s>" $) (f "<cmd>wincmd %s<cr>" $) {:remap false}]])
+     (unpack))])
 
 (map-multi mappings)
 
