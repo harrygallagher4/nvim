@@ -34,3 +34,15 @@
     (where [s ms] (a.string? s)) (map-multi s ms)
     [ms nil] (map-multi ms)))
 
+; (def- config-files
+;   [:fnl/dotfiles/plugins.fnl
+;    :fnl/dotfiles/init.fnl
+;    :init.lua])
+; (defn- config-file []
+;   (let [buf (vf.expand "%:s?.*/\\.config/nvim/??")]
+;     ( buf)))
+
+; (let [ks (vim.tbl_keys (vim.api.nvim_get_all_options_info))]
+;   (table.sort ks #(< (string.byte $1) (string.byte $2)))
+;   ks)
+

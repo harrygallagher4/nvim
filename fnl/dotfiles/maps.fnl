@@ -75,7 +75,3 @@
 
 (map-multi mappings)
 
-; (let [ks (vim.tbl_keys (vim.api.nvim_get_all_options_info))]
-;   (table.sort ks #(< (string.byte $1) (string.byte $2)))
-;   ks)
-
