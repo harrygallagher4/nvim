@@ -136,4 +136,5 @@
   (telescope.extensions.packer.packer))
 
 (cmds.mod-cmd! :Plugins *module-name* :plugin-picker)
+(vim.cmd "highlight link TelescopePromptPrefix TelescopeBorder")
 
