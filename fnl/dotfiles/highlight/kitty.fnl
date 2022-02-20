@@ -161,12 +161,12 @@
 
 ; after this is generated the theme can be reloaded with:
 ; > kitty @ set-colors --all --configured ~/.config/kitty/nvim_auto_colors.conf
-(defn generate-kitty []
+(defn generate-kitty! []
   (a.spit
     "/Users/harry/.config/kitty/nvim_auto_colors.conf"
     (lustache:render template view)))
 
-(defn generate-fzf []
+(defn generate-fzf! []
   (a.spit
     "/Users/harry/.fzf-theme.zsh"
     (lustache:render fzf-template view)))
