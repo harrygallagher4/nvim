@@ -5,6 +5,8 @@
             preload plenary.reload
             it plenary.iterators}})
 
+;; TODO this file needs a lot of work
+
 (def config-path (vim.fn.stdpath "config"))
 
 ;
