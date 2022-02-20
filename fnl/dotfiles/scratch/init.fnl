@@ -5,8 +5,15 @@
             str aniseed.string}
    require-macros [dotfiles.macros]})
 
-; aniseed.compile stuff
-; ------------------------------------------
+;; get all options (don't remember why i needed this)
+;; --------------------------------------------------
+(fn all-options []
+  (let [ks (vim.tbl_keys (vim.api.nvim_get_all_options_info))]
+    (table.sort ks #(< (string.byte $1) (string.byte $2)))
+    ks))
+
+;; aniseed.compile stuff
+;; ------------------------------------------
 
 (defn macros-strs [mods]
   (->> (if (a.string? mods) [mods] mods)
@@ -27,14 +34,9 @@
 (macros-prefix "(print 2)" {:filename *file* :macros :dotfiles.macros})
 (macros-prefix "(print 2)" {:filename *file*})
 
+;; // aniseed.compile
+
 ;; TODO seems like this could be interesting
 (let [mod-mt {:__call (fn [] (_G.pr "testing module metatable!"))}]
   (setmetatable *module* mod-mt))
-
-; // aniseed.compile
-
-; (let [scratch
-;       (macro scratch []
-;         (pr (get-scope)))]
-;   (a.pr (scratch)))
 
