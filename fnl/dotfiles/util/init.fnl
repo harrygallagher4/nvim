@@ -2,12 +2,18 @@
   {require {a aniseed.core
             nvim aniseed.nvim
             nvu aniseed.nvim.util
+            str dotfiles.util.string
             preload plenary.reload
             it plenary.iterators}})
 
 ;; TODO this file needs a lot of work
 
 (def config-path (vim.fn.stdpath "config"))
+
+(defn stdfile [path ...]
+  (str.join "/"
+    [(vim.fn.stdpath path)
+     ...]))
 
 ;
 ; general utils

@@ -13,10 +13,25 @@
 (defn splitter [pat]
   (fn [s] (str.split s pat)))
 
+; aniseed.string (split s pat)
+;
+; maybe I should stick to the aniseed signature
+; if this is called with 2 arguments?
 (def split
   (lambda split [pat ?s]
     (if ?s (str.split ?s pat)
            (splitter pat))))
+
+; (aniseed.string.join [xs] [sep xs])
+(def join str.join)
+; (aniseed.string.blank? s)
+(def blank? str.blank?)
+; (aniseed.string.triml s)
+(def triml str.triml)
+; (aniseed.string.trimr s)
+(def trimr str.trimr)
+; (aniseed.string.trim s)
+(def trim str.trim)
 
 (defn trim-multiline [s]
   (->> s
@@ -43,8 +58,8 @@
   (let [indent (common-indent s)
         lines (split "\n" s)]
     (->> lines
-        (a.map (trim-leading-spaces indent))
-        (str.join "\n"))))
+         (a.map (trim-leading-spaces indent))
+         (str.join "\n"))))
 
 (defn multiline-str [s]
   (->> s
