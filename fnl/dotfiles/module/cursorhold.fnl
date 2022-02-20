@@ -16,16 +16,23 @@
   (util.cmd "doautocmd <nomodeline> %s" event)
   (oset+ :eventignore event))
 
-(augroup cursorhold
-  (autocmd :CursorMoved "*"
-    (timer:stop)
-    (let [{: mode} (vim.api.nvim_get_mode)
-          reg (vim.fn.reg_recording)]
-      (when (and (= :n (mode:sub 1 1)) (= "" reg))
-        (timer:start timeout 0 #(vim.schedule #(callback :CursorHold))))))
-  (autocmd :CursorMovedI "*"
-    (timer:stop)
-    (let [reg (vim.fn.reg_recording)]
-      (when (= "" reg)
-        (timer:start timeout 0 #(vim.schedule #(callback :CursorHoldI)))))))
+(defn cursor-moved []
+  (timer:stop)
+  (let [{: mode} (vim.api.nvim_get_mode)
+        reg (vim.fn.reg_recording)]
+    (when (and (= :n (string.sub mode 1 1)) (= "" reg))
+      (timer:start timeout 0 #(vim.schedule #(callback :CursorHold))))))
+
+(defn cursor-moved-i []
+  (timer:stop)
+  (let [reg (vim.fn.reg_recording)]
+    (when (= "" reg)
+      (timer:start timeout 0 #(vim.schedule #(callback :CursorHoldI))))))
+
+(util.cmd
+  "augroup fix_cursorhold
+   autocmd!
+   autocmd CursorMoved * lua package.loaded['dotfiles.module.cursorhold']['cursor-moved']()
+   autocmd CursorMovedI * lua package.loaded['dotfiles.module.cursorhold']['cursor-moved-i']()
+   augroup END")
 
