@@ -14,15 +14,20 @@
 (defn- match-line []
   (match-str (vim.api.nvim_get_current_line)))
 
+;; TODO
+;; looks like this won't do anything unless it gets refs, I'm pretty sure
+;; packer always matches `updated-pattern-branch` so i should probably remove
+;; `updated-pattern` entirely
 (defn- url [...]
-  (if (= 4 (a.count [...]))
+  (when (= 4 (a.count [...]))
     (string.format "https://github.com/%s/%s/compare/%s...%s" ...)))
 
 (defn- open-url! [url]
   (when (not (a.nil? url))
         (vim.cmd (string.format "silent !%s '%s'" config.cmd url))))
 
-(defn- do-line [] (open-url! (url (match-line))))
+(defn- do-line []
+  (open-url! (url (match-line))))
 
 (defn init []
   (vim.keymap.set "n" "o" do-line {:buffer true}))
