@@ -1,20 +1,19 @@
 (module dotfiles.module.presence
   {require {a aniseed.core
             u dotfiles.util
-            : presence
-            cmd dotfiles.commands}})
+            cmd dotfiles.commands}
+   autoload {: presence}})
 
 (def- state {:started false})
 (defn setup [...] (: presence :setup ...))
 
-(setup
-  {:auto_update 0
-   :main_image "neovim" ; or "file"
-   :buttons true
-   :blacklist []})
-
 (defn- start-if-necessary! []
   (when (not state.started)
+    (setup
+      {:auto_update 0
+       :main_image "neovim" ; or "file"
+       :buttons true
+       :blacklist []})
     (presence:handle_focus_gained)
     (u.cmd "augroup dotfiles_presence")
     (u.cmd "au VimLeavePre * lua require'%s'.stop()" *module-name*)

@@ -25,7 +25,7 @@
    :nvim-lua/popup.nvim
    :romgrk/fzy-lua-native {:run "make"}
 
-   :andweeb/presence.nvim
+   :andweeb/presence.nvim {:module "presence"}
 
    "~/.config/nvim/localplugin" {:as "harryg"}
    :kyazdani42/nvim-web-devicons
