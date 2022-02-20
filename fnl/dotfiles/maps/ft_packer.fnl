@@ -5,15 +5,14 @@
 (def- updated-pattern "^%W+Updated ([%w%-%.]+)/([%w%-%.]+): (%w+)%.%.(%w+)$")
 (def- updated-pattern-branch "^%W+Updated ([%w%-%.]+)/([%w%-%.]+)/[%w%-%.]+: (%w+)%.%.(%w+)$")
 
-(def- repo-pattern "^%W'(%w+)/(%w+)'.*$")
-
 (defn- match-str [s]
   (let [m [(string.match s updated-pattern)]]
     (if (not (a.empty? m))
         (unpack m)
         (string.match s updated-pattern-branch))))
 
-(defn- match-line [] (match-str (vim.api.nvim_get_current_line)))
+(defn- match-line []
+  (match-str (vim.api.nvim_get_current_line)))
 
 (defn- url [...]
   (if (= 4 (a.count [...]))
