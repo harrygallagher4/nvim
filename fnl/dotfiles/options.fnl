@@ -20,6 +20,7 @@
 (gset :cursorhold_updatetime 100)
 (gset :do_filetype_lua 1)
 (gset :did_load_filetypes 0)
+(gset :loaded_fix_cursorhold_nvim "yes")
 
 (gset :mapleader " ")
 

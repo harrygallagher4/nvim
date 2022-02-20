@@ -10,6 +10,8 @@
 (require :dotfiles.maps)
 (require :dotfiles.theme)
 
+(init-module :cursorhold)
+
 ; TODO: decide if I should replace explicit
 ; module load-order with the old require-all
 ; method. Modules that need to be loaded

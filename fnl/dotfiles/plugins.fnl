@@ -27,7 +27,6 @@
 
    :andweeb/presence.nvim
 
-   :antoinemadec/FixCursorHold.nvim
    "~/.config/nvim/localplugin" {:as "harryg"}
    :kyazdani42/nvim-web-devicons
    :catppuccin/nvim {:as "catppuccin"}
@@ -99,6 +98,8 @@
 
    :harrygallagher4/vim-lf
    "~/Projects/nvim/nvim-colorizer.lua"
+
+   :ThePrimeagen/jvim.nvim {:ft ["json" "jsonc"]}
 
    :junegunn/vim-easy-align {:cmd ["EasyAlign" "LiveEasyAlign"]
                              :keys ["<Plug>(EasyAlign)"
