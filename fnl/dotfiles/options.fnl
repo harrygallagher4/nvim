@@ -10,6 +10,8 @@
 
 (defn oset+ [optname value]
   (: (. vim.opt optname) :append value))
+(defn oset- [optname value]
+  (: (. vim.opt optname) :remove value))
 
 
 (gset :loaded_python_provider 0)
