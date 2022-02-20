@@ -44,7 +44,7 @@
   (compile.glob "**/*.fnl" fnl-dir lua-dir {}))
 
 (defn aniseed-compile! []
-  (env.init {:module "init" :compile true}))
+  (env.init {:module "dummy" :compile true}))
 
 ; this isn't used anywhere but I thought I'd make a function out of it
 ; (aniseed-reload "dotfiles" "^dotfiles%..+") uncaches `dotfiles` and
