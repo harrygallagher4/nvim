@@ -14,6 +14,12 @@
   (: (. vim.opt optname) :remove value))
 
 
+(gset :loaded_2html_plugin 1)
+(gset :loaded_gzip 1)
+(gset :loaded_tarPlugin 1)
+(gset :loaded_tutor_mode_plugin 1)
+(gset :loaded_zipPlugin 1)
+
 (gset :loaded_python_provider 0)
 (gset :python3_host_prog "/usr/local/bin/python3")
 (gset :node_host_prog "/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js")
