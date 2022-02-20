@@ -1,5 +1,11 @@
 (module dotfiles.scratch.maps
-  {require {a aniseed.core}})
+  {require {a aniseed.core
+            str dotfiles.util.string}})
+
+(defn- split-mode [mapping] [(-> mapping (a.first) (str.chars)) (-> mapping (a.rest) (unpack))])
+(defn map [mapping] (-> mapping (split-mode) (unpack) (vim.keymap.set)))
+
+
 
 (def- none
   (setmetatable {} {:__tostring (fn [] "none")}))
@@ -17,7 +23,6 @@
       (tset m i (resolve-default dx mx))))
   m)
 
-
 (defn map-multi-defaults [df mf]
   (let [defaults (df none) mappings (mf none)]
     (each [k v (ipairs mappings)]
@@ -28,21 +33,15 @@
   #[[:n "<c-c>" ":quit"]
     [:v "Y" "y$" {:remap false}]])
 
+(defn map-multi [x y]
+  (let [mappings
+        (if (a.nil? y) x
+          (a.map #(a.concat [x] $) y))]
+    (a.run! map mappings)))
+
 (defn map-multi-meta [x y]
   (match [x y]
     (where [f ms] (a.function? f)) "func"
     (where [s ms] (a.string? s)) (map-multi s ms)
     [ms nil] (map-multi ms)))
-
-; (def- config-files
-;   [:fnl/dotfiles/plugins.fnl
-;    :fnl/dotfiles/init.fnl
-;    :init.lua])
-; (defn- config-file []
-;   (let [buf (vf.expand "%:s?.*/\\.config/nvim/??")]
-;     ( buf)))
-
-; (let [ks (vim.tbl_keys (vim.api.nvim_get_all_options_info))]
-;   (table.sort ks #(< (string.byte $1) (string.byte $2)))
-;   ks)
 
