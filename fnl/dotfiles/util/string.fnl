@@ -13,6 +13,12 @@
 (defn splitter [pat]
   (fn [s] (str.split s pat)))
 
+(defn joiner [sep]
+  (fn [xs] (str.join sep xs)))
+
+(defn matcher [pat]
+  (fn [s] (string.match s pat)))
+
 ; aniseed.string (split s pat)
 ;
 ; maybe I should stick to the aniseed signature
@@ -26,6 +32,7 @@
 (def join str.join)
 ; (aniseed.string.blank? s)
 (def blank? str.blank?)
+(defn notblank? [s] (not (blank? s)))
 ; (aniseed.string.triml s)
 (def triml str.triml)
 ; (aniseed.string.trimr s)
