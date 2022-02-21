@@ -7,13 +7,28 @@
   {:load
    {:core.defaults {}
     :core.neorgcmd {}
-    :core.integrations.telescope {}
+
     :core.norg.concealer
     {:config
      {:icon_preset "diamond"
       :markup_preset "dimmed"}} ; "brave" hides markup characters
+
+    :core.keybinds
+    {:config {:default_keybinds true}}
+
     :core.norg.dirman
     {:config
      {:workspaces
-      {:home "~/neorg"}}}}})
+      {:main "~/Documents/neorg"
+       :home "~/neorg"
+       :gtd "~/Documents/neorg/gtd"}
+      :autochdir false
+      :autodetect false}}
 
+    :core.integrations.telescope {}
+
+    :core.gtd.base
+    {:config {:workspace "gtd"}}}})
+
+
+    ; :core.neorgcmd {}
