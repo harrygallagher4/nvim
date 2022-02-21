@@ -15,10 +15,21 @@
   {:catppuccin
    #(catppuccin.setup
       {:term_colors true
+       :styles {:comments "NONE" ; italic
+                :functions "NONE" ; italic
+                :keywords "NONE" ; italic
+                :strings "NONE" ; NONE
+                :variables "NONE"} ; italic
        :integrations
-       {:lsp_trouble true
+       {:bufferline true
+        :cmp true
+        :gitsigns true
         :lsp_saga true
+        :lsp_trouble true
+        :notify true
+        :telescope true
         :ts_rainbow true
+        :which_key true
         :indent_blankline {:enabled true}}})})
 
 (defn- setup [theme]
