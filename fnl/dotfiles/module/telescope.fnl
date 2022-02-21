@@ -1,16 +1,16 @@
 (module dotfiles.module.telescope
   {require {a aniseed.core
-            str aniseed.string
+            cmds dotfiles.commands
             maps dotfiles.maps
             util dotfiles.util
-            cmds dotfiles.commands
             telescope telescope
-            builtin telescope.builtin
             actions telescope.actions
-            project telescope._extensions.project.actions
-            project-utils telescope._extensions.project.utils
             themes telescope.themes
-            trouble trouble.providers.telescope}})
+            trouble trouble.providers.telescope}
+   autoload {str dotfiles.util.string
+             builtin telescope.builtin
+             project telescope._extensions.project.actions
+             project-utils telescope._extensions.project.utils}})
 
 (def- compiled-fnl
   (a.map
@@ -76,19 +76,19 @@
   (keymap "i" :<c-w> project.change_working_directory)
   true)
 
-(def project-file (.. (vim.fn.stdpath "data") "/telescope-projects.txt"))
+(def project-file (util.stdfile "data" "telescope-projects.txt"))
 
 (defn get-projects []
   (->> (a.slurp project-file)
-       (#(str.split $ "\n"))
-       (a.filter #(not (str.blank? $)))
-       (a.map #(str.split $ "="))
+       (str.split "\n")
+       (a.filter str.notblank?)
+       (a.map (str.split "="))
        (a.map #{(a.second $) (a.first $)})
        (unpack)
        (a.merge)))
 
 (defn dir-project-name [dir]  (a.get (get-projects) dir))
-(defn is-project? [dir]       (not (a.nil? (dir-project-name dir))))
+(defn is-project? [dir]       (a.string? (dir-project-name dir)))
 (defn cwd-is-project? []      (is-project? (vim.fn.getcwd)))
 (defn cwd-project []          (dir-project-name (vim.fn.getcwd)))
 
@@ -110,7 +110,7 @@
 
 (maps :n
   [["<leader>p"     #(builtin.oldfiles (oldfiles-theme (cwd-project)))]
-   ["<leader><c-p>" #(builtin.oldfiles (oldfiles-theme false))]
+   ["<leader><c-p>" #(builtin.oldfiles (oldfiles-theme))]
    ["<c-p>"         #(builtin.find_files)]
    ["<leader>t"     #(builtin.live_grep)]
    ["<leader>;"     #(builtin.commands nopreview)]
