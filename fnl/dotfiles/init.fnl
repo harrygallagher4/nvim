@@ -46,21 +46,3 @@
     autocmd VimEnter * lua require'dotfiles'.init_post()
     augroup END")
 
-; (let [wrap-module
-;       (macro wrap-module [...]
-;         (let [body# [...]
-;               last-expr# (table.remove body#)]
-;           (table.insert body#
-;             `(let [original-return# (do ,last-expr#)]
-;                (or ,(sym "*module*") original-return#)))
-;           `(do ,(unpack body#))))]
-;   (macrodebug (wrap-module (print "test1") (print "test2") {:x 1})))
-
-; (defn- init-all-modules []
-;   (when (not _G.dotfiles) (tset _G :dotfiles []))
-;   (->> (util.glob (.. util.config-path "/lua/dotfiles/module/*.lua"))
-;        (a.run!
-;          #(let [(i j f) (string.match $ ".*/(.-)/(.-)/(.-)%.lua")
-;                 mod (require (string.format "%s.%s.%s" i j f))]
-;             (tset _G.dotfiles.module f mod)))))
-
