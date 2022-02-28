@@ -45,8 +45,8 @@
    ;; tries to format the buffer while the snippet is expanding
    ;; which messes with extmarks
    :fennel
-   [(s {:name "Module (dynamic)" :dscr "Aniseed module definition"
-        :trig "%(?module%)?" :regTrig true}
+   [(s {:trig "module" :wordTrig true
+        :name "Module (dynamic)" :dscr "Aniseed module definition"}
        [(t ["(module "])
         (d 1 module-name-snip [])
         (t ["" "  {require {"])

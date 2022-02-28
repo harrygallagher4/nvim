@@ -30,5 +30,3 @@
     :core.gtd.base
     {:config {:workspace "gtd"}}}})
 
-
-    ; :core.neorgcmd {}

@@ -9,6 +9,8 @@
    :context_patterns
    ["class" "function" "method" "^if" "^while" "^for" "^object" "^table"
     "block" "arguments" "^attrset$" "^list$" "^let$" "^indented_string$"]
+   :filetype
+   ["json" "nix"]
    :filetype_exclude
    ["" "help" "fennel" "packer" "lspinfo" "tsplayground" "query" "scheme" "Trouble"]
    :buftype_exclude
