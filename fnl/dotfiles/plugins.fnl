@@ -11,7 +11,7 @@
    :log {:level "warn"}})
 
 (def- rocks
-  [:lustache :hsluv])
+  [:lustache :hsluv :fun])
 
 (def- plugin-list
   [:wbthomason/packer.nvim
@@ -140,4 +140,13 @@
   (startup packer-config
            (-> plugin-list (plugin-list-to-map) (plugin-map-to-spec))
            rocks))
+
+(def clean packer.clean)
+(def compile packer.compile)
+(def install packer.install)
+(def load-plugin packer.loader)
+(def loader packer.loader)
+(def status packer.status)
+(def sync packer.sync)
+(def update packer.update)
 
