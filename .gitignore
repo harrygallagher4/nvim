@@ -6,8 +6,3 @@
 
 lua/**/*
 
-!lua/plugins/
-!lua/plugins/startup.lua
-
-!lua/init.lua
-
