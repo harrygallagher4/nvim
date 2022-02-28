@@ -17,9 +17,7 @@ end
 -- Bootstrap essential plugins required for installing and loading the rest.
 Plugin'wbthomason/packer.nvim'
 Plugin'Olical/aniseed'
-Plugin'lewis6991/impatient.nvim'
 
--- require'impatient'
 require'plugins.startup'
 require'aniseed.env'.init { module = 'dotfiles', compile = false }
 
