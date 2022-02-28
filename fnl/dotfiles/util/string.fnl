@@ -49,7 +49,7 @@
 (defn common-indent [s]
   (->> s
        (split "\n")
-       (a.map #(string.match $ "^(%s+)%S"))
+       (a.map (matcher "^(%s+)%S"))
        (a.map string.len)
        (util.min-of)))
 

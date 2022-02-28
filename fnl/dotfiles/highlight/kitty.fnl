@@ -1,60 +1,14 @@
 (module dotfiles.highlight.kitty
   {require {a aniseed.core
-            str aniseed.string
+            str dotfiles.util.string
             lustache lustache}})
 
 (def- ffffff 16777215)
 
-(defn- min-of [xs]
-  (math.min (unpack xs)))
-(defn- split-at [sep s]
-  (str.split s sep))
-(defn- trim-multiline [s]
-  (->> s
-       (split-at "\n")
-       (a.map str.trim)
-       (str.join "\n")))
-
-(defn- common-indent [s]
-  (->> s
-       (split-at "\n")
-       (a.map #(string.match $ "^(%s+)%S"))
-       (a.map string.len)
-       (min-of)))
-
-(defn- trim-leading-spaces [indent input]
-  (let [f (fn [s] (if (string.match s (.. "^" (string.rep "%s" indent)))
-                      (string.sub s (+ 1 indent))
-                      (string.match s "^%s+$")
-                      ""
-                      s))]
-    (if (a.nil? input) f (f input))))
-
-(defn- trim-common [s]
-  (let [indent (common-indent s)
-        lines (split-at "\n" s)]
-    (->> lines
-      (a.map (trim-leading-spaces indent))
-      (str.join "\n"))))
-
-(defn- tail [xs]
-  (let [[h & t] xs] t))
-
-(defn- multiline-str [s]
-  (->> s
-       (split-at "\n")
-       (a.rest)
-       (str.join "\n")
-       (trim-common)))
-
 (defn- safe-bg [group]
-  (string.format
-    "#%06x"
-    (a.get group :background ffffff)))
+  (string.format "#%06x" (a.get group :background ffffff)))
 (defn- safe-fg [group]
-  (string.format
-    "#%06x"
-    (a.get group :foreground ffffff)))
+  (string.format "#%06x" (a.get group :foreground ffffff)))
 (defn- get-bg [group]
   (if (a.get group :reverse false)
       (safe-fg group)
@@ -65,18 +19,8 @@
       (safe-fg group)))
 
 (defn- get-hl [group]
-  (let [g (vim.api.nvim_get_hl_by_name group true)]
-    {:bg (get-bg g)
-     :fg (get-fg g)}))
-
-; (get-bg (vim.api.nvim_get_hl_by_name :Cursor true))
-
-; (defn- get-hl [group]
-;   (let [g (vim.api.nvim_get_hl_by_name group true)
-;         bg (a.get g :background ffffff)
-;         fg (a.get g :foreground ffffff)]
-;     {:bg (string.format "#%06x" bg)
-;      :fg (string.format "#%06x" fg)}))
+  (-> (vim.api.nvim_get_hl_by_name group true)
+      (#{:bg (get-bg $) :fg (get-fg $)})))
 
 (def-
   view
@@ -104,7 +48,7 @@
 
 
 (def- template
-  (multiline-str
+  (str.multiline-str
     "
       # generated from nvim colorscheme: {{scheme_name}}
 
@@ -145,7 +89,7 @@
     "))
 
 (def- fzf-template
-  (multiline-str
+  (str.multiline-str
     "
       _gen_fzf_default_opts() {
       local color00='{{Normal.bg}}'
@@ -162,12 +106,12 @@
 ; after this is generated the theme can be reloaded with:
 ; > kitty @ set-colors --all --configured ~/.config/kitty/nvim_auto_colors.conf
 (defn generate-kitty! []
-  (a.spit
-    "/Users/harry/.config/kitty/nvim_auto_colors.conf"
-    (lustache:render template view)))
+  (->>
+    (lustache:render template view)
+    (a.spit "/Users/harry/.config/kitty/nvim_auto_colors.conf")))
 
 (defn generate-fzf! []
-  (a.spit
-    "/Users/harry/.fzf-theme.zsh"
-    (lustache:render fzf-template view)))
+  (->>
+    (lustache:render fzf-template view)
+    (a.spit "/Users/harry/.fzf-theme.zsh")))
 
