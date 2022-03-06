@@ -35,14 +35,11 @@
 (init-module :presence)
 (init-module :conjure)
 
-(defn init_post []
+(defn init-post []
   (cmds.mod-cmd! :FnlClean :dotfiles.compile :clean!)
   (cmds.mod-cmd! :FnlCompileAll :dotfiles.compile :compile-all!)
   (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))
 
-(vim.cmd
-  " augroup dotfiles
-    autocmd!
-    autocmd VimEnter * lua require'dotfiles'.init_post()
-    augroup END")
+(vim.api.nvim_create_augroup "dotfiles" {:clear true})
+(vim.api.nvim_create_autocmd :VimEnter {:callback init-post})
 
