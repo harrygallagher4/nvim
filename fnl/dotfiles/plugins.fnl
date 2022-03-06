@@ -86,7 +86,7 @@
    :junegunn/fzf.vim
    :junegunn/vim-slash
 
-   :editorconfig/editorconfig-vim
+   :gpanders/editorconfig.nvim
    :Raimondi/delimitMate
    :sbdchd/neoformat
 
