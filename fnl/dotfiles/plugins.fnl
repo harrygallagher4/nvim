@@ -99,6 +99,10 @@
    :harrygallagher4/vim-lf
    "~/Projects/nvim/nvim-colorizer.lua"
 
+   :mizlan/iswap.nvim {:cmd [:ISwap :ISwapWith]
+                       :keys [:<Plug>ISwapNormal :<Plug>ISwapWith]
+                       :config #(require "dotfiles.plugin.iswap")}
+
    :ThePrimeagen/jvim.nvim {:ft ["json" "jsonc"]}
 
    :junegunn/vim-easy-align {:cmd ["EasyAlign" "LiveEasyAlign"]
