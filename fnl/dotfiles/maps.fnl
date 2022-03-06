@@ -37,6 +37,8 @@
 
    [:n "<leader><leader>P" #((. (require :dotfiles.plugins) :packer :sync))]
 
+   [:n "<leader>x" "<Plug>ISwapNormal"]
+
    [:nvo :H  :^]
    [:nvo :L  :$]
    [:nvo ";" ":"]
