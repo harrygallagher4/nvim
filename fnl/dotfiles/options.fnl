@@ -57,7 +57,7 @@
 (oset :inccommand "nosplit")
 (oset :linebreak)
 (oset :list)
-(oset :listchars {:eol "↴" :tab "  " :trail "⋅" :nbsp "_"})
+(oset :listchars {:tab "  " :trail "⋅" :multispace "⋅" :nbsp "_" :lead " "})
 (oset :mouse "a")
 (oset :equalalways false)
 (oset :wrap false)
@@ -79,6 +79,7 @@
 ; (oset :foldlevelstart 99)
 ; (oset :foldmethod "expr")
 ; (oset :foldexpr ((. vim.fn "nvim_treesitter#foldexpr")))
+; (oset :listchars {:eol "↴" :tab "  " :trail "⋅" :multispace "⋅" :nbsp "_"})
 
 (oset :completeopt [:menu :menuone :noinsert :noselect])
 (oset+ :shortmess :c)
