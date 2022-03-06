@@ -111,6 +111,10 @@
                                     ["v" "<Plug>(EasyAlign)"]
                                     ["v" "<Plug>(LiveEasyAlign)"]]}
 
+   ; sort of "window manager" for nvim, resizes windows as focus changes
+   ; seems interesting but would probably need a good amount of configuration
+   :beauwilliams/focus.nvim {:module "focus"}
+
    :sindrets/winshift.nvim {:cmd "WinShift"}
 
    :mhinz/vim-sayonara {:cmd "Sayonara"}
