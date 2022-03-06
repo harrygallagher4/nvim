@@ -15,11 +15,11 @@
   {:catppuccin
    #(catppuccin.setup
       {:term_colors true
-       :styles {:comments "NONE" ; italic
-                :functions "NONE" ; italic
-                :keywords "NONE" ; italic
+       :styles {:comments "italic" ; italic
+                :functions "italic" ; italic
+                :keywords "italic" ; italic
                 :strings "NONE" ; NONE
-                :variables "NONE"} ; italic
+                :variables "italic"} ; italic
        :integrations
        {:bufferline true
         :cmp true
