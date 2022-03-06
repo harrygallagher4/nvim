@@ -1,0 +1,45 @@
+
+change-request: {"options": {
+                    "prevText": "(fn clear-logs []\n  (for [i 1 (length logs)]\n       (table.remove logs)))",
+                    "stringDelimiters": ["\""],
+                    "guileBlockComments": false,
+                    "janetLongStrings": false,
+                    "forceBalance": false,
+                    "cursorX": 8,
+                    "lispVlineSymbols": false,
+                    "prevCursorLine": 2,
+                    "commentChar": ";",
+                    "prevCursorX": 7,
+                    "schemeSexpComments": false,
+                    "lispBlockComments": false,
+                    "cursorLine": 2},
+                 "mode": "smart",
+                 "text": "(fn clear-logs []\n  (for [i 1 (length logs)]\n        (table.remove logs)))"}
+change-response: {"parens": [],
+                  "cursorLine": 2,
+                  "cursorX": 8,
+                  "tabStops": [{"ch": "(", "x": 0, "argX": null, "lineNo": 0},
+                               {"ch": "(", "x": 2, "argX": null, "lineNo": 1},
+                               {"ch": "[", "x": 7, "argX": 10, "lineNo": 1},
+                               {"ch": "(", "x": 12, "argX": 20, "lineNo": 1}],
+                  "parenTrails": [{"endX": 17, "lineNo": 0, "startX": 16},
+                                  {"endX": 25, "lineNo": 1, "startX": 24},
+                                  {"endX": 27, "lineNo": 2, "startX": 26}],
+                  "text": "(fn clear-logs []\n  (for [i 1 (length logs)\n        (table.remove logs)]))",
+                  "error": null,
+                  "success": true}
+ (fn clear-logs []
+-  (for [i 1 (length logs)]
+-        (table.remove logs)))
++  (for [i 1 (length logs)
++        (table.remove logs)]))
+
+
+change-request: {"options": {"prevText": "(fn clear-logs []\n  (for [i 1 (length logs)\n        (table.remove logs)]))", "stringDelimiters": ["\""], "guileBlockComments": false, "janetLongStrings": false, "forceBalance": false, "cursorX": 6, "lispVlineSymbols": false, "prevCursorLine": 2, "commentChar": ";", "prevCursorX": 8, "schemeSexpComments": false, "lispBlockComments": false, "cursorLine": 2}, "mode": "smart", "text": "(fn clear-logs []\n  (for [i 1 (length logs)\n      (table.remove logs)]))"}
+change-response: {"parens": [], "cursorLine": 2, "cursorX": 6, "tabStops": [{"ch": "(", "x": 0, "argX": null, "lineNo": 0}, {"ch": "(", "x": 2, "argX": null, "lineNo": 1}, {"ch": "[", "x": 7, "argX": 10, "lineNo": 1}, {"ch": "(", "x": 12, "argX": 20, "lineNo": 1}], "parenTrails": [{"endX": 17, "lineNo": 0, "startX": 16}, {"endX": 26, "lineNo": 1, "startX": 24}, {"endX": 25, "lineNo": 2, "startX": 24}], "text": "(fn clear-logs []\n  (for [i 1 (length logs)]\n      (table.remove logs)))", "error": null, "success": true}
+ (fn clear-logs []
+-  (for [i 1 (length logs)
+-      (table.remove logs)]))
++  (for [i 1 (length logs)]
++      (table.remove logs)))
+
