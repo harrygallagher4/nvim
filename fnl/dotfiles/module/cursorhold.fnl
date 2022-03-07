@@ -20,8 +20,8 @@
 
 (fn cursor-moved []
   (timer:stop)
-  (when (and (-> (nvim.get_mode) (. :mode) (string.sub 1 1) (= :n))
-             (= "" (vim.fn.reg_recording)))
+  (when (-> (nvim.get_mode) (. :mode) (string.sub 1 1) (= :n)
+            (and (= "" (vim.fn.reg_recording))))
     (timer:start timeout 0 #(vim.schedule #(callback :CursorHold)))))
 
 (fn cursor-moved-i []
