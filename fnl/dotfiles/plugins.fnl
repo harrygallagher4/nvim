@@ -96,6 +96,7 @@
    :nanotee/luv-vimdocs
    :bfredl/nvim-luadev
 
+   ; :is0n/fm-nvim
    :harrygallagher4/vim-lf
    "~/Projects/nvim/nvim-colorizer.lua"
 

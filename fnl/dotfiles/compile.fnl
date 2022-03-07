@@ -66,9 +66,6 @@
   (fennel.add-path (.. fnl-dir fs.path-sep "?.fnl"))
   (compile.glob "**/*.fnl" fnl-dir lua-dir {}))
 
-(defn- notify [title lines level opts]
-  (vim.notify (a.map #(.. " " $) (a.concat [title] lines)) level opts))
-
 ; well, apparently aniseed compiles the entire directory if any file is
 ; changed, so unfortunately it isn't possible to detect *which* files
 ; were compiled without reading all of them before & after
@@ -78,8 +75,8 @@
     (env.init {:module "dummy" :compile true})
     (let [lines (cmp)]
       (if (> (length lines) 0)
-          (notify "Compiled!" lines vim.log.levels.INFO)
-          (notify "Nothing to compile" [] vim.log.levels.WARN)))))
+          (vim.notify (a.concat ["Compiled!"] lines) vim.log.levels.INFO)
+          (vim.notify "Nothing to compile" vim.log.levels.WARN)))))
 
 ; this isn't used anywhere but I thought I'd make a function out of it
 ; (aniseed-reload "dotfiles" "^dotfiles%..+") uncaches `dotfiles` and

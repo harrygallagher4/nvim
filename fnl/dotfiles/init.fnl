@@ -4,7 +4,9 @@
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
 
-(tset vim :notify (require :notify))
+; override vim.notify. I figure this should be first in case a plugin
+; wants to send a notification during startup
+(init-module :notify)
 
 (require :dotfiles.options)
 (require :dotfiles.maps)
