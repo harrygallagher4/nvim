@@ -62,10 +62,10 @@
                              :keymaps
                              {:smart_rename "grr"}}}
    :rainbow {:enable true}
-   :playground {:enable false
+   :playground {:enable true
                 :updatetime 10
                 :persist_queries true}
-   :query_linter {:enable false
+   :query_linter {:enable true
                   :use_virtual_text true
                   :lint_events [:BufWrite :CursorHold]}})
 

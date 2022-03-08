@@ -4,15 +4,15 @@
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
 
-; override vim.notify. I figure this should be first in case a plugin
-; wants to send a notification during startup
-(init-module :notify)
-
 (require :dotfiles.options)
 (require :dotfiles.maps)
 (require :dotfiles.theme)
 
 (init-module :cursorhold)
+
+; override vim.notify. I figure this should be first in case a plugin
+; wants to send a notification during startup
+(init-module :notify)
 
 ; TODO: decide if I should replace explicit
 ; module load-order with the old require-all
