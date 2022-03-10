@@ -2,6 +2,7 @@
 
 (local ffi (require :ffi))
 (local util (require :dotfiles.util))
+(local cmds (require :dotfiles.commands))
 (local a (require :aniseed.core))
 (local nvim (require :aniseed.nvim))
 (local f (require :fun))
@@ -83,18 +84,30 @@
      (tset state buf :cursorX cx)
      (tset state buf :cursorLine cl)))
 
+(fn refresh-text [buf]
+  (let [ct (nvim.buf_get_changedtick buf)]
+    (when (~= ct (. state buf :changedtick))
+      (tset state buf :changedtick ct)
+      (tset state buf :text (nvim.buf_get_lines buf 0 -1 false)))))
+
+(fn refresher [buf]
+  (let [ref-c (refresh-cursor buf)]
+    #(do (refresh-text buf) (ref-c))))
+
 (fn enter-buffer [buf]
   (when (= nil (. state buf))
     (let [[cl cx] (get-cursor) proc (make-processor buf)]
-      (tset state buf
-        {:text (get-buf-content) :process proc :changedtick -1
-         :cursorX cx :cursorLine cl})
+      (tset state buf {:text (get-buf-content) :process proc :changedtick -1
+                       :cursorX cx :cursorLine cl})
       (nvim.create_autocmd
-        [:CursorMoved :InsertCharPre :InsertEnter :TextChanged :TextChangedI :TextChangedP]
+        [:CursorMoved :InsertEnter :TextChanged :TextChangedI :TextChangedP]
         {:callback proc :buffer buf :group "parinfennel"})
       (nvim.create_autocmd
         [:BufEnter :WinEnter]
-        {:callback (refresh-cursor buf) :buffer buf :group "parinfennel"})))
+        {:callback (refresh-cursor buf) :buffer buf :group "parinfennel"})
+      (nvim.create_autocmd
+        :InsertCharPre
+        {:callback (refresher buf) :buffer buf :group "parinfennel"})))
   (let [original-mode state.mode]
     (tset state :mode "paren")
     ((. state buf :process))
@@ -104,7 +117,7 @@
   (when (= "" (win_gettype))
     (enter-buffer (expand "<abuf>"))))
 
-(fn setup []
+(defn setup! []
   (nvim.create_augroup "parinfennel" {:clear true})
   (nvim.create_autocmd "FileType"
     {:group "parinfennel"
@@ -114,10 +127,11 @@
 (fn cleanup []
   (nvim.del_augroup_by_name "parinfennel"))
 
-
-(defn attach_current_buf []
+(defn attach-current-buf! []
+  (tset vim.g :parinfer_enabled 0)
   (let [buf (nvim.get_current_buf)]
     (enter-buffer buf)))
 
 (nvim.create_augroup "parinfennel" {:clear true})
+(cmds.mod-cmd! :ParinferFnlOn *module-name* :attach-current-buf!)
 
