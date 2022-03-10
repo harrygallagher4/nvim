@@ -1,12 +1,11 @@
 
-(fn docstring: (string) @comment
-  (#set! @comment "priority" 201))
+(fn docstring: (string) @comment)
 
 ((list .
-  (symbol) @_defn .
-  [(symbol) (multi_symbol)] .
-  (sequential_table) .
-  (string) @comment .
-  (_)+)
+   (symbol) @_defn .
+   [(symbol) (multi_symbol)] .
+   (sequential_table) .
+   (string) @comment .
+   (_)+)
  (#any-of? @_defn "defn" "defn-"))
 
