@@ -1,14 +1,20 @@
 (module dotfiles.highlight.kitty
   {require {a aniseed.core
+            nvim aniseed.nvim
             str dotfiles.util.string
             lustache lustache}})
 
-(def- ffffff 16777215)
+(local WHITE 16777215)
+(local BLACK 0)
+(local Normal (nvim.get_hl_by_name "Normal" true))
+(local default-fg (a.get Normal :foreground WHITE))
+(local default-bg (a.get Normal :background BLACK))
+
 
 (defn- safe-bg [group]
-  (string.format "#%06x" (a.get group :background ffffff)))
+  (string.format "#%06x" (a.get group :background default-bg)))
 (defn- safe-fg [group]
-  (string.format "#%06x" (a.get group :foreground ffffff)))
+  (string.format "#%06x" (a.get group :foreground default-fg)))
 (defn- get-bg [group]
   (if (a.get group :reverse false)
       (safe-fg group)
@@ -19,7 +25,7 @@
       (safe-fg group)))
 
 (defn- get-hl [group]
-  (-> (vim.api.nvim_get_hl_by_name group true)
+  (-> (nvim.get_hl_by_name group true)
       (#{:bg (get-bg $) :fg (get-fg $)})))
 
 (def-
@@ -45,7 +51,6 @@
     {:__index
      (fn [t k]
        (get-hl k))}))
-
 
 (def- template
   (str.multiline-str
@@ -106,12 +111,10 @@
 ; after this is generated the theme can be reloaded with:
 ; > kitty @ set-colors --all --configured ~/.config/kitty/nvim_auto_colors.conf
 (defn generate-kitty! []
-  (->>
-    (lustache:render template view)
-    (a.spit "/Users/harry/.config/kitty/nvim_auto_colors.conf")))
+  (->> (lustache:render template view)
+       (a.spit "/Users/harry/.config/kitty/nvim_auto_colors.conf")))
 
 (defn generate-fzf! []
-  (->>
-    (lustache:render fzf-template view)
-    (a.spit "/Users/harry/.fzf-theme.zsh")))
+  (->> (lustache:render fzf-template view)
+       (a.spit "/Users/harry/.fzf-theme.zsh")))
 

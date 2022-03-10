@@ -90,12 +90,12 @@
          (unpack)
          (zip))))
 
-(comment
-  (foreach
-    a.pr
-    (fun-wrap-multi
-      (fun-zip-multi
-        (fun-rev-str "abcdef")
-        (fun-rev-str "abcdef")
-        (fun-rev-str "uvwxyz")))))
+; (comment
+;   (foreach
+;     a.pr
+;     (fun-wrap-multi
+;       (fun-zip-multi
+;         (fun-rev-str "abcdef")
+;         (fun-rev-str "abcdef")
+;         (fun-rev-str "uvwxyz")))))
 
