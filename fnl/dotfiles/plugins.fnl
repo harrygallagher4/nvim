@@ -1,7 +1,8 @@
 (module dotfiles.plugins
-  {require {p packer
-            a aniseed.core
-            util packer.util}})
+  {require
+   {p packer
+    a aniseed.core
+    util packer.util}})
 
 (def- packer-config
   {:compile_path (util.join_paths (vim.fn.stdpath :config)
@@ -61,6 +62,7 @@
    :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
    :nvim-telescope/telescope.nvim {:requires ["popup.nvim" "plenary.nvim"]}
 
+   :harrygallagher4/aniseed-ts-queries.nvim
    :nvim-treesitter/nvim-treesitter-refactor
    :nvim-treesitter/nvim-treesitter-textobjects
    :nvim-treesitter/playground
