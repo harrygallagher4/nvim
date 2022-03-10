@@ -67,7 +67,7 @@
 (oset :pumheight 8)
 (oset :scrolloff 3)
 (oset :showcmd)
-(oset :signcolumn "auto")
+(oset :signcolumn "yes:1")
 (oset :smartcase)
 (oset :smarttab)
 (oset :splitbelow)
