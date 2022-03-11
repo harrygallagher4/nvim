@@ -1,9 +1,10 @@
 (module dotfiles.module.toggleterm
-  {require {a aniseed.core
-            : toggleterm
-            ui toggleterm.ui
-            terms toggleterm.terminal
-            maps dotfiles.maps}})
+  {require
+   {a aniseed.core
+    : toggleterm
+    ui toggleterm.ui
+    terms toggleterm.terminal
+    maps dotfiles.maps}})
 
 (defn- new-terminal [opts]
   (terms.Terminal:new opts))
@@ -30,7 +31,9 @@
      :hidden true
      :insert_mappings false
      :on_open
-     #(maps.map [:t :q (toggle $) {:buffer $.bufnr}])}))
+     #(maps.map-multi
+        [[:t :q (toggle $) {:buffer $.bufnr}]
+         [:t :<c-q> :q {:buffer $.bufnr :remap false}]])}))
 
 (defn smarter-toggle []
   (let [(has-open-term? windows) (ui.find_open_windows)
