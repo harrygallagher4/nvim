@@ -1,0 +1,86 @@
+
+Ideas:
+ - use response.tabStops for an indentline-like thingy
+ - grey out response.parenTrails like the editors on the demo page
+ - diagnostics for errors, the necessary information is provided
+
+response.tabStops:
+```json
+[
+{
+  "ch": "(",
+  "x": 0,
+  "argX": 7,
+  "lineNo": 11
+},
+{
+  "ch": "[",
+  "x": 12,
+  "argX": null,
+  "lineNo": 11
+}
+//, etc
+]
+```
+
+response.parenTrails:
+```json
+[
+{
+  "startX": 24,
+  "endX": 26,
+  "lineNo": 8
+},
+{
+  "startX": 35,
+  "endX": 37,
+  "lineNo": 9
+}
+//, etc
+]
+```
+
+response.error
+```json
+{
+  "inputX": 2,
+  "name": "quote-danger",
+  "inputLineNo": 20,
+  "x": 50,
+  "message": "Quotes must balanced inside comment blocks.",
+  "lineNo": 19
+}
+{
+  "inputX": 4,
+  "name": "unclosed-quote",
+  "inputLineNo": 163,
+  "x": 8,
+  "message": "String is missing a closing quote.",
+  "lineNo": 149
+}
+```
+
+
+This comment and the lines from the code block were deleted from painfer.fnl
+
+
+need to test the value of b:changedtick and buffer text on InsertCharPre i
+suspect changedtick may be updated without updating the text which would
+interfere with the next process
+
+UPDATE on InsertCharPre changedtick and text are both updated with the change,
+which will interfere with processing the buffer. InsertCharPre should probably
+just be ignored?
+
+UPDATE it appears changedtick actually isn't updated when InsertCharPre is
+dispatched, the TextChangedI dispatched afterward has an incremented
+changedtick
+
+# parinfer.fnl#enter-buffer:158
+```fennel
+;; L~33
+(local refresh-events [:InsertCharPre])
+
+;; enter-buffer:L~158
+(buf-autocmd buf refresh-events (refresher buf))
+```

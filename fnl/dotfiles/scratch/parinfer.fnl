@@ -30,7 +30,6 @@
 
 (local process-events [:CursorMoved :InsertEnter :TextChanged :TextChangedI :TextChangedP])
 (local cursor-events [:BufEnter :WinEnter])
-(local refresh-events [:InsertCharPre])
 
 (local state {:mode "smart" :augroup nil})
 
@@ -155,8 +154,7 @@
          :changedtick -1
          :cursorX cx :cursorLine cl})
       (buf-autocmd buf process-events proc)
-      (buf-autocmd buf cursor-events (refresh-cursor buf))
-      (buf-autocmd buf refresh-events (refresher buf))))
+      (buf-autocmd buf cursor-events (refresh-cursor buf))))
 
   (let [original-mode state.mode]
     (vim.schedule_wrap
