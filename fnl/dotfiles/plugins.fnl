@@ -74,7 +74,7 @@
 
    :Olical/conjure {:branch "develop"}
    :tsbohc/zest.nvim {:module "zest"}
-   :eraserhd/parinfer-rust {:run "cargo build --release"}
+   :eraserhd/parinfer-rust {:opt true :run "cargo build --release"}
 
    :akinsho/toggleterm.nvim
 

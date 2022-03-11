@@ -74,7 +74,11 @@
   (tset state :log do-log)
   (tset _G :parinfer state))
 
+; packadd! parinfer-rust will add the plugin to runtimepath without
+; sourcing plugin/parinfer.vim. this way the library can still be
+; located but parinfer.vim won't interfere
 (fn setup []
+  (vim.cmd "packadd! parinfer-rust")
   (tset state :lib-path (?. (resolve-lib) 1))
   (load-parinfer)
   (setup-global)

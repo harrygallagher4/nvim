@@ -1,5 +1,7 @@
 (module dotfiles
-  {autoload {cmds dotfiles.commands}})
+  {autoload
+   {cmds dotfiles.commands
+    parinfer dotfiles.scratch.parinfer}})
 
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
@@ -37,7 +39,11 @@
 (init-module :presence)
 (init-module :conjure)
 
+; parinfer needs to be required & setup after VimEnter so that
+; :packadd! won't source plugin/* scripts. this way parinfer-rust is
+; added to the runtimepath but isn't set up
 (defn init-post []
+  (parinfer.setup!)
   (cmds.mod-cmd! :FnlClean :dotfiles.compile :clean!)
   (cmds.mod-cmd! :FnlCompileAll :dotfiles.compile :compile-all!)
   (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))
