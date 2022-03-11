@@ -170,6 +170,7 @@
   (when (= "" (win_gettype))
     (enter-buffer (abuf))))
 
+; removes process callbacks associated with buf
 (fn detach-buffer [buf]
   (each [_ v (ipairs (. state buf :autocmds))]
     (vim.api.nvim_del_autocmd v))
@@ -182,6 +183,7 @@
     {:pattern "clojure,scheme,lisp,racket,hy,fennel,janet,carp,wast,yuck,dune"
      :callback initialize-buffer}))
 
+; delete parinfennel augroup which contains the init callback & all processors
 (defn cleanup! []
   (del-augroup))
 
@@ -193,6 +195,7 @@
   (let [buf (get_current_buf)]
     (enter-buffer buf)))
 
+; Only used for :ParinferOff, detaches from current buffer
 (defn detach-current-buf! []
   (let [buf (get_current_buf)]
     (detach-buffer buf)))
