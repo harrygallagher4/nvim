@@ -1,3 +1,8 @@
+[
+  "collect"
+  "icollect"
+  "accumulate"
+] @repeat
 
 (fn docstring: (string) @comment)
 
