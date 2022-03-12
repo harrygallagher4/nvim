@@ -109,21 +109,22 @@
     (fn process []
 
       (when (~= (. state buf :changedtick) (buf_get_changedtick buf))
-        (let [(cl cx) (get-cursor)
-              original-text (get-buf-content buf)
-              bufstate (. state buf)
-              req
-              {:mode state.mode
-               :text original-text
-               :options
-               {: commentChar : stringDelimiters : forceBalance
-                : lispVlineSymbols : lispBlockComments : guileBlockComments
-                : schemeSexpComments : janetLongStrings
-                :cursorX cx :cursorLine cl
-                :prevCursorX bufstate.cursorX
-                :prevCursorLine bufstate.cursorLine
-                :prevText bufstate.text}}
-              response (run-parinfer req)]
+        (let
+          [(cl cx) (get-cursor)
+           original-text (get-buf-content buf)
+           bufstate (. state buf)
+           req
+           {:mode state.mode
+            :text original-text
+            :options
+            {: commentChar : stringDelimiters : forceBalance
+             : lispVlineSymbols : lispBlockComments : guileBlockComments
+             : schemeSexpComments : janetLongStrings
+             :cursorX cx :cursorLine cl
+             :prevCursorX bufstate.cursorX
+             :prevCursorLine bufstate.cursorLine
+             :prevText bufstate.text}}
+           response (run-parinfer req)]
 
           (if response.success
             (do
@@ -145,15 +146,15 @@
 (fn enter-buffer [buf]
   (when (= nil (. state buf))
     (let [(cl cx) (get-cursor)
-          proc (make-processor buf)]
+          process (make-processor buf)]
       (tset
         state buf
-        {:process proc
+        {:process process
          :text (get-buf-content buf)
          :autocmds []
          :changedtick -1
          :cursorX cx :cursorLine cl})
-      (buf-autocmd buf process-events proc)
+      (buf-autocmd buf process-events process)
       (buf-autocmd buf cursor-events (refresh-cursor buf))))
 
   (let [original-mode state.mode]
@@ -180,7 +181,7 @@
 (defn setup! []
   (ensure-augroup)
   (autocmd :FileType
-    {:pattern "clojure,scheme,lisp,racket,hy,fennel,janet,carp,wast,yuck,dune"
+    {:pattern ["clojure" "scheme" "lisp" "racket" "hy" "fennel" "janet" "carp" "wast" "yuck" "dune"]
      :callback initialize-buffer}))
 
 ; delete parinfennel augroup which contains the init callback & all processors
