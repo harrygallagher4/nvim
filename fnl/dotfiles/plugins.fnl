@@ -76,9 +76,12 @@
    :tsbohc/zest.nvim {:module "zest"}
    :eraserhd/parinfer-rust {:opt true :run "cargo build --release"}
 
+   :ggandor/lightspeed.nvim
+
    :akinsho/toggleterm.nvim
 
-   :luukvbaal/stabilize.nvim {:config #((. (require :stabilize) :setup))}
+   :luukvbaal/stabilize.nvim {:opt true
+                              :config #((. (require :stabilize) :setup))}
 
    :tpope/vim-commentary
    :tpope/vim-repeat

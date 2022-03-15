@@ -24,6 +24,7 @@
        {:bufferline true
         :cmp true
         :gitsigns true
+        :lightspeed false
         :lsp_saga true
         :lsp_trouble true
         :notify true
