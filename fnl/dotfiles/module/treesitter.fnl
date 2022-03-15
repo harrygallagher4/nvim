@@ -61,7 +61,7 @@
               :smart_rename {:enable true
                              :keymaps
                              {:smart_rename "grr"}}}
-   :rainbow {:enable true}
+   :rainbow {:enable false}
    :playground {:enable true
                 :updatetime 10
                 :persist_queries true}

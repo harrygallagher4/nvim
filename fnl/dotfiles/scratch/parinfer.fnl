@@ -3,10 +3,13 @@
    {ffi ffi
     cmds dotfiles.commands
     a aniseed.core
+    notify notify
+    incr-bst dotfiles.scratch.parinfer-bst
     parinfer-state dotfiles.scratch.parinfer-state}})
 
 (local {:interface parinfer} parinfer-state)
 (local json vim.json)
+(local ns (vim.api.nvim_create_namespace "parinfer"))
 
 ; I've heard that enclosing functions can slightly improve speed due to
 ; reducing the number of table lookups, but who knows. I figure if
@@ -33,6 +36,15 @@
 
 (local state {:mode "smart" :augroup nil})
 
+
+(fn notify-error [buf request response]
+  (notify.notify
+    [(.. "[Parinfer] error in buffer " buf)
+     (json.encode (or (?. response :error) {}))
+     (json.encode request)
+     (json.encode (or response {}))]
+    vim.log.levels.ERROR))
+
 ; creates parinfennel augroup if necessary & stores id in state
 (fn ensure-augroup []
   (when (= nil state.augroup)
@@ -40,7 +52,7 @@
 
 ; deletes parinfennel augroup if it exists
 (fn del-augroup []
-  (when (~= nil state.augroup)
+  (when (not= nil state.augroup)
     (del_augroup_by_id state.augroup)
     (tset state :augroup nil)))
 
@@ -62,6 +74,11 @@
 (fn run-parinfer [request]
   (-> request (json.encode) (parinfer.run_parinfer) (ffi.string) (json.decode)))
 
+(fn handle-trails [buf trails]
+  (vim.api.nvim_buf_clear_namespace buf ns 0 -1)
+  (each [_ {: startX : endX : lineNo} (ipairs (or trails []))]
+    (vim.api.nvim_buf_add_highlight buf ns "Whitespace" lineNo startX endX)))
+
 ; gets cursor position, (0, 0) indexed
 (fn get-cursor []
   (let [[row col] (win_get_cursor 0)]
@@ -73,7 +90,8 @@
 
 ; gets entire buffer text as one string
 (fn get-buf-content [buf]
-  (table.concat (buf_get_lines buf 0 -1 false) "\n"))
+  (let [lines (buf_get_lines buf 0 -1 false)]
+    (values (table.concat lines "\n") lines)))
 
 ; creates a function that refreshes the state of buf's changedtick
 (fn refresh-changedtick [buf]
@@ -88,9 +106,9 @@
 ; creates a function that refreshes the state of buf's text & changedtick
 (fn refresh-text [buf]
   #(let [ct (buf_get_changedtick buf)]
-     (when (~= ct (. state buf :changedtick))
+     (when (not= ct (. state buf :changedtick))
        (tset state buf :changedtick ct)
-       (tset state buf :text (buf_get_lines buf 0 -1 false)))))
+       (tset state buf :text (get-buf-content buf)))))
 
 ; creates a function that refreshes the state of
 ; buf's cursor, text, and changedtick
@@ -108,10 +126,10 @@
 
     (fn process []
 
-      (when (~= (. state buf :changedtick) (buf_get_changedtick buf))
+      (when (not= (. state buf :changedtick) (buf_get_changedtick buf))
         (let
           [(cl cx) (get-cursor)
-           original-text (get-buf-content buf)
+           (original-text original-lines) (get-buf-content buf)
            bufstate (. state buf)
            req
            {:mode state.mode
@@ -128,12 +146,16 @@
 
           (if response.success
             (do
-              (when (~= response.text original-text)
-                (vim.cmd "silent! undojoin")
-                (buf_set_lines buf 0 -1 false (vim.split response.text "\n")))
+              (when (not= response.text original-text)
+                ; (vim.cmd "silent! undojoin")
+                (incr-bst.buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n")))
+                ; (buf_set_lines buf 0 -1 false (vim.split response.text "\n"))
+                ; (buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n"))
               (set-cursor response.cursorLine response.cursorX)
-              (tset state buf :text response.text))
+              (tset state buf :text response.text)
+              (handle-trails buf response.parenTrails))
             (do
+              (notify-error buf req response)
               (tset state buf :error response.error)
               (refresh-text))))
 
@@ -155,15 +177,14 @@
          :changedtick -1
          :cursorX cx :cursorLine cl})
       (buf-autocmd buf process-events process)
-      (buf-autocmd buf cursor-events (refresh-cursor buf))))
+      (buf-autocmd buf cursor-events (refresh-cursor buf))
+      (buf-autocmd buf :InsertCharPre (refresher buf))))
 
   (let [original-mode state.mode]
-    (vim.schedule_wrap
-      (fn []
-        (tset state :mode "paren")
-        (vim.cmd "execute \"normal! i\\<C-G>u\\<ESC>\"")
-        ((. state buf :process))
-        (tset state :mode original-mode)))))
+    (tset state :mode "paren")
+    ; (vim.cmd "execute \"normal! i\\<C-G>u\\<ESC>\"")
+    ((. state buf :process))
+    (tset state :mode original-mode)))
 
 
 ; initializes a buffer if its window isn't a special type (qflist/etc)
@@ -175,6 +196,7 @@
 (fn detach-buffer [buf]
   (each [_ v (ipairs (. state buf :autocmds))]
     (vim.api.nvim_del_autocmd v))
+  (vim.api.nvim_buf_clear_namespace buf ns 0 -1)
   (tset state buf nil))
 
 ; sets up autocmds to initialize new buffers
