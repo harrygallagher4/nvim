@@ -10,6 +10,11 @@
 (local {:interface parinfer} parinfer-state)
 (local json vim.json)
 (local ns (vim.api.nvim_create_namespace "parinfer"))
+(local
+  settings
+  {:mode "smart"
+   :trail_highlight true
+   :trail_highlight_group "Whitespace"})
 
 ; I've heard that enclosing functions can slightly improve speed due to
 ; reducing the number of table lookups, but who knows. I figure if
@@ -24,17 +29,20 @@
 (local create_augroup vim.api.nvim_create_augroup)
 (local create_autocmd vim.api.nvim_create_autocmd)
 (local del_augroup_by_id vim.api.nvim_del_augroup_by_id)
+(local del_autocmd vim.api.nvim_del_autocmd)
 (local win_get_cursor vim.api.nvim_win_get_cursor)
 (local win_set_cursor vim.api.nvim_win_set_cursor)
 (local get_current_buf vim.api.nvim_get_current_buf)
 (local buf_get_changedtick vim.api.nvim_buf_get_changedtick)
 (local buf_set_lines vim.api.nvim_buf_set_lines)
 (local buf_get_lines vim.api.nvim_buf_get_lines)
+(local buf_add_highlight vim.api.nvim_buf_add_highlight)
+(local buf_clear_namespace vim.api.nvim_buf_clear_namespace)
 
 (local process-events [:CursorMoved :InsertEnter :TextChanged :TextChangedI :TextChangedP])
 (local cursor-events [:BufEnter :WinEnter])
 
-(local state {:mode "smart" :augroup nil})
+(local state {:mode settings.mode :augroup nil})
 
 
 (fn notify-error [buf request response]
@@ -74,10 +82,11 @@
 (fn run-parinfer [request]
   (-> request (json.encode) (parinfer.run_parinfer) (ffi.string) (json.decode)))
 
-(fn handle-trails [buf trails]
-  (vim.api.nvim_buf_clear_namespace buf ns 0 -1)
-  (each [_ {: startX : endX : lineNo} (ipairs (or trails []))]
-    (vim.api.nvim_buf_add_highlight buf ns "Whitespace" lineNo startX endX)))
+(fn handle-trails [group]
+  (fn [buf trails]
+    (buf_clear_namespace buf ns 0 -1)
+    (each [_ {: startX : endX : lineNo} (ipairs (or trails []))]
+      (buf_add_highlight buf ns group lineNo startX endX))))
 
 ; gets cursor position, (0, 0) indexed
 (fn get-cursor []
@@ -122,7 +131,8 @@
         lispVlineSymbols false lispBlockComments false guileBlockComments false
         schemeSexpComments false janetLongStrings false
         refresh-cursor (refresh-cursor buf) refresh-text (refresh-text buf)
-        refresh-changedtick (refresh-changedtick buf)]
+        refresh-changedtick (refresh-changedtick buf)
+        trails-func (when settings.trail_highlight (handle-trails settings.trail_highlight_group))]
 
     (fn process []
 
@@ -153,7 +163,7 @@
                 ; (buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n"))
               (set-cursor response.cursorLine response.cursorX)
               (tset state buf :text response.text)
-              (handle-trails buf response.parenTrails))
+              (when (not= nil trails-func) (trails-func buf response.parenTrails)))
             (do
               (notify-error buf req response)
               (tset state buf :error response.error)
@@ -195,8 +205,8 @@
 ; removes process callbacks associated with buf
 (fn detach-buffer [buf]
   (each [_ v (ipairs (. state buf :autocmds))]
-    (vim.api.nvim_del_autocmd v))
-  (vim.api.nvim_buf_clear_namespace buf ns 0 -1)
+    (del_autocmd v))
+  (buf_clear_namespace buf ns 0 -1)
   (tset state buf nil))
 
 ; sets up autocmds to initialize new buffers
@@ -223,14 +233,31 @@
   (let [buf (get_current_buf)]
     (detach-buffer buf)))
 
+(defn refresh-current-buf! []
+  (let [buf (get_current_buf)]
+    (detach-buffer buf)
+    (enter-buffer buf)))
+
 ;; if parinfer-rust is active commands should start with :ParinferFnl,
 ; otherwise they just start with :Parinfer
 (fn cmd-str [s]
-  (let [prefix (if (= 1 vim.g.parinfer_enabled) :ParinferFnl :Parinfer)]
+  (let [prefix
+        (if (= 1 vim.g.parinfer_enabled)
+          :ParinferFnl :Parinfer)]
     (.. prefix s)))
 
 (cmds.mod-cmd! (cmd-str :On) *module-name* :attach-current-buf!)
 (cmds.mod-cmd! (cmd-str :Off) *module-name* :detach-current-buf!)
+(cmds.mod-cmd! (cmd-str :Refresh) *module-name* :refresh-current-buf!)
 (cmds.mod-cmd! (cmd-str :Setup) *module-name* :setup!)
 (cmds.mod-cmd! (cmd-str :Cleanup) *module-name* :cleanup!)
+
+; should move this somewhere else
+(cmds.mod-cmd! :Phl *module-name* :toggle-paren-hl)
+
+(defn toggle-paren-hl []
+  (let [hl (vim.api.nvim__get_hl_defs 0)
+        fnlP hl.fennelTSPunctBracket.link]
+    (when (= fnlP "TSPunctBracket") (vim.cmd "highlight! link fennelTSPunctBracket Whitespace"))
+    (when (= fnlP "Whitespace") (vim.cmd "highlight! link fennelTSPunctBracket TSPunctBracket"))))
 
