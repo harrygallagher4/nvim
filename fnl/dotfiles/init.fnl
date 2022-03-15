@@ -9,6 +9,7 @@
 (require :dotfiles.options)
 (require :dotfiles.maps)
 (require :dotfiles.theme)
+(require :dotfiles.ftplugin)
 
 (init-module :cursorhold)
 
@@ -29,7 +30,6 @@
 (init-module :treesitter)
 (init-module :telescope)
 ; order doesn't matter
-(init-module :conjure)
 (init-module :gitsigns)
 (init-module :indentline)
 (init-module :lf)
@@ -49,5 +49,5 @@
   (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))
 
 (vim.api.nvim_create_augroup "dotfiles" {:clear true})
-(vim.api.nvim_create_autocmd :VimEnter {:callback init-post})
+(vim.api.nvim_create_autocmd :VimEnter {:callback init-post :group "dotfiles"})
 

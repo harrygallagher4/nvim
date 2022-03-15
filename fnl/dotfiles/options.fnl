@@ -24,10 +24,14 @@
 (gset :loaded_python_provider 0)
 (gset :python3_host_prog "/usr/local/bin/python3")
 (gset :node_host_prog "/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js")
+(gset :loaded_fix_cursorhold_nvim "yes")
 (gset :cursorhold_updatetime 100)
 (gset :do_filetype_lua 1)
 (gset :did_load_filetypes 0)
-(gset :loaded_fix_cursorhold_nvim "yes")
+
+; this makes :Man look like :help
+(gset :man_hardwrap true)
+(tset vim.env :MANWIDTH 79)
 
 (gset :mapleader " ")
 
