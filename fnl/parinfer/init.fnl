@@ -109,20 +109,23 @@
 
 ; creates a function that refreshes the state of buf's changedtick
 (fn refresh-changedtick [buf]
-  #(tset state buf :changedtick (buf_get_changedtick buf)))
+  (let [bufstate (. state buf)]
+    #(tset bufstate :changedtick (buf_get_changedtick buf))))
 
 ; creates a function that refreshes the state of buf's cursor position
 (fn refresh-cursor [buf]
-  #(let [(cl cx) (get-cursor)]
-     (tset state buf :cursorX cx)
-     (tset state buf :cursorLine cl)))
+  (let [bufstate (. state buf)]
+    #(let [(cl cx) (get-cursor)]
+       (tset bufstate :cursorX cx)
+       (tset bufstate :cursorLine cl))))
 
 ; creates a function that refreshes the state of buf's text & changedtick
 (fn refresh-text [buf]
-  #(let [ct (buf_get_changedtick buf)]
-     (when (not= ct (. state buf :changedtick))
-       (tset state buf :changedtick ct)
-       (tset state buf :text (get-buf-content buf)))))
+  (let [bufstate (. state buf)]
+    #(let [ct (buf_get_changedtick buf)]
+       (when (not= ct (. state buf :changedtick))
+         (tset bufstate :changedtick ct)
+         (tset bufstate :text (get-buf-content buf))))))
 
 ; creates a function that refreshes the state of
 ; buf's cursor, text, and changedtick
@@ -132,7 +135,8 @@
 
 ; make a process-buffer function with enclosed settings
 (fn make-processor [buf]
-  (let [commentChar ";" stringDelimiters ["\""] forceBalance false
+  (let [bufstate (. state buf)
+        commentChar ";" stringDelimiters ["\""] forceBalance false
         lispVlineSymbols false lispBlockComments false guileBlockComments false
         schemeSexpComments false janetLongStrings false
         refresh-cursor (refresh-cursor buf) refresh-text (refresh-text buf)
@@ -141,11 +145,10 @@
 
     (fn process []
 
-      (when (not= (. state buf :changedtick) (buf_get_changedtick buf))
+      (when (not= bufstate.changedtick (buf_get_changedtick buf))
         (let
           [(cl cx) (get-cursor)
            (original-text original-lines) (get-buf-content buf)
-           bufstate (. state buf)
            req
            {:mode state.mode
             :text original-text
@@ -165,11 +168,11 @@
                 (vim.cmd "silent! undojoin")
                 (incr-bst.buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n")))
               (set-cursor response.cursorLine response.cursorX)
-              (tset state buf :text response.text)
+              (tset bufstate :text response.text)
               (when (not= nil trails-func) (trails-func buf response.parenTrails)))
             (do
               (notify-error buf req response)
-              (tset state buf :error response.error)
+              (tset bufstate :error response.error)
               (refresh-text))))
 
         (refresh-changedtick))
@@ -180,15 +183,15 @@
 ; initialize buffer state if necessary, process buffer in paren mode
 (fn enter-buffer [buf]
   (when (= nil (. state buf))
+    (tset state buf {})
     (let [(cl cx) (get-cursor)
           process (make-processor buf)]
-      (tset
-        state buf
-        {:process process
-         :text (get-buf-content buf)
-         :autocmds []
-         :changedtick -1
-         :cursorX cx :cursorLine cl})
+      (each [k v (pairs {:process process
+                         :text (get-buf-content buf)
+                         :autocmds []
+                         :changedtick -1
+                         :cursorX cx :cursorLine cl})]
+        (tset state buf k v))
       (buf-autocmd buf process-events process)
       (buf-autocmd buf cursor-events (refresh-cursor buf))
       (buf-autocmd buf :InsertCharPre (refresher buf))))
@@ -217,7 +220,10 @@
 
 ; :ParinferSetup as well as the main entry-point of this module
 ; sets up autocmds to initialize new buffers
-(defn setup! []
+(defn setup! [conf]
+  (when conf
+    (each [k v (pairs (merger settings conf))]
+      (tset settings k v)))
   (ensure-augroup)
   (autocmd :FileType
     {:pattern ["clojure" "scheme" "lisp" "racket" "hy" "fennel" "janet" "carp" "wast" "yuck" "dune"]
