@@ -22,6 +22,7 @@
     :winfixheight true
     :winfixwidth true}
 
+   :qf :qflist
    :qflist
    {:cursorlineopt "line"
     :list false
