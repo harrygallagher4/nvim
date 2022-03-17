@@ -1,10 +1,10 @@
-(module dotfiles.scratch.parinfer
+(module parinfer
   {require
    {ffi ffi
     cmds dotfiles.commands
     notify notify
-    incr-bst dotfiles.scratch.parinfer-bst
-    parinfer-lib dotfiles.scratch.parinfer-lib}})
+    incr-bst parinfer.incremental-change
+    parinfer-lib parinfer.lib}})
 
 (local {:interface parinfer} parinfer-lib)
 (local json vim.json)

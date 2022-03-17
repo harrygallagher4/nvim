@@ -1,4 +1,4 @@
-(module dotfiles.scratch.parinfer-bst
+(module parinfer.incremental-change
   {require
    {a aniseed.core
     str dotfiles.util.string}

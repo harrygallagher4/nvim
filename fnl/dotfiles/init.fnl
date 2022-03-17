@@ -1,7 +1,7 @@
 (module dotfiles
   {autoload
    {cmds dotfiles.commands
-    parinfer dotfiles.scratch.parinfer}})
+    parinfer parinfer}})
 
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
@@ -43,7 +43,7 @@
 ; :packadd! won't source plugin/* scripts. this way parinfer-rust is
 ; added to the runtimepath but isn't set up
 (defn init-post []
-  (parinfer.setup!)
+  (parinfer.setup! {:trail_highlight false})
   (cmds.mod-cmd! :FnlClean :dotfiles.compile :clean!)
   (cmds.mod-cmd! :FnlCompileAll :dotfiles.compile :compile-all!)
   (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))
