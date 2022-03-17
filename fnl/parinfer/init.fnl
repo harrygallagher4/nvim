@@ -1,10 +1,7 @@
-(module parinfer
-  {require
-   {ffi ffi
-    cmds dotfiles.commands
-    notify notify
-    incr-bst parinfer.incremental-change
-    parinfer-lib parinfer.lib}})
+(local ffi (require :ffi))
+(local cmds (require :dotfiles.commands))
+(local incr-bst (require :parinfer.incremental-change))
+(local parinfer-lib (require :parinfer.lib))
 
 (local {:interface parinfer} parinfer-lib)
 (local json vim.json)
@@ -50,11 +47,13 @@
   (vim.tbl_extend "force" ...))
 
 (fn notify-error [buf request response]
-  (notify.notify
-    [(.. "[Parinfer] error in buffer " buf)
-     (json.encode (or (?. response :error) {}))
-     (json.encode request)
-     (json.encode (or response {}))]
+  (vim.notify
+    (table.concat
+      [(.. "[Parinfer] error in buffer " buf)
+       (json.encode (or (?. response :error) {}))
+       (json.encode request)
+       (json.encode (or response {}))]
+      "\n")
     vim.log.levels.ERROR))
 
 ; creates parinfennel augroup if necessary & stores id in state
@@ -220,7 +219,7 @@
 
 ; :ParinferSetup as well as the main entry-point of this module
 ; sets up autocmds to initialize new buffers
-(defn setup! [conf]
+(fn setup! [conf]
   (when conf
     (each [k v (pairs (merger settings conf))]
       (tset settings k v)))
@@ -231,29 +230,29 @@
 
 ; :ParinferCleanup
 ; delete parinfennel augroup which contains the init callback & all processors
-(defn cleanup! []
+(fn cleanup! []
   (del-augroup))
 
 ; :ParinferOn
-(defn attach-current-buf! []
+(fn attach-current-buf! []
   (disable-parinfer-rust)
   (ensure-augroup)
   (let [buf (get_current_buf)]
     (enter-buffer buf)))
 
 ; :ParinferOff
-(defn detach-current-buf! []
+(fn detach-current-buf! []
   (let [buf (get_current_buf)]
     (detach-buffer buf)))
 
 ; :ParinferRefresh
-(defn refresh-current-buf! []
+(fn refresh-current-buf! []
   (let [buf (get_current_buf)]
     (detach-buffer buf)
     (enter-buffer buf)))
 
 ; :ParinferTrails
-(defn toggle-trails! []
+(fn toggle-trails! []
   (tset settings :trail_highlight (not settings.trail_highlight))
   (refresh-current-buf!))
 
@@ -263,6 +262,8 @@
   (let [prefix
         (if (= 1 (vim.fn.exists "g:parinfer_enabled")) :ParinferFnl :Parinfer)]
     (.. prefix s)))
+
+(local *module-name* :parinfer)
 
 (cmds.mod-cmd! (cmd-str :On) *module-name* :attach-current-buf!)
 (cmds.mod-cmd! (cmd-str :Off) *module-name* :detach-current-buf!)
@@ -274,9 +275,17 @@
 ; should move this somewhere else
 (cmds.mod-cmd! :Phl *module-name* :toggle-paren-hl)
 
-(defn toggle-paren-hl []
+(fn toggle-paren-hl []
   (let [hl (vim.api.nvim__get_hl_defs 0)
         fnlP hl.fennelTSPunctBracket.link]
     (when (= fnlP "TSPunctBracket") (vim.cmd "highlight! link fennelTSPunctBracket Whitespace"))
     (when (= fnlP "Whitespace") (vim.cmd "highlight! link fennelTSPunctBracket TSPunctBracket"))))
+
+{: setup!
+ : cleanup!
+ : attach-current-buf!
+ : detach-current-buf!
+ : refresh-current-buf!
+ : toggle-trails!
+ : toggle-paren-hl}
 
