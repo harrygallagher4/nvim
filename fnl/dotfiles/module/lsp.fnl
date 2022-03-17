@@ -43,7 +43,7 @@
     (maps.map [:v :<leader>f vim.lsp.buf.range_formatting {:buffer buf}])))
 
 (defn- setup [server config]
-  (let [default-config {: capabilities : on-attach}]
+  (let [default-config {: capabilities :on_attach on-attach}]
     ((a.get-in lsp [server :setup])
      (if (a.nil? config)
          default-config
