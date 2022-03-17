@@ -4,7 +4,7 @@
     str dotfiles.util.string}})
 
 (def- diff-line-pattern "^([+-])MD5 %((.-)%) = %w-$")
-(def- dump-command "fd -uu '.' %s -t f -x md5sum --tag {} | sort > %s")
+(def- dump-command "fd -uu '.' '%s' -t f -x md5sum --tag {} | sort > %s")
 (def- diff-command "diff %s %s --unchanged-line-format='' --old-line-format='-%%L' --new-line-format='+%%L'")
 
 (defn- dump-hashes [dir]
