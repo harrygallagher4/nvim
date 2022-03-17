@@ -2,12 +2,11 @@
   {require
    {ffi ffi
     cmds dotfiles.commands
-    a aniseed.core
     notify notify
     incr-bst dotfiles.scratch.parinfer-bst
-    parinfer-state dotfiles.scratch.parinfer-state}})
+    parinfer-lib dotfiles.scratch.parinfer-lib}})
 
-(local {:interface parinfer} parinfer-state)
+(local {:interface parinfer} parinfer-lib)
 (local json vim.json)
 (local ns (vim.api.nvim_create_namespace "parinfer"))
 (local
@@ -45,6 +44,11 @@
 (local state {:mode settings.mode :augroup nil})
 
 
+(fn mergel [...]
+  (vim.tbl_extend "keep" ...))
+(fn merger [...]
+  (vim.tbl_extend "force" ...))
+
 (fn notify-error [buf request response]
   (notify.notify
     [(.. "[Parinfer] error in buffer " buf)
@@ -66,7 +70,7 @@
 
 ; creates an autocmd in `parinfennel` group
 (fn autocmd [events opts]
-  (create_autocmd events (a.merge opts {:group "parinfennel"})))
+  (create_autocmd events (mergel opts {:group "parinfennel"})))
 
 ; shorthand for attaching a callback to a buffer
 (fn buf-autocmd [buf events func]
@@ -82,6 +86,7 @@
 (fn run-parinfer [request]
   (-> request (json.encode) (parinfer.run_parinfer) (ffi.string) (json.decode)))
 
+; highlight 'parenTrails' that are being handled by parinfer
 (fn handle-trails [group]
   (fn [buf trails]
     (buf_clear_namespace buf ns 0 -1)
@@ -157,10 +162,8 @@
           (if response.success
             (do
               (when (not= response.text original-text)
-                ; (vim.cmd "silent! undojoin")
+                (vim.cmd "silent! undojoin")
                 (incr-bst.buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n")))
-                ; (buf_set_lines buf 0 -1 false (vim.split response.text "\n"))
-                ; (buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n"))
               (set-cursor response.cursorLine response.cursorX)
               (tset state buf :text response.text)
               (when (not= nil trails-func) (trails-func buf response.parenTrails)))
@@ -192,10 +195,8 @@
 
   (let [original-mode state.mode]
     (tset state :mode "paren")
-    ; (vim.cmd "execute \"normal! i\\<C-G>u\\<ESC>\"")
     ((. state buf :process))
     (tset state :mode original-mode)))
-
 
 ; initializes a buffer if its window isn't a special type (qflist/etc)
 (fn initialize-buffer []
@@ -204,11 +205,17 @@
 
 ; removes process callbacks associated with buf
 (fn detach-buffer [buf]
-  (each [_ v (ipairs (. state buf :autocmds))]
-    (del_autocmd v))
+  (when (?. state buf :autocmds)
+    (each [_ v (ipairs (. state buf :autocmds))]
+      (del_autocmd v)))
   (buf_clear_namespace buf ns 0 -1)
   (tset state buf nil))
 
+(fn disable-parinfer-rust []
+  (when (= 1 (vim.fn.exists "g:parinfer_enabled"))
+    (tset vim.g :parinfer_enabled 0)))
+
+; :ParinferSetup as well as the main entry-point of this module
 ; sets up autocmds to initialize new buffers
 (defn setup! []
   (ensure-augroup)
@@ -216,39 +223,45 @@
     {:pattern ["clojure" "scheme" "lisp" "racket" "hy" "fennel" "janet" "carp" "wast" "yuck" "dune"]
      :callback initialize-buffer}))
 
+; :ParinferCleanup
 ; delete parinfennel augroup which contains the init callback & all processors
 (defn cleanup! []
   (del-augroup))
 
-;; Only used for :ParinferFnlOn, disables parinfer-rust & attaches to
-; current buffer only
+; :ParinferOn
 (defn attach-current-buf! []
-  (tset vim.g :parinfer_enabled 0)
+  (disable-parinfer-rust)
   (ensure-augroup)
   (let [buf (get_current_buf)]
     (enter-buffer buf)))
 
-; Only used for :ParinferOff, detaches from current buffer
+; :ParinferOff
 (defn detach-current-buf! []
   (let [buf (get_current_buf)]
     (detach-buffer buf)))
 
+; :ParinferRefresh
 (defn refresh-current-buf! []
   (let [buf (get_current_buf)]
     (detach-buffer buf)
     (enter-buffer buf)))
 
+; :ParinferTrails
+(defn toggle-trails! []
+  (tset settings :trail_highlight (not settings.trail_highlight))
+  (refresh-current-buf!))
+
 ;; if parinfer-rust is active commands should start with :ParinferFnl,
 ; otherwise they just start with :Parinfer
 (fn cmd-str [s]
   (let [prefix
-        (if (= 1 vim.g.parinfer_enabled)
-          :ParinferFnl :Parinfer)]
+        (if (= 1 (vim.fn.exists "g:parinfer_enabled")) :ParinferFnl :Parinfer)]
     (.. prefix s)))
 
 (cmds.mod-cmd! (cmd-str :On) *module-name* :attach-current-buf!)
 (cmds.mod-cmd! (cmd-str :Off) *module-name* :detach-current-buf!)
 (cmds.mod-cmd! (cmd-str :Refresh) *module-name* :refresh-current-buf!)
+(cmds.mod-cmd! (cmd-str :Trails) *module-name* :toggle-trails!)
 (cmds.mod-cmd! (cmd-str :Setup) *module-name* :setup!)
 (cmds.mod-cmd! (cmd-str :Cleanup) *module-name* :cleanup!)
 
