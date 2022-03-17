@@ -36,7 +36,8 @@
                    :<c-s> actions.file_split
                    :<c-n> actions.preview_scrolling_down
                    :<c-p> actions.preview_scrolling_up
-                   :<c-t> trouble.open_with_trouble}}
+                   :<c-t> trouble.open_with_trouble
+                   :<a-t> trouble.open_selected_with_trouble}}
     :file_ignore_patterns compiled-fnl}
    :extensions
    {:fzf

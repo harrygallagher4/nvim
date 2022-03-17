@@ -1,6 +1,8 @@
 (module dotfiles.ftplugin
   {require
-   {a aniseed.core}})
+   {a aniseed.core
+    maps dotfiles.maps
+    trouble trouble}})
 
 
 (fn setl [o v]
@@ -10,7 +12,8 @@
       (tset vim.opt_local o v)))
 
 (local local-opts
-  {:help
+  {:man :help
+   :help
    {:cursorlineopt "line"
     :list false
     :number false
@@ -41,7 +44,10 @@
     :signcolumn "no"
     :virtualedit "all"
     :winfixheight true
-    :winfixwidth true}})
+    :winfixwidth true}
+
+   :Trouble
+   {:cursorlineopt "line"}})
 
 (fn str2nr? [s]
   (if (s:match "^%d+$")
@@ -61,21 +67,29 @@
       {:match aumatch : bufnr? : buf : file}
       buf-opts)))
 
-;    (do (when fname (pr fname)) (pr opts))
+(fn ft-options [ft]
+  (if (a.table? ft) (setl ft)
+      (a.string? ft)
+      (ft-options (. local-opts ft))))
+
 (fn wrap [f fname]
  #(let [opts (get-opts)]
     (f opts)))
 
+(fn ft-trouble [opts]
+  (maps.map-multi :n
+    [[:j #(trouble.next {:skip_groups true :jump false}) {:buffer opts.buf}]
+     [:k #(trouble.previous {:skip_groups true :jump false}) {:buffer opts.buf}]]))
+
 (fn handle-filetype [opts]
-  (if (= opts.match "help") (setl local-opts.help)
-      (= opts.match "man") (setl local-opts.help)
-      (= opts.match "qf") (setl local-opts.qflist)))
+  (ft-options opts.match)
+  (if (= opts.match "Trouble") (ft-trouble opts)))
 
 (fn handle-bufnew [opts]
   (if (opts.file:match "^conjure%-log%-%d+.*$") (setl local-opts.conjure)))
 
 (fn handle-termopen [opts]
-  (setl local-opts.terminal))
+  (ft-options :terminal))
 
 
 (vim.api.nvim_create_augroup :dfftplugins {:clear true})

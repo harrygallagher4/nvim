@@ -2,9 +2,10 @@
   {require {a aniseed.core
             lsp lspconfig
             cmp-lsp cmp_nvim_lsp
-            completion dotfiles.module.completion
             trouble trouble
-            fidget dotfiles.module.fidget}
+            completion dotfiles.module.completion
+            fidget dotfiles.module.fidget
+            maps dotfiles.maps}
    require-macros [dotfiles.maps.macros]})
 
 (def- lua-runtime-path
@@ -15,30 +16,34 @@
 (def- capabilities
   (cmp-lsp.update_capabilities (vim.lsp.protocol.make_client_capabilities)))
 
-(trouble.setup {:auto_preview false :height 8})
+(trouble.setup
+  {:auto_preview false
+   :padding false
+   :height 8
+   :action_keys {:previous {} :next {}}})
 
-(defn- on_attach [client]
-  (tset vim.wo :signcolumn "yes")
-  (nnoremap :K            vim.lsp.buf.hover                         :buffer true)
-  (nnoremap :<c-l>        vim.lsp.buf.signature_help                :buffer true)
-  (inoremap :<c-l>        vim.lsp.buf.signature_help                :buffer true)
-  (nnoremap :gd           vim.lsp.buf.definition                    :buffer true)
-  (nnoremap :gr           vim.lsp.buf.references                    :buffer true)
-  (nnoremap :gD           vim.lsp.buf.declaration                   :buffer true)
-  (nnoremap :gi           vim.lsp.buf.implementation                :buffer true)
-  (nnoremap :<leader>r    vim.lsp.buf.rename                        :buffer true)
-  (nnoremap :<leader>ca   vim.lsp.buf.code_action                   :buffer true)
-  (nnoremap :<leader>d    vim.lsp.diagnostic.show_line_diagnostics  :buffer true)
-  (nnoremap "[d"          vim.lsp.diagnostic.goto_prev              :buffer true)
-  (nnoremap "d]"          vim.lsp.diagnostic.goto_next              :buffer true)
-  (nnoremap :<leader>q    vim.lsp.diagnostic.set_loclist            :buffer true)
+(defn on-attach [client buf]
+  (maps.map-multi :n
+    [[:K vim.lsp.buf.hover {:buffer buf}]
+     [:<c-l> vim.lsp.buf.signature_help {:buffer buf}]
+     [:gd vim.lsp.buf.definition {:buffer buf}]
+     [:gr vim.lsp.buf.references {:buffer buf}]
+     [:gD vim.lsp.buf.declaration {:buffer buf}]
+     [:gi vim.lsp.buf.implementation {:buffer buf}]
+     [:<leader>r vim.lsp.buf.rename {:buffer buf}]
+     [:<leader>ca vim.lsp.buf.code_action {:buffer buf}]
+     [:<leader>d #(vim.diagnostic.show nil buf) {:buffer buf}]
+     ["[d" vim.diagnostic.goto_next {:buffer buf}]
+     ["]d" vim.diagnostic.goto_next {:buffer buf}]
+     ["]d" vim.diagnostic.toqflist {:buffer buf}]])
+  (maps.map [:i :<c-l> vim.lsp.buf.signature_help {:buffer buf}])
   (when client.resolved_capabilities.document_formatting
-    (nnoremap :<leader>f  vim.lsp.buf.formatting                    :buffer true))
+    (maps.map [:n :<leader>f vim.lsp.buf.formatting {:buffer buf}]))
   (when client.resolved_capabilities.document_range_formatting
-    (vnoremap :<leader>f  vim.lsp.buf.range_formatting              :buffer true)))
+    (maps.map [:v :<leader>f vim.lsp.buf.range_formatting {:buffer buf}])))
 
 (defn- setup [server config]
-  (let [default-config {: capabilities : on_attach}]
+  (let [default-config {: capabilities : on-attach}]
     ((a.get-in lsp [server :setup])
      (if (a.nil? config)
          default-config
