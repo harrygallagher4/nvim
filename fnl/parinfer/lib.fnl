@@ -1,5 +1,6 @@
 (local ffi (require :ffi))
-(local json vim.json)
+(local ffi-string ffi.string)
+(local {:encode json-encode :decode json-decode} vim.json)
 
 (local state {})
 (var parinfer nil)
@@ -12,12 +13,13 @@
           _ "libparinfer_rust.so")]
     (vim.api.nvim_get_runtime_file (.. "target/release/" libname) false)))
 
-(fn run [request]
-  (-> request
-      (json.encode)
-      (parinfer.run_parinfer)
-      (ffi.string)
-      (json.decode)))
+(fn runner [parinfer]
+  (fn run [request]
+    (-> request
+        (json-encode)
+        (parinfer.run_parinfer)
+        (ffi-string)
+        (json-decode))))
 
 (fn load-lib []
   (let [[lib-path] (resolve-lib)]
@@ -32,7 +34,7 @@
       (let [ns (ffi.load state.lib-path)]
         (set parinfer ns)
         (tset state :interface ns)
-        (tset state :run run)
+        (tset state :run (runner ns))
         state))))
 
 (fn parinfer-rust-loaded? []

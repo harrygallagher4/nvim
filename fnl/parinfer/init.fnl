@@ -1,11 +1,11 @@
-(local ffi (require :ffi))
 (local cmds (require :dotfiles.commands))
 (local incr-bst (require :parinfer.incremental-change))
-(local parinfer-lib (require :parinfer.lib))
+(local {:run run-parinfer} (require :parinfer.lib))
 (local {: lmerge : rmerge} (require :parinfer.util))
 
-(local {:interface parinfer} parinfer-lib)
-(local json vim.json)
+(local buf-apply-diff incr-bst.buf-apply-diff)
+(local (t/cat t/ins) (values table.concat table.insert))
+(local (json split cmd) (values vim.json vim.split vim.cmd))
 (local ns (vim.api.nvim_create_namespace "parinfer"))
 (local
   settings
@@ -44,7 +44,7 @@
 
 (fn notify-error [buf request response]
   (vim.notify
-    (table.concat
+    (t/cat
       [(.. "[Parinfer] error in buffer " buf)
        (json.encode (or (?. response :error) {}))
        (json.encode request)
@@ -69,7 +69,7 @@
 
 ; shorthand for attaching a callback to a buffer
 (fn buf-autocmd [buf events func]
-  (table.insert
+  (t/ins
     (. state buf :autocmds)
     (autocmd events {:callback func :buffer buf})))
 
@@ -77,16 +77,13 @@
 (fn abuf []
   (str2nr (expand "<abuf>")))
 
-; sends `request` as json to parinfer
-(fn run-parinfer [request]
-  (-> request (json.encode) (parinfer.run_parinfer) (ffi.string) (json.decode)))
-
 ; highlight 'parenTrails' that are being handled by parinfer
 (fn handle-trails [group]
   (fn [buf trails]
     (buf_clear_namespace buf ns 0 -1)
-    (each [_ {: startX : endX : lineNo} (ipairs (or trails []))]
-      (buf_add_highlight buf ns group lineNo startX endX))))
+    (when trails
+      (each [_ {: startX : endX : lineNo} (ipairs trails)]
+        (buf_add_highlight buf ns group lineNo startX endX)))))
 
 ; gets cursor position, (0, 0) indexed
 (fn get-cursor []
@@ -100,7 +97,7 @@
 ; gets entire buffer text as one string
 (fn get-buf-content [buf]
   (let [lines (buf_get_lines buf 0 -1 false)]
-    (values (table.concat lines "\n") lines)))
+    (values (t/cat lines "\n") lines)))
 
 ; creates a function that refreshes the state of buf's changedtick
 (fn refresh-changedtick [buf]
@@ -118,7 +115,7 @@
 (fn refresh-text [buf]
   (let [bufstate (. state buf)]
     #(let [ct (buf_get_changedtick buf)]
-       (when (not= ct (. state buf :changedtick))
+       (when (not= ct bufstate.changedtick)
          (tset bufstate :changedtick ct)
          (tset bufstate :text (get-buf-content buf))))))
 
@@ -129,7 +126,7 @@
     #(do (ref-t) (ref-c))))
 
 ; make a process-buffer function with enclosed settings
-(fn make-processor [buf]
+(fn make-processor [buf mode]
   (let [bufstate (. state buf)
         commentChar ";" stringDelimiters ["\""] forceBalance false
         lispVlineSymbols false lispBlockComments false guileBlockComments false
@@ -144,24 +141,23 @@
         (let
           [(cl cx) (get-cursor)
            (original-text original-lines) (get-buf-content buf)
-           req
-           {:mode state.mode
-            :text original-text
-            :options
-            {: commentChar : stringDelimiters : forceBalance
-             : lispVlineSymbols : lispBlockComments : guileBlockComments
-             : schemeSexpComments : janetLongStrings
-             :cursorX cx :cursorLine cl
-             :prevCursorX bufstate.cursorX
-             :prevCursorLine bufstate.cursorLine
-             :prevText bufstate.text}}
+           req {:mode mode
+                :text original-text
+                :options
+                {: commentChar : stringDelimiters : forceBalance
+                 : lispVlineSymbols : lispBlockComments : guileBlockComments
+                 : schemeSexpComments : janetLongStrings
+                 :cursorX cx :cursorLine cl
+                 :prevCursorX bufstate.cursorX
+                 :prevCursorLine bufstate.cursorLine
+                 :prevText bufstate.text}}
            response (run-parinfer req)]
 
           (if response.success
             (do
               (when (not= response.text original-text)
-                (vim.cmd "silent! undojoin")
-                (incr-bst.buf-apply-diff buf original-text original-lines response.text (vim.split response.text "\n")))
+                (cmd "silent! undojoin")
+                (buf-apply-diff buf original-text original-lines response.text (split response.text "\n")))
               (set-cursor response.cursorLine response.cursorX)
               (tset bufstate :text response.text)
               (when (not= nil trails-func) (trails-func buf response.parenTrails)))
@@ -169,19 +165,23 @@
               (notify-error buf req response)
               (tset bufstate :error response.error)
               (refresh-text))))
-
         (refresh-changedtick))
 
       (refresh-cursor))))
 
-
 ; initialize buffer state if necessary, process buffer in paren mode
+; TODO: handle mode. shouldn't be hard
+; all that really needs to be done is set the `process-events` autocmd
+; to call `process-{mode}` and also make sure to re-init the buffer
+; whenever mode is changed. that's also how settings can be handled
 (fn enter-buffer [buf]
   (when (= nil (. state buf))
     (tset state buf {})
     (let [(cl cx) (get-cursor)
-          process (make-processor buf)]
+          process (make-processor buf "smart")
+          process-paren (make-processor buf "paren")]
       (each [k v (pairs {:process process
+                         :process-paren process-paren
                          :text (get-buf-content buf)
                          :autocmds []
                          :changedtick -1
@@ -190,11 +190,7 @@
       (buf-autocmd buf process-events process)
       (buf-autocmd buf cursor-events (refresh-cursor buf))
       (buf-autocmd buf :InsertCharPre (refresher buf))))
-
-  (let [original-mode state.mode]
-    (tset state :mode "paren")
-    ((. state buf :process))
-    (tset state :mode original-mode)))
+  ((. state buf :process-paren)))
 
 ; initializes a buffer if its window isn't a special type (qflist/etc)
 (fn initialize-buffer []
