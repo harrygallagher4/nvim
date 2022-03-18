@@ -1,4 +1,5 @@
 (require-macros :parinfer.macros)
+(local {: merge} (require :parinfer.util))
 
 (local (t/ins t/cat) (values table.insert table.concat))
 
@@ -9,7 +10,7 @@
 
 
 (fn diff [strA strB opts]
-  (vim.diff strA strB (vim.tbl_extend "force" {:result_type "indices"} opts)))
+  (vim.diff strA strB (merge {:result_type "indices"} opts)))
 
 (fn set-line-text [buf line cs ce replacement]
   (buf-set-text buf line cs line ce [replacement]))

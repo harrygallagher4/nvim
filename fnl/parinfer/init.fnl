@@ -2,6 +2,7 @@
 (local cmds (require :dotfiles.commands))
 (local incr-bst (require :parinfer.incremental-change))
 (local parinfer-lib (require :parinfer.lib))
+(local {: lmerge : rmerge} (require :parinfer.util))
 
 (local {:interface parinfer} parinfer-lib)
 (local json vim.json)
@@ -41,11 +42,6 @@
 (local state {:mode settings.mode :augroup nil})
 
 
-(fn mergel [...]
-  (vim.tbl_extend "keep" ...))
-(fn merger [...]
-  (vim.tbl_extend "force" ...))
-
 (fn notify-error [buf request response]
   (vim.notify
     (table.concat
@@ -69,7 +65,7 @@
 
 ; creates an autocmd in `parinfennel` group
 (fn autocmd [events opts]
-  (create_autocmd events (mergel opts {:group "parinfennel"})))
+  (create_autocmd events (lmerge opts {:group "parinfennel"})))
 
 ; shorthand for attaching a callback to a buffer
 (fn buf-autocmd [buf events func]
@@ -221,7 +217,7 @@
 ; sets up autocmds to initialize new buffers
 (fn setup! [conf]
   (when conf
-    (each [k v (pairs (merger settings conf))]
+    (each [k v (pairs (rmerge settings conf))]
       (tset settings k v)))
   (ensure-augroup)
   (autocmd :FileType
