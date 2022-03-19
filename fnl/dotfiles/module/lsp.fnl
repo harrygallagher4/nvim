@@ -34,8 +34,8 @@
      [:<leader>ca vim.lsp.buf.code_action {:buffer buf}]
      [:<leader>d #(vim.diagnostic.show nil buf) {:buffer buf}]
      ["[d" vim.diagnostic.goto_next {:buffer buf}]
-     ["]d" vim.diagnostic.goto_next {:buffer buf}]
-     ["]d" vim.diagnostic.toqflist {:buffer buf}]])
+     ["]d" vim.diagnostic.goto_next {:buffer buf}]])
+     ; "<rbracket>d" vim.diagnostic.toqflist {:buffer buf}
   (maps.map [:i :<c-l> vim.lsp.buf.signature_help {:buffer buf}])
   (when client.resolved_capabilities.document_formatting
     (maps.map [:n :<leader>f vim.lsp.buf.formatting {:buffer buf}]))
