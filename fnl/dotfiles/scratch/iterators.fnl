@@ -1,5 +1,7 @@
 (module dotfiles.scratch.iterators
-  {require {a aniseed.core fun fun}})
+  {require
+   {a aniseed.core
+    fun fun}})
 
 (local {: reverse : gmatch : len} string)
 (local {: iter : map : zip : foreach} fun)
