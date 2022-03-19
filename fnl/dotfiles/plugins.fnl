@@ -2,13 +2,12 @@
   {require
    {p packer
     a aniseed.core
-    util packer.util}})
+    util dotfiles.util}})
 
 ; :profile {:enabled false :threshold 1}
 ; :display {:non_interactive true}
 (def- packer-config
-  {:compile_path (util.join_paths (vim.fn.stdpath :config)
-                                  :lua :plugins :startup.lua)
+  {:compile_path (util.stdfile :config :lua :plugins :startup.lua)
    :max_jobs 32
    :ensure_dependencies true
    :git {:cmd "/usr/local/bin/git"}

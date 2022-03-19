@@ -2,7 +2,7 @@
   {require {o dotfiles.options
             cmd dotfiles.commands}})
 
-(o.gset :conjure#extract#tree_sitter#enabled true)
+; (o.gset :conjure#extract#tree_sitter#enabled true)
 (o.gset :conjure#log#jump_to_latest#enabled true)
 (o.gset :conjure#log#jump_to_latest#cursor_scroll_position "top")
 (o.gset :conjure#client#fennel#stdio#command
