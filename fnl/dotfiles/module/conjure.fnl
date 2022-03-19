@@ -1,12 +1,10 @@
 (module dotfiles.module.conjure
-  {require {a aniseed.core
-            o dotfiles.options
+  {require {o dotfiles.options
             cmd dotfiles.commands}})
 
-(o.gset :conjure#log#jump_to_latest#enabled
-        true)
-(o.gset :conjure#log#jump_to_latest#cursor_scroll_position
-        "top")
+(o.gset :conjure#extract#tree_sitter#enabled true)
+(o.gset :conjure#log#jump_to_latest#enabled true)
+(o.gset :conjure#log#jump_to_latest#cursor_scroll_position "top")
 (o.gset :conjure#client#fennel#stdio#command
         "fennel --globals '*' --no-compiler-sandbox --repl")
 
@@ -19,5 +17,5 @@
     (. conjure-fennel-opts
       (. vim.g :conjure#filetype#fennel))))
 
-(cmd.mod-cmd! :FnlToggleClient :dotfiles.module.conjure :toggle-client)
+(cmd.mod-cmd! :FnlToggleClient *module-name* :toggle-client)
 
