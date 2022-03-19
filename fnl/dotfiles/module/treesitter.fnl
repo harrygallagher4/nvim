@@ -46,21 +46,21 @@
    :textobjects {:enable false}
    :incremental_selection {:enable true
                            :keymaps
-                           {:init_selection "gnn"
-                            :node_incremental "grn"
-                            :scope_incremental "grc"
-                            :node_decremental "grm"}}
+                           {:init_selection "g<space>"
+                            :node_incremental "gno"
+                            :scope_incremental "gns"
+                            :node_decremental "gni"}}
    :refactor {:navigation {:enable true
                            :keymaps
                            {:goto_previous_usage "<c-k>"
                             :goto_next_usage "<c-j>"
-                            :goto_definition "gnd"
-                            :list_definitions "gnD"}}
+                            :goto_definition "gd"
+                            :list_definitions "gb"}}
               :highlight_current_scope {:enable false}
               :highlight_definitions {:enable true}
               :smart_rename {:enable true
                              :keymaps
-                             {:smart_rename "grr"}}}
+                             {:smart_rename "gR"}}}
    :rainbow {:enable false}
    :playground {:enable true
                 :updatetime 10
