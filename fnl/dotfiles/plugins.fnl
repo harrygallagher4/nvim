@@ -4,12 +4,15 @@
     a aniseed.core
     util packer.util}})
 
+; :profile {:enabled false :threshold 1}
+; :display {:non_interactive true}
 (def- packer-config
   {:compile_path (util.join_paths (vim.fn.stdpath :config)
                                   :lua :plugins :startup.lua)
-   :luarocks {:python_cmd "python3"}
-   :profile {:enabled false :threshold 1}
-   :log {:level "warn"}})
+   :max_jobs 32
+   :ensure_dependencies true
+   :git {:cmd "/usr/local/bin/git"}
+   :log {:level "trace"}})
 
 (def- rocks
   [:lustache :hsluv :fun])
@@ -28,7 +31,6 @@
 
    :andweeb/presence.nvim {:module "presence"}
 
-   "~/.config/nvim/localplugin" {:as "harryg"}
    :kyazdani42/nvim-web-devicons
    :catppuccin/nvim {:as "catppuccin"}
    :hoob3rt/lualine.nvim
@@ -39,7 +41,6 @@
 
    :onsails/lspkind-nvim
    :tami5/lspsaga.nvim {:module "lspsaga"}
-   ; :nvim-lua/lsp-status.nvim
    :j-hui/fidget.nvim
    :folke/trouble.nvim
    :neovim/nvim-lspconfig
@@ -49,7 +50,7 @@
    :hrsh7th/cmp-buffer
    :hrsh7th/cmp-path
    :hrsh7th/cmp-cmdline
-   ; :ray-x/cmp-treesitter
+   :ray-x/cmp-treesitter
    :PaterJason/cmp-conjure
    ; :saadparwaiz1/cmp_luasnip
    :hrsh7th/nvim-cmp
@@ -58,7 +59,6 @@
    :nvim-telescope/telescope-packer.nvim
    :nvim-telescope/telescope-ghq.nvim
    :jvgrootveld/telescope-zoxide
-   ; :nvim-telescope/telescope-fzf-writer.nvim
    :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
    :nvim-telescope/telescope.nvim {:requires ["popup.nvim" "plenary.nvim"]}
 
@@ -111,6 +111,11 @@
 
    :ThePrimeagen/jvim.nvim {:ft ["json" "jsonc"]}
 
+   :sindrets/diffview.nvim {:cmd
+                            [:DiffviewOpen :DiffviewClose :DiffviewToggleFiles
+                             :DiffviewFocusFiles :DiffviewRefresh
+                             :DiffviewFileHistory]}
+
    :junegunn/vim-easy-align {:cmd ["EasyAlign" "LiveEasyAlign"]
                              :keys ["<Plug>(EasyAlign)"
                                     "<Plug>(LiveEasyAlign)"
@@ -155,12 +160,12 @@
            (-> plugin-list (plugin-list-to-map) (plugin-map-to-spec))
            rocks))
 
-(def clean packer.clean)
-(def compile packer.compile)
-(def install packer.install)
-(def load-plugin packer.loader)
-(def loader packer.loader)
-(def status packer.status)
-(def sync packer.sync)
-(def update packer.update)
+; (def clean packer.clean)
+; (def compile packer.compile)
+; (def install packer.install)
+; (def load-plugin packer.loader)
+; (def loader packer.loader)
+; (def status packer.status)
+; (def sync packer.sync)
+; (def update packer.update)
 
