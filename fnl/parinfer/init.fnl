@@ -136,23 +136,20 @@
         trails-func (when settings.trail_highlight (handle-trails settings.trail_highlight_group))]
 
     (fn process []
-
       (when (not= bufstate.changedtick (buf_get_changedtick buf))
-        (let
-          [(cl cx) (get-cursor)
-           (original-text original-lines) (get-buf-content buf)
-           req {:mode mode
-                :text original-text
-                :options
-                {: commentChar : stringDelimiters : forceBalance
-                 : lispVlineSymbols : lispBlockComments : guileBlockComments
-                 : schemeSexpComments : janetLongStrings
-                 :cursorX cx :cursorLine cl
-                 :prevCursorX bufstate.cursorX
-                 :prevCursorLine bufstate.cursorLine
-                 :prevText bufstate.text}}
-           response (run-parinfer req)]
-
+        (let [(cl cx) (get-cursor)
+              (original-text original-lines) (get-buf-content buf)
+              req {:mode mode
+                   :text original-text
+                   :options
+                   {: commentChar : stringDelimiters : forceBalance
+                    : lispVlineSymbols : lispBlockComments : guileBlockComments
+                    : schemeSexpComments : janetLongStrings
+                    :cursorX cx :cursorLine cl
+                    :prevCursorX bufstate.cursorX
+                    :prevCursorLine bufstate.cursorLine
+                    :prevText bufstate.text}}
+              response (run-parinfer req)]
           (if response.success
             (do
               (when (not= response.text original-text)
@@ -255,23 +252,24 @@
         (if (= 1 (vim.fn.exists "g:parinfer_enabled")) :ParinferFnl :Parinfer)]
     (.. prefix s)))
 
-(local *module-name* :parinfer)
+(fn parinfer-command! [s f opts]
+  (vim.api.nvim_add_user_command (cmd-str s) f (or opts {})))
 
-(cmds.mod-cmd! (cmd-str :On) *module-name* :attach-current-buf!)
-(cmds.mod-cmd! (cmd-str :Off) *module-name* :detach-current-buf!)
-(cmds.mod-cmd! (cmd-str :Refresh) *module-name* :refresh-current-buf!)
-(cmds.mod-cmd! (cmd-str :Trails) *module-name* :toggle-trails!)
-(cmds.mod-cmd! (cmd-str :Setup) *module-name* :setup!)
-(cmds.mod-cmd! (cmd-str :Cleanup) *module-name* :cleanup!)
+(parinfer-command! :On attach-current-buf!)
+(parinfer-command! :Off detach-current-buf!)
+(parinfer-command! :Refresh refresh-current-buf!)
+(parinfer-command! :Trails toggle-trails!)
+(parinfer-command! :Setup setup!)
+(parinfer-command! :Cleanup cleanup!)
 
 ; should move this somewhere else
-(cmds.mod-cmd! :Phl *module-name* :toggle-paren-hl)
-
 (fn toggle-paren-hl []
   (let [hl (vim.api.nvim__get_hl_defs 0)
         fnlP hl.fennelTSPunctBracket.link]
     (when (= fnlP "TSPunctBracket") (vim.cmd "highlight! link fennelTSPunctBracket Whitespace"))
     (when (= fnlP "Whitespace") (vim.cmd "highlight! link fennelTSPunctBracket TSPunctBracket"))))
+
+(vim.api.nvim_add_user_command :Phl toggle-paren-hl {})
 
 {: setup!
  : cleanup!
@@ -279,5 +277,11 @@
  : detach-current-buf!
  : refresh-current-buf!
  : toggle-trails!
- : toggle-paren-hl}
+ : toggle-paren-hl
+ :setup setup!
+ :cleanup cleanup!
+ :attach-current-buf attach-current-buf!
+ :detach-current-buf detach-current-buf!
+ :refresh-current-buf refresh-current-buf!
+ :toggle-trails toggle-trails!}
 
