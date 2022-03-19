@@ -1,6 +1,5 @@
 (module dotfiles.module.telescope
   {require {a aniseed.core
-            cmds dotfiles.commands
             maps dotfiles.maps
             util dotfiles.util
             telescope telescope
@@ -118,6 +117,7 @@
    ["<leader>:"     #(builtin.command_history nopreview)]
    ["<leader>o"     #(builtin.buffers)]
    ["<leader>lm"    #(builtin.reloader)]
+   ["<leader>z"     "<cmd>Telescope zoxide list<cr>"]
    ["<a-p>"         #(telescope.extensions.project.project
                       (a.merge (projects-theme) {:attach_mappings project-maps}))]])
 
@@ -136,6 +136,6 @@
   (setup-packer!)
   (telescope.extensions.packer.packer))
 
-(cmds.mod-cmd! :Plugins *module-name* :plugin-picker)
+(vim.api.nvim_add_user_command :Plugins plugin-picker {})
 (vim.cmd "highlight link TelescopePromptPrefix TelescopeBorder")
 
