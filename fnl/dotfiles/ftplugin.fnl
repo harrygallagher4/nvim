@@ -2,7 +2,9 @@
   {require
    {a aniseed.core
     maps dotfiles.maps
-    trouble trouble}})
+    trouble trouble}
+   autoload
+   {packer-maps dotfiles.maps.ft_packer}})
 
 
 (fn setl [o v]
@@ -84,10 +86,11 @@
 
 (fn handle-filetype [opts]
   (ft-options opts.match)
-  (if (= opts.match "Trouble") (ft-trouble opts)))
+  (if (= opts.match "Trouble") (ft-trouble opts)
+      (= opts.match "packer") (packer-maps.init)))
 
 (fn handle-bufnew [opts]
-  (if (opts.file:match "^conjure%-log%-%d+.*$") (setl local-opts.conjure)))
+  (if (opts.file:match "^conjure%-log%-%d+.*$") (ft-options :conjure)))
 
 (fn handle-termopen [opts]
   (ft-options :terminal))
