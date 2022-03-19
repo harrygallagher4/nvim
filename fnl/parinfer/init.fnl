@@ -1,4 +1,3 @@
-(local cmds (require :dotfiles.commands))
 (local incr-bst (require :parinfer.incremental-change))
 (local {:run run-parinfer} (require :parinfer.lib))
 (local {: lmerge : rmerge} (require :parinfer.util))
