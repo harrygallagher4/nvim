@@ -1,32 +1,56 @@
 (module dotfiles.module.neorg
-  {require {a aniseed.core
-            : neorg
-            dfts dotfiles.module.treesitter}})
+  {require
+   {neorg neorg
+    dfts dotfiles.module.treesitter}
+   require-macros [dotfiles.macros]})
 
 (neorg.setup
   {:load
    {:core.defaults {}
+
+    :core.norg.completion
+    {:config
+     {:engine "nvim-cmp"}}
+
     :core.neorgcmd {}
 
     :core.norg.concealer
     {:config
      {:icon_preset "diamond"
-      :markup_preset "dimmed"}} ; "brave" hides markup characters
+      :markup_preset "conceal"}} ; "brave" hides markup characters
 
     :core.keybinds
-    {:config {:default_keybinds true}}
+    {:config
+     {:default_keybinds true
+      :hook
+      #(apply->
+         ($.remap_key "norg" "n")
+         ("<C-Space>" "<localleader>t")
+         ("gtp" "<localleader>gp")
+         ("gtr" "<localleader>gr")
+         ("gti" "<localleader>gi")
+         ("gtd" "<localleader>gd")
+         ("gth" "<localleader>gh")
+         ("gtc" "<localleader>gc")
+         ("gtu" "<localleader>gu"))}}
 
     :core.norg.dirman
     {:config
      {:workspaces
-      {:main "~/Documents/neorg"
-       :home "~/neorg"
+      {:home "~/neorg"
        :gtd "~/Documents/neorg/gtd"}
       :autochdir false
       :autodetect false}}
 
+    :core.norg.journal
+    {:config
+     {:workspace "home"}}
+
+    :core.norg.qol.toc {}
+
     :core.integrations.telescope {}
 
     :core.gtd.base
-    {:config {:workspace "gtd"}}}})
+    {:config
+     {:workspace "gtd"}}}})
 

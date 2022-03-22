@@ -1,10 +1,8 @@
 
-
 (fn ieach-rec [i levels body]
   (if (> i (length levels)) body
       `(each [,(gensym) ,(. levels i 1) (ipairs ,(. levels i 2))]
          ,(ieach-rec (+ 1 i) levels body))))
-
 (fn ieach [bindings body]
   (local levels [])
   (each [i form (ipairs bindings)]
@@ -32,5 +30,18 @@
        (values ,...))))
 
 
-{: dbg! : use-api :ieach-> ieach}
+(fn apply-> [initial ...]
+  (let [(func args) (if (sym? initial) initial
+                        (values (table.remove initial 1) [(unpack initial)]))
+        forms [...]]
+    (each [i f (ipairs forms)]
+      (table.insert (. forms i) 1 func)
+      (when args
+        (each [j arg (ipairs args)]
+          (table.insert (. forms i) (+ 1 j) arg))))
+    `(do
+       ,(unpack forms))))
+
+
+{: dbg! : use-api :ieach-> ieach : apply->}
 

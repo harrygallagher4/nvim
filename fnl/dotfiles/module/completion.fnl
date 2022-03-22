@@ -1,11 +1,11 @@
 (module dotfiles.module.completion
-  {require {a aniseed.core
-            lspkind lspkind
-            ls luasnip
-            cmp cmp
-            ctx cmp.config.context}})
+  {require
+   {a aniseed.core
+    lspkind lspkind
+    ls luasnip
+    cmp cmp
+    ctx cmp.config.context}})
 
-; (set vim.o.completeopt "menu,menuone,noselect")
 (lspkind.init {})
 
 (def- m cmp.mapping)
@@ -65,7 +65,11 @@
    (s [{:name "conjure"}
        {:name "buffer"}
        {:name "path" :trigger_characters ["/"]}])})
-      ; [{:name "buffer"}])})
+
+(cmp.setup.filetype
+  "norg"
+  {:sources
+   (s [{:name "neorg"}])})
 
 ; complete from buffer when searching
 (cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
