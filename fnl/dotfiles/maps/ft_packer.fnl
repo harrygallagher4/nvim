@@ -1,33 +1,63 @@
 (module dotfiles.maps.ft_packer
-  {require {a aniseed.core}})
+  {require
+   {a aniseed.core}})
 
 (def config {:cmd "open"})
-(def- updated-pattern "^%W+Updated ([%w%-%.]+)/([%w%-%.]+): (%w+)%.%.(%w+)$")
-(def- updated-pattern-branch "^%W+Updated ([%w%-%.]+)/([%w%-%.]+)/[%w%-%.]+: (%w+)%.%.(%w+)$")
+(local url-pattern "^  URL: (.+)$")
 
-(defn- match-str [s]
-  (let [m [(string.match s updated-pattern)]]
-    (if (not (a.empty? m))
-        (unpack m)
-        (string.match s updated-pattern-branch))))
+(local pat-format
+  {url-pattern
+   #["%s" $2]
+   "    %x+ .+ %(#?(%d+)%) %(%d+ %w+ ago%)"
+   #["%s/pull/%s" $.url $2]
+   "    %x+ .+ #(%d+) %(%d+ %w+ ago%)"
+   #["%s/pull/%s" $.url $2]
+   "    %x+ Merge pull request #(%d+) from .+%(%d+ %w+ ago%)"
+   #["%s/pull/%s" $.url $2]
+   "^%W+Updated ([%w%-%.]+/[%w%-%.]+): (%w+)%.%.(%w+)$"
+   #["https://github.com/%s/compare/%s...%s" $2 $3 $4]
+   "^%W+Updated ([%w%-%.]+/[%w%-%.]+)/[%w%-%.]+: (%w+)%.%.(%w+)$"
+   #["https://github.com/%s/compare/%s...%s" $2 $3 $4]
+   "    (%x+) .+ %(%d+ %w+ ago%)"
+   #["%s/commit/%s" $.url $2]})
 
-(defn- match-line []
-  (match-str (vim.api.nvim_get_current_line)))
 
-;; TODO
-;; looks like this won't do anything unless it gets refs, I'm pretty sure
-;; packer always matches `updated-pattern-branch` so i should probably remove
-;; `updated-pattern` entirely
-(defn- url [...]
-  (when (= 4 (a.count [...]))
-    (string.format "https://github.com/%s/%s/compare/%s...%s" ...)))
+; this works to create a map of line->last url.
+; i only had an old log saved so it probably needs to be tested on a
+; more recent packer log buffer
+(fn line-to-url-map []
+  (accumulate [urls []
+               i line (ipairs (vim.api.nvim_buf_get_lines 0 0 -1 false))]
+    (let [url (string.match line url-pattern)
+          prev (or (. urls (- i 1)) 0)]
+      (if url (table.insert urls url)
+          (table.insert urls prev))
+      urls)))
 
-(defn- open-url! [url]
+(fn current-line-url []
+  (let [urls (line-to-url-map)
+        [line] (vim.api.nvim_win_get_cursor 0)]
+    (. urls line)))
+
+(fn extract-current-url []
+  (let [url (current-line-url)
+        line (vim.api.nvim_get_current_line)]
+    (var matched nil)
+    (each [p f (pairs pat-format) :until matched]
+      (let [m [(string.match line p)]]
+        (when (< 0 (length m))
+          (->> (f {: url :match m} (unpack m))
+               (unpack)
+               (string.format)
+               (set matched)))))
+    matched))
+
+(fn open-url! [url]
   (when (not (a.nil? url))
         (vim.cmd (string.format "silent !%s '%s'" config.cmd url))))
 
-(defn- do-line []
-  (open-url! (url (match-line))))
+(fn do-line []
+  (open-url! (extract-current-url)))
 
 (defn init []
   (vim.keymap.set "n" "o" do-line {:buffer true}))
