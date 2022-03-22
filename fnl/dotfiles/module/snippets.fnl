@@ -1,8 +1,9 @@
 (module dotfiles.module.snippets
-  {require {a aniseed.core
-            str aniseed.string
-            util dotfiles.util
-            ls luasnip}
+  {require
+   {a aniseed.core
+    str aniseed.string
+    util dotfiles.util
+    ls luasnip}
    require-macros [dotfiles.snippets.macros]})
 
 (def s (. ls :s))
@@ -80,5 +81,5 @@
         (t ["["]) (i 2) (t ["]"])
         (t ["" "  ("]) (i 0) (t ["))"])])]})
 
-(a.assoc ls :snippets snips)
+(ls.add_snippets nil snips)
 
