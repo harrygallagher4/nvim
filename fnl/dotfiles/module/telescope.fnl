@@ -1,15 +1,17 @@
 (module dotfiles.module.telescope
-  {require {a aniseed.core
-            maps dotfiles.maps
-            util dotfiles.util
-            telescope telescope
-            actions telescope.actions
-            themes telescope.themes
-            trouble trouble.providers.telescope}
-   autoload {str dotfiles.util.string
-             builtin telescope.builtin
-             project telescope._extensions.project.actions
-             project-utils telescope._extensions.project.utils}})
+  {require
+   {a aniseed.core
+    maps dotfiles.maps
+    util dotfiles.util
+    telescope telescope
+    actions telescope.actions
+    themes telescope.themes
+    trouble trouble.providers.telescope}
+   autoload
+   {str dotfiles.util.string
+    builtin telescope.builtin
+    project telescope._extensions.project.actions
+    project-utils telescope._extensions.project.utils}})
 
 (def- compiled-fnl
   (a.map
@@ -28,7 +30,8 @@
     :path_display ["smart"]
     :dynamic_preview_title true
     :layout_config {:vertical {:width 0.8 :height 0.6 :mirror true}
-                    :horizontal {:prompt_position "top" :preview_width 0.5625}}
+                    :horizontal {:prompt_position "top" :preview_width 0.45
+                                 :width 0.85}}
     :mappings {:i {:<esc> actions.close
                    :<c-j> actions.move_selection_next
                    :<c-k> actions.move_selection_previous
@@ -66,7 +69,7 @@
     {:prompt_title false
      :previewer false
      :layout_config
-     {:width 0.8
+     {:width 0.85
       :height 0.6667}}))
 
 (defn- project-maps [_ keymap]

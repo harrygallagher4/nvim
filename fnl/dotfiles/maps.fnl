@@ -69,9 +69,6 @@
    [:n  :<leader>?         "<plug>Commentary"]
    [:xo :<leader>/         "<plug>Commentary"]
 
-   [:n "<plug>(slash-after)" "'zz'.slash#blink(2, 50)" {:expr true}]
-   ; [:n "<plug>(slash-after)" "slash#blink(2, 50)" {:expr true}]
-
    ; add <c-w>X and <c-w><c-X> maps in terminal mode
    (->>
      "hjklsvcq"

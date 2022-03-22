@@ -1,7 +1,8 @@
 (module dotfiles
   {autoload
    {cmds dotfiles.commands
-    parinfer parinfer}})
+    parinfer parinfer
+    specs specs}})
 
 (defn- init-module [mod]
   (require (.. "dotfiles.module." mod)))
@@ -30,9 +31,7 @@
 (init-module :treesitter)
 (init-module :telescope)
 ; order doesn't matter
-(init-module :gitsigns)
 (init-module :indentline)
-(init-module :lf)
 (init-module :neoformat)
 (init-module :neorg)
 (init-module :toggleterm)
@@ -43,7 +42,7 @@
 ; :packadd! won't source plugin/* scripts. this way parinfer-rust is
 ; added to the runtimepath but isn't set up
 (defn init-post []
-  (parinfer.setup! {:trail_highlight false})
+  (init-module :vimenter)
   (cmds.mod-cmd! :FnlClean :dotfiles.compile :clean!)
   (cmds.mod-cmd! :FnlCompileAll :dotfiles.compile :compile-all!)
   (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))

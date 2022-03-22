@@ -1,6 +1,7 @@
 (module dotfiles.options
-  {require {a aniseed.core
-            util dotfiles.util}})
+  {require
+   {a aniseed.core
+    util dotfiles.util}})
 
 (defn gset [varname value]
   (tset vim.g varname value))
@@ -43,6 +44,7 @@
 
 (oset :encoding "utf8")
 
+(oset :shada ["!" "'500" "<100" "s100" "h"])
 (oset :backupdir (util.stdfile "data" "backup"))
 (oset :directory (util.stdfile "data" "swap"))
 (oset :undodir (util.stdfile "data" "undo"))
@@ -68,6 +70,7 @@
 (oset :wrap false)
 (oset :number)
 (oset :numberwidth 3)
+(oset :previewheight 8)
 (oset :pumheight 8)
 (oset :scrolloff 3)
 (oset :showcmd)

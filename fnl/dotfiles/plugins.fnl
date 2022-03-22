@@ -79,6 +79,9 @@
 
    :akinsho/toggleterm.nvim
 
+   "https://gitlab.com/yorickpeterse/nvim-pqf"
+   {:config #((. (require :pqf) :setup))}
+
    :luukvbaal/stabilize.nvim {:opt true
                               :config #((. (require :stabilize) :setup))}
 
@@ -88,7 +91,8 @@
 
    :/usr/local/opt/fzf
    :junegunn/fzf.vim
-   :junegunn/vim-slash
+
+   :edluffy/specs.nvim
 
    :gpanders/editorconfig.nvim
    :Raimondi/delimitMate
