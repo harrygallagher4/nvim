@@ -1,0 +1,349 @@
+--- Options ---
+  aleph=224
+noarabic
+  arabicshape
+noallowrevins
+  ambiwidth=single
+noautochdir
+  autoindent
+  autoread
+noautowrite
+noautowriteall
+  background=dark
+  backspace=indent,eol,start
+nobackup
+  backupcopy=auto
+  backupdir=~/.local/share/nvim/backup
+  backupext=~
+  backupskip=/private/tmp/*,/var/folders/rz/hjn8j_0s5tzf468vqryzpf3m0000gn/T/*
+  belloff=all
+nobinary
+nobomb
+  breakat= ^I!@*-+;:,./?
+nobreakindent
+  breakindentopt=
+  bufhidden=
+  buflisted
+  buftype=
+  casemap=internal,keepascii
+nocdhome
+  cdpath=,,
+  cedit=^F
+  channel=0
+  charconvert=
+nocindent
+  cinkeys=0{,0},0),0],:,0#,!^F,o,O,e
+  cinoptions=
+  cinwords=if,else,while,do,for,switch
+  clipboard=
+  cmdheight=1
+  cmdwinheight=7
+  colorcolumn=
+  columns=190
+  comments=fb:-,fb:*,n:>
+  commentstring=
+nocompatible
+  complete=.,w,b,u,t
+  concealcursor=
+  conceallevel=0
+  completefunc=
+  completeopt=menu,menuone,noinsert,noselect
+noconfirm
+nocopyindent
+  cpoptions=aABceFs_
+  cscopepathcomp=0
+  cscopeprg=cscope
+  cscopequickfix=
+nocscoperelative
+nocscopetag
+  cscopetagorder=0
+  cscopeverbose
+nocursorbind
+nocursorcolumn
+  cursorline
+  cursorlineopt=number
+  debug=
+  define=^\s*#\s*define
+nodelcombine
+  dictionary=
+nodiff
+  diffexpr=
+  diffopt=internal,filler,closeoff
+nodigraph
+  directory=~/.local/share/nvim/swap
+  display=lastline,msgsep
+  eadirection=both
+noedcompatible
+  emoji
+  encoding=utf-8
+  endofline
+noequalalways
+  equalprg=
+noerrorbells
+  errorfile=errors.err
+  errorformat=%*[^"]"%f"%*\D%l: %m,"%f"%*\D%l: %m,%-G%f:%l: (Each undeclared identifier is reported only once,%-G%f:%l: for each function it appears in.),%-GIn file included from %f:%l:%c:,%-GIn file included from %f:%l:%c\,,%-GIn file included from %f:%l:%c,%-GIn file included from %f:%l,%-G%*[ ]from %f:%l:%c,%-G%*[ ]from %f:%l:,%-G%*[ ]from %f:%l\,,%-G%*[ ]from %f:%l,%f:%l:%c:%m,%f(%l):%m,%f:%l:%m,"%f"\, line %l%*\D%c%*[^ ] %m,%D%*\a[%*\d]: Entering directory %*[`']%f',%X%*\a[%*\d]: Leaving directory %*[`']%f',%D%*\a: Entering directory %*[`']%f',%X%*\a: Leaving directory %*[`']%f',%DMaking %*\a in %f,%f|%l| %m
+  eventignore=CursorHoldI,CursorHold
+  expandtab
+noexrc
+  fileencoding=utf-8
+  fileencodings=ucs-bom,utf-8,default,latin1
+  fileformat=unix
+  fileformats=unix,dos
+  fileignorecase
+  filetype=text
+  fillchars=eob: 
+  fixendofline
+  foldclose=
+  foldcolumn=0
+  foldenable
+  foldexpr=0
+  foldignore=#
+  foldlevel=0
+  foldlevelstart=-1
+  foldmarker={{{,}}}
+  foldmethod=manual
+  foldminlines=1
+  foldnestmax=20
+  foldopen=block,hor,mark,percent,quickfix,search,tag,undo
+  foldtext=foldtext()
+  formatexpr=
+  formatoptions=tcqj
+  formatlistpat=^\s*\d\+[\]:.)}\t ]\s*
+  formatprg=
+nofsync
+nogdefault
+  grepformat=%f:%l:%m,%f:%l%m,%f  %l%m
+  grepprg=grep -n $* /dev/null
+  guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
+  guifont=
+  guifontwide=
+  helpfile=/nix/store/d705cbgmws2mfx9za1n648cslsdd2j4d-neovim-unwrapped-master/share/nvim/runtime/doc/help.txt
+  helpheight=20
+  helplang=en
+  hidden
+  highlight=8:SpecialKey,~:EndOfBuffer,z:TermCursor,Z:TermCursorNC,@:NonText,d:Directory,e:ErrorMsg,i:IncSearch,l:Search,m:MoreMsg,M:ModeMsg,n:LineNr,a:LineNrAbove,b:LineNrBelow,N:CursorLineNr,G:CursorLineSign,O:CursorLineFoldr:Question,s:StatusLine,S:StatusLineNC,c:VertSplit,t:Title,v:Visual,V:VisualNOS,w:WarningMsg,W:WildMenu,f:Folded,F:FoldColumn,A:DiffAdd,C:DiffChange,D:DiffDelete,T:DiffText,>:SignColumn,-:Conceal,B:SpellBad,P:SpellCap,R:SpellRare,L:SpellLocal,+:Pmenu,=:PmenuSel,x:PmenuSbar,X:PmenuThumb,*:TabLine,#:TabLineSel,_:TabLineFill,!:CursorColumn,.:CursorLine,o:ColorColumn,q:QuickFixLine,0:Whitespace,I:NormalNC
+  history=10000
+nohkmap
+nohkmapp
+  hlsearch
+noicon
+  iconstring=
+  ignorecase
+  iminsert=0
+  imsearch=-1
+  inccommand=nosplit
+  include=^\s*#\s*include
+  includeexpr=
+  incsearch
+  indentexpr=
+  indentkeys=!^F,o,O
+noinfercase
+noinsertmode
+  isfname=@,48-57,/,.,-,_,+,,,#,$,%,~,=
+  isident=@,48-57,_,192-255
+  iskeyword=@,48-57,_,192-255
+  isprint=@,161-255
+nojoinspaces
+  jumpoptions=
+  keymap=
+  keymodel=
+  keywordprg=:Man
+  langmap=
+  langmenu=
+  langnoremap
+nolangremap
+  laststatus=2
+nolazyredraw
+  linebreak
+  lines=38
+  linespace=0
+nolisp
+  lispwords=defun,define,defmacro,set!,lambda,if,case,let,flet,let*,letrec,do,do*,define-syntax,let-syntax,letrec-syntax,destructuring-bind,defpackage,defparameter,defstruct,deftype,defvar,do-all-symbols,do-external-symbols,do-symbols,dolist,dotimes,ecase,etypecase,eval-when,labels,macrolet,multiple-value-bind,multiple-value-call,multiple-value-prog1,multiple-value-setq,prog1,progv,typecase,unless,unwind-protect,when,with-input-from-string,with-open-file,with-open-stream,with-output-to-string,with-package-iterator,define-condition,handler-bind,handler-case,restart-bind,restart-case,with-simple-restart,store-value,use-value,muffle-warning,abort,continue,with-slots,with-slots*,with-accessors,with-accessors*,defclass,defmethod,print-unreadable-object
+  list
+  listchars=lead: ,multispace:⋅,nbsp:_,tab:  ,trail:⋅
+  loadplugins
+  magic
+  makeef=
+  makeencoding=
+  makeprg=make
+  matchpairs=(:),{:},[:]
+  matchtime=5
+  maxcombine=6
+  maxfuncdepth=100
+  maxmapdepth=1000
+  maxmempattern=1000
+  menuitems=25
+  mkspellmem=460000,2000,500
+  modeline
+nomodelineexpr
+  modelines=5
+  modifiable
+nomodified
+  more
+  mouse=a
+nomousefocus
+  mousemodel=extend
+  mousetime=500
+  nrformats=bin,hex
+  number
+  numberwidth=3
+  omnifunc=
+  operatorfunc=
+  packpath=~/.config/nvim,~/.nix-profile/etc/xdg/nvim,/etc/profiles/per-user/harry/etc/xdg/nvim,/run/current-system/sw/etc/xdg/nvim,/nix/var/nix/profiles/default/etc/xdg/nvim,~/.local/share/nvim/site,~/.nix-profile/share/nvim/site,/etc/profiles/per-user/harry/share/nvim/site,/run/current-system/sw/share/nvim/site,/nix/var/nix/profiles/default/share/nvim/site,/nix/store/d705cbgmws2mfx9za1n648cslsdd2j4d-neovim-unwrapped-master/share/nvim/runtime,/nix/store/d705cbgmws2mfx9za1n648cslsdd2j4d-neovim-unwrapped-master/lib/nvim,/nix/var/nix/profiles/default/share/nvim/site/after,/run/current-system/sw/share/nvim/site/after,/etc/profiles/per-user/harry/share/nvim/site/after,~/.nix-profile/share/nvim/site/after,~/.local/share/nvim/site/after,/nix/var/nix/profiles/default/etc/xdg/nvim/after,/run/current-system/sw/etc/xdg/nvim/after,/etc/profiles/per-user/harry/etc/xdg/nvim/after,~/.nix-profile/etc/xdg/nvim/after,~/.config/nvim/after
+  paragraphs=IPLPPPQPP TPHPLIPpLpItpplpipbp
+nopaste
+  pastetoggle=
+  patchexpr=
+  patchmode=
+  path=.,/usr/include,,
+nopreserveindent
+  previewheight=12
+nopreviewwindow
+  printdevice=
+  printencoding=
+  printexpr=system(['lpr'] + (empty(&printdevice)?[]:['-P', &printdevice]) + [v:fname_in]). delete(v:fname_in)+ v:shell_error
+  printfont=courier
+  printheader=%<%f%h%m%=Page %N
+  printmbcharset=
+  printmbfont=
+  printoptions=
+  prompt
+  pumblend=0
+  pumheight=8
+  pumwidth=15
+  pyxversion=3
+  quickfixtextfunc=PqfQuickfixTextFunc
+  quoteescape=\
+noreadonly
+  redrawdebug=
+  redrawtime=2000
+  regexpengine=0
+norelativenumber
+  remap
+  report=2
+norevins
+norightleft
+  rightleftcmd=search
+noruler
+  rulerformat=
+  runtimepath=~/.config/nvim,~/.nix-profile/etc/xdg/nvim,/etc/profiles/per-user/harry/etc/xdg/nvim,/run/current-system/sw/etc/xdg/nvim,/nix/var/nix/profiles/default/etc/xdg/nvim,~/.local/share/nvim/site,~/.local/share/nvim/site/pack/packer/opt/parinfer-rust,~/.local/share/nvim/site/pack/*/start/*,~/.local/share/nvim/site/pack/packer/start/packer.nvim,~/.nix-profile/share/nvim/site,/etc/profiles/per-user/harry/share/nvim/site,/run/current-system/sw/share/nvim/site,/nix/var/nix/profiles/default/share/nvim/site,/nix/store/d705cbgmws2mfx9za1n648cslsdd2j4d-neovim-unwrapped-master/share/nvim/runtime,/nix/store/d705cbgmws2mfx9za1n648cslsdd2j4d-neovim-unwrapped-master/share/nvim/runtime/pack/dist/opt/matchit,/nix/store/d705cbgmws2mfx9za1n648cslsdd2j4d-neovim-unwrapped-master/lib/nvim,~/.local/share/nvim/site/pack/*/start/*/after,/nix/var/nix/profiles/default/share/nvim/site/after,/run/current-system/sw/share/nvim/site/after,/etc/profiles/per-user/harry/share/nvim/site/after,~/.nix-profile/share/nvim/site/after,~/.local/share/nvim/site/after,/nix/var/nix/profiles/default/etc/xdg/nvim/after,/run/current-system/sw/etc/xdg/nvim/after,/etc/profiles/per-user/harry/etc/xdg/nvim/after,~/.nix-profile/etc/xdg/nvim/after,~/.config/nvim/after
+  scroll=17
+  scrollback=-1
+noscrollbind
+  scrolljump=1
+  scrolloff=3
+  scrollopt=ver,jump
+  sections=SHNHH HUnhsh
+nosecure
+  selection=inclusive
+  selectmode=
+  sessionoptions=blank,buffers,curdir,folds,help,tabpages,winsize
+  shada=!,'500,<100,s100,h
+  shadafile=
+  shell=/usr/local/bin/zsh
+  shellcmdflag=-c
+  shellpipe=2>&1| tee
+  shellquote=
+  shellredir=>%s 2>&1
+  shelltemp
+  shellxquote=
+  shellxescape=
+noshiftround
+  shiftwidth=2
+  shortmess=TOtfcxilnoF
+  showbreak=
+  showcmd
+noshowfulltag
+noshowmatch
+  showmode
+  showtabline=2
+  sidescroll=1
+  sidescrolloff=0
+  signcolumn=yes:1
+  smartcase
+nosmartindent
+  smarttab
+  softtabstop=-1
+nospell
+  spellcapcheck=[.?!]\_[\])'"^I ]\+
+  spellfile=
+  spelllang=en
+  spellsuggest=best
+  spelloptions=
+  splitbelow
+  splitright
+nostartofline
+  statusline=%{%v:lua.require'lualine'.statusline()%}
+  suffixes=.bak,~,.o,.h,.info,.swp,.obj
+  suffixesadd=
+  swapfile
+  switchbuf=uselast
+  synmaxcol=3000
+  syntax=text
+  tagfunc=
+  tabline=%!v:lua.nvim_bufferline()
+  tabpagemax=50
+  tabstop=2
+  tagbsearch
+  tagcase=followic
+  taglength=0
+  tagrelative
+  tags=./tags;,tags
+  tagstack
+notermbidi
+  termguicolors
+  termpastefilter=BS,HT,ESC,DEL
+noterse
+  textwidth=0
+  thesaurus=
+  thesaurusfunc=
+notildeop
+  timeout
+  timeoutlen=1000
+notitle
+  titlelen=85
+  titleold=
+  titlestring=nvim
+  ttimeout
+  ttimeoutlen=50
+  ttyfast
+  undodir=~/.local/share/nvim/undo
+  undofile
+  undolevels=1000
+  undoreload=10000
+  updatecount=200
+  updatetime=4000
+  varsofttabstop=
+  vartabstop=
+  verbose=0
+  verbosefile=
+  viewdir=~/.local/share/nvim/view//
+  viewoptions=folds,cursor,curdir
+  virtualedit=block
+novisualbell
+  warn
+  whichwrap=b,s
+  wildchar=<Tab>
+  wildcharm=0
+  wildignore=
+nowildignorecase
+  wildmenu
+  wildmode=longest,full
+  wildoptions=pum
+  winaltkeys=menu
+  winblend=0
+  winhighlight=
+  window=37
+  winheight=1
+nowinfixheight
+nowinfixwidth
+  winminheight=1
+  winminwidth=1
+  winwidth=20
+nowrap
+  wrapmargin=0
+  wrapscan
+  write
+nowriteany
+  writebackup
+  writedelay=0

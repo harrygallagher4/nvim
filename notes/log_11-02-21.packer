@@ -2,21 +2,25 @@
  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  - Removed /Users/harry/.local/share/nvim/site/pack/packer/start/.DS_Store
  ✓ Updated nvim-telescope/telescope-project.nvim: 6f63c15..50ae840
+  URL: https://github.com/nvim-telescope/telescope-project.nvim
   Commits:
     50ae840 Little fix on the README (#70) (11 days ago)
     348f5c7 fix: don't use deprecated actions (#69) (3 weeks ago)
 
  ✓ Updated nvim-telescope/telescope-packer.nvim: 2c9a0ff..b2a3dca
+  URL: https://github.com/nvim-telescope/telescope-packer.nvim
   Commits:
     b2a3dca fix more readme patterns (#9) (3 weeks ago)
     09fa9bb [fix]: packer's abnormal behavier when reload config (#7) (4 weeks ago)
     b9ffb7f feat: ENTER to read selected pack doc (#6) (4 weeks ago)
 
  ✓ Updated nanotee/luv-vimdocs: ddcd5ef..fb04e10
+  URL: https://github.com/nanotee/luv-vimdocs
   Commits:
     fb04e10 update (2 days ago)
 
  ✓ Updated gelguy/wilder.nvim: 15ff3a0..f7071a6
+  URL: https://github.com/gelguy/wilder.nvim
   Commits:
     f7071a6 Fix E749 when in Ex mode (3 days ago)
     50cb56a Fix no candidates for user completion (3 days ago)
@@ -32,6 +36,7 @@
     4a98c80 Fix typo (#91) (4 weeks ago)
 
  ✓ Updated windwp/nvim-autopairs: 8ce5ea3..e6b1870
+  URL: https://github.com/windwp/nvim-autopairs
   Commits:
     e6b1870 chore: generated vimdoc (5 days ago)
     cd182bc update README.md (5 days ago)
@@ -72,6 +77,7 @@
     0e5a115 update ci (5 weeks ago)
 
  ✓ Updated rmagatti/auto-session: 3909c78..5f2a9d7
+  URL: https://github.com/rmagatti/auto-session
   Commits:
     5f2a9d7 Merge pull request #85 from rmagatti/add-statusline-instructions (3 days ago)
     db50952 Update readme (3 days ago)
@@ -90,6 +96,7 @@
     a47458b Fix the directory (4 weeks ago)
 
  ✓ Updated folke/trouble.nvim: 51dd917..756f09d
+  URL: https://github.com/folke/trouble.nvim
   Commits:
     756f09d fix: prevent segfault on closing (11 days ago)
     d40695e refactor: made padding a boolean and added to docs (12 days ago)
@@ -111,6 +118,7 @@
     dab82ef fix: added compatibility to retrieve signs from vim.diagnostic (12 days ago)
 
  ✓ Updated L3MON4D3/LuaSnip: 528611c..a54b21a
+  URL: https://github.com/L3MON4D3/LuaSnip
   Commits:
     a54b21a fix(insertNode): node ending with \n leads to wrong selection. (4 days ago)
     b7d520e BREAKING(conditions): move expand-conditions due to ambiguity. (5 days ago)
@@ -162,10 +170,12 @@
     40d9886 fix(choice_restore): stupid (closes #187). (5 weeks ago)
 
  ✓ Updated hrsh7th/nvim-compe: 980357a..d186d73
+  URL: https://github.com/hrsh7th/nvim-compe
   Commits:
     d186d73 Fix broken Luasnip integration (#545) (4 weeks ago)
 
  ✓ Updated nvim-treesitter/nvim-treesitter-textobjects: 47cdd6b..ba9be1b
+  URL: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
   Commits:
     ba9be1b [docgen] Update README.md skip-checks: true (2 weeks ago)
     e7c03d1 Update queries to support new Elixir parser (2 weeks ago)
@@ -177,6 +187,7 @@
     d0429d7 Add glsl support (5 weeks ago)
 
  ✓ Updated p00f/nvim-ts-rainbow: 2f39c59..2943a62
+  URL: https://github.com/p00f/nvim-ts-rainbow
   Commits:
     2943a62 [fennel] Add `let_clause` level (8 days ago)
     3e6597b Update README (13 days ago)
@@ -193,6 +204,7 @@
     6b5cdc2 Update fennel levels - fix #67 (5 weeks ago)
 
  ✓ Updated vhyrro/neorg/unstable: cdae38a..3f0698a
+  URL: https://github.com/vhyrro/neorg
   Commits:
     3f0698a fix(core.norg.completion) Use new syntax (3 hours ago)
     fd008f5 test(core.gtd.ui) Add tests for waiting for tasks (5 hours ago)
@@ -616,6 +628,7 @@
     25a5041 Create base GTD module (3 months ago)
 
  ✓ Updated Olical/conjure/develop: ca55e4e..01272ab
+  URL: https://github.com/Olical/conjure
   Commits:
     01272ab Add b:* config overrides (3 days ago)
     e977a84 New sponsor! @kevinkrouse! Thank you so much! (3 days ago)
@@ -640,6 +653,7 @@
     20f5a76 Source conjure.vim from the school (9 weeks ago)
 
  ✓ Updated lukas-reineke/indent-blankline.nvim: a5c8b55..252797e
+  URL: https://github.com/lukas-reineke/indent-blankline.nvim
   Commits:
     252797e Merge pull request #291 from lukas-reineke/develop (7 days ago)
     4949a6a Version 2.9.2 (7 days ago)
@@ -700,6 +714,7 @@
     7ec7d3c Merge pull request #246 from lukas-reineke/master (5 weeks ago)
 
  ✓ Updated Olical/aniseed/develop: 6e1bee1..4bb3a4c
+  URL: https://github.com/Olical/aniseed
   Commits:
     4bb3a4c Fix flaky REPL tests, ensure static is false in REPL evals (9 days ago)
     270731c Default opts in eval.repl to an empty table (9 days ago)
@@ -718,15 +733,18 @@
     c416cd1 Remove the concept of a replace marker, shouldn't ever be required (5 weeks ago)
 
  ✓ Updated tpope/vim-surround: f51a26d..aeb9332
+  URL: https://github.com/tpope/vim-surround
   Commits:
     aeb9332 surround.vim 2.2 (3 weeks ago)
 
  ✓ Updated ray-x/guihua.lua: ec5ce1e..0cc237b
+  URL: https://github.com/ray-x/guihua.lua
   Commits:
     0cc237b bug fix https://github.com/ray-x/navigator.lua/issues/93#issue (2 minutes ago)
     6ab6364 highlight updates (6 days ago)
 
  ✓ Updated ray-x/lsp_signature.nvim: 8f89ab2..6469c55
+  URL: https://github.com/ray-x/lsp_signature.nvim
   Commits:
     6469c55 bugfix #121 sumneko_lua (9 days ago)
     8f6b15d bugfix for multi signatures csharp issue #120 (9 days ago)
@@ -737,6 +755,7 @@
     7342ef3 README update #110 (4 weeks ago)
 
  ✓ Updated nvim-telescope/telescope.nvim: 4e629cd..587a10d
+  URL: https://github.com/nvim-telescope/telescope.nvim
   Commits:
     587a10d chore: remove a lot of deprecated stuff (#1399) (29 hours ago)
     0caec3d Revert "break: changed the results window highlight to always be full width (#1312)" (#1398) (2 days ago)
@@ -774,6 +793,7 @@
     440c598 fix: which key float positioning (#1293) (5 weeks ago)
 
  ✓ Updated onsails/lspkind-nvim: 9cc3265..1557ce5
+  URL: https://github.com/onsails/lspkind-nvim
   Commits:
     1557ce5 Merge pull request #26 from stevearc/global-config (8 days ago)
     835e5c4 Store configuration globally after call to init() (9 days ago)
@@ -786,6 +806,7 @@
     354c6d7 cmp integration (4 weeks ago)
 
  ✓ Updated ray-x/navigator.lua: 633c7da..4c7e7f6
+  URL: https://github.com/ray-x/navigator.lua
   Commits:
     4c7e7f6 update README.md (41 minutes ago)
     427007e bugfix issue #97 (48 minutes ago)
@@ -843,6 +864,7 @@
     3c06460 bugfix for #71 (6 weeks ago)
 
  ✓ Updated neovim/nvim-lspconfig: 4a39290..242cfc4
+  URL: https://github.com/neovim/nvim-lspconfig
   Commits:
     242cfc4 docs: update CONFIG.md skip-checks: true (5 hours ago)
     5f45fbf fix(ltexls): correctly return filetype as languageid (#1365) (5 hours ago)
@@ -901,15 +923,18 @@
     a7df46e chore: update bug_report.yml (5 weeks ago)
 
  ✓ Updated akinsho/nvim-bufferline.lua: 5fb9005..782fab8
+  URL: https://github.com/akinsho/nvim-bufferline.lua
   Commits:
     782fab8 fix(config): update lsp highlights to support 0.6 (2 days ago)
     58e8d9b docs: add note on how to check offset filetype (#242) (13 days ago)
 
  ✓ Updated nvim-telescope/telescope-ghq.nvim: 8db2448..1d26edf
+  URL: https://github.com/nvim-telescope/telescope-ghq.nvim
   Commits:
     1d26edf Avoid duplication messages (3 weeks ago)
 
  ✓ Updated wbthomason/packer.nvim: a97cace..fae6749
+  URL: https://github.com/wbthomason/packer.nvim
   Commits:
     fae6749 Use Makefile for running tests in CI (#680) (5 hours ago)
     ea353e5 Add a makefile for running unit tests (#671) (5 hours ago)
@@ -930,6 +955,7 @@
     80cc56b Add Selene configuration files (4 weeks ago)
 
  ✓ Updated antoinemadec/FixCursorHold.nvim: b5158c9..0e4e22d
+  URL: https://github.com/antoinemadec/FixCursorHold.nvim
   Commits:
     0e4e22d Merge pull request #5 from yous/fix-typo (13 hours ago)
     507811b Fix typo (18 hours ago)
@@ -939,10 +965,12 @@
     23175ef fix: always cancel CursorHoldI event after move in normal mode (3 weeks ago)
 
  ✓ Updated oberblastmeister/neuron.nvim/unstable: 6563229..58bd90f
+  URL: https://github.com/oberblastmeister/neuron.nvim
   Commits:
     58bd90f fix backlinks and mapping (#37) (2 weeks ago)
 
  ✓ Updated kyazdani42/nvim-web-devicons: ba8a936..ee10146
+  URL: https://github.com/kyazdani42/nvim-web-devicons
   Commits:
     ee10146 add icon for .zig (4 weeks ago)
     0883180 add icon for .heex (Elixir's HTML EEx) (4 weeks ago)
@@ -950,12 +978,14 @@
     7f768cd Add get_icon_color to README (5 weeks ago)
 
  ✓ Updated rktjmp/lush.nvim: 63e11d9..40d92a1
+  URL: https://github.com/rktjmp/lush.nvim
   Commits:
     40d92a1 Remove `syntax reset` from viml generation (2 weeks ago)
     80366a4 Add walh themes to made_with_lush (3 weeks ago)
     00c74a2 Add doubletrouble to made_with_lush (4 weeks ago)
 
  ✓ Updated savq/melange: 6b35b53..a7f6cc4
+  URL: https://github.com/savq/melange
   Commits:
     a7f6cc4 Update README.md (8 days ago)
     8241055 Merge pull request #28 from savq/light (8 days ago)
@@ -982,6 +1012,7 @@
     a96d530 chore: move iterm2 files to their own directory (5 weeks ago)
 
  ✓ Updated sbdchd/neoformat: 964c66f..6b28df6
+  URL: https://github.com/sbdchd/neoformat
   Commits:
     6b28df6 Fixed the order of arguments for Prettier with svelte (#381) (3 days ago)
     6ec728b Add deno fmt for JSON, JSONC, and Markdown (#379) (7 days ago)
@@ -989,6 +1020,7 @@
     63c50a7 Add cue formatter (#377) (13 days ago)
 
  ✓ Updated folke/tokyonight.nvim: eede574..2981e4b
+  URL: https://github.com/folke/tokyonight.nvim
   Commits:
     2981e4b Merge branch 'main' of github.com:folke/tokyonight.nvim (12 days ago)
     3fcd611 refactor: only define LspDiagnostics groups when vim.diagnostic does not exist (12 days ago)
@@ -999,6 +1031,7 @@
     8b53447 fix: Make lightline theme use same colors as lualine theme (#95) (13 days ago)
 
  ✓ Updated hoob3rt/lualine.nvim: 9726824..7eff9bb
+  URL: https://github.com/hoob3rt/lualine.nvim
   Commits:
     7eff9bb chore: formated with stylua (#410) (4 days ago)
     0928fef chore: generated vimdoc (#411) (4 days ago)
@@ -1402,6 +1435,7 @@
     2c24d62 Initial commit (10 months ago)
 
  ✓ Updated nvim-lua/plenary.nvim: 8c6cc07..96e821e
+  URL: https://github.com/nvim-lua/plenary.nvim
   Commits:
     96e821e fix: check if title ranges is the empty table (#266) (4 days ago)
     b39bd43 fix: update title highlights on `Border:move` (#264) (5 days ago)
@@ -1418,10 +1452,12 @@
     6bb0e09 feat: option to output logging to the qflist (#247) (5 weeks ago)
 
  ✓ Updated tjdevries/astronauta.nvim: 02ba43b..ea8cae1
+  URL: https://github.com/tjdevries/astronauta.nvim
   Commits:
     ea8cae1 Update README.md (3 weeks ago)
 
  ✓ Updated junegunn/fzf.vim: e393108..d6aa214
+  URL: https://github.com/junegunn/fzf.vim
   Commits:
     d6aa214 Add LICENSE file (#1342) (24 hours ago)
     0452b71 Fix preview failing on files with special characters (#1337) (3 weeks ago)
