@@ -1,4 +1,4 @@
-(module dotfiles.module.highlights
+(module dotfiles.scratch.highlights
   {require {a aniseed.core
             str aniseed.string
             nvim aniseed.nvim

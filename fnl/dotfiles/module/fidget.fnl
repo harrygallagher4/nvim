@@ -1,6 +1,6 @@
 (module dotfiles.module.fidget
-  {require {a aniseed.core
-            spinners fidget.spinners}
+  {require
+   {spinners fidget.spinners}
    autoload {: fidget}})
 
 (def- custom

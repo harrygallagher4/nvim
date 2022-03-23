@@ -1,4 +1,4 @@
-(module dotfiles.module.matchparen
+(module dotfiles.scratch.matchparen
   {require {nvim aniseed.nvim
             util dotfiles.util}})
 ;;

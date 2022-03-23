@@ -6,12 +6,17 @@
    autoload
    {packer-maps dotfiles.maps.ft_packer}})
 
+(local func (setmetatable {} {:__tostring "setupfn"}))
+
+(fn set-opt [k v]
+  (if (= k func) (v)
+      (tset vim.opt_local k v)))
 
 (fn setl [o v]
   (if (and (a.table? o) (a.nil? v))
       (each [k v (pairs o)]
-        (tset vim.opt_local k v))
-      (tset vim.opt_local o v)))
+        (set-opt k v))
+      (set-opt o v)))
 
 (local local-opts
   {:man :help

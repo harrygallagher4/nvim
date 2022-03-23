@@ -17,7 +17,14 @@
                       :width 24
                       :winhl "lualine_a_insert"
                       :resizer specs.shrink_resizer
-                      :fader specs.linear_fader}})
+                      :fader specs.linear_fader}
+              :ignore_buftypes {:nofile true
+                                :nowrite true
+                                :quickfix true
+                                :terminal true
+                                :prompt true}
+              :ignore_filetypes {:TelescopePrompt true
+                                 :Trouble true}})
 
 (tset vim.g :lf#replace_netrw 1)
 (tset vim.g :lf#layout {:window {:width 0.85
