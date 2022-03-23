@@ -1,36 +1,58 @@
 (module dotfiles.module.completion
   {require
-   {a aniseed.core
-    lspkind lspkind
+   {lspkind lspkind
     ls luasnip
     cmp cmp
     ctx cmp.config.context}})
 
-(lspkind.init {})
+; this may be overkill, but I figure it couldn't hurt to cache
+; functions that are going to be called very often. plus i'd consider
+; completion an area where performance is important
+(local (s/sub s/match) (values string.sub string.match))
+(local get-mode vim.api.nvim_get_mode)
+(local win-get-cursor vim.api.nvim_win_get_cursor)
+(local buf-get-lines vim.api.nvim_buf_get_lines)
 
-(def- m cmp.mapping)
-(def- s cmp.config.sources)
-(def- expandable? ls.expandable)
-(def- expandable-or-jumpable? ls.expand_or_jumpable)
-(defn- expandable-and-not-selected? []
-  (and (expandable?) (a.nil? (cmp.get_selected_entry))))
-(defn- backwards-jumpable? [] (ls.jumpable -1))
-(def- visible? cmp.visible)
-(defn- has-word-before? []
-  (let [[line col] (vim.api.nvim_win_get_cursor 0)
-        [s] (vim.api.nvim_buf_get_lines 0 (- line 1) line true)]
+(local m cmp.mapping)
+(local s cmp.config.sources)
+
+(local complete! cmp.complete)
+(local abort! cmp.abort)
+(local select-next-item! cmp.select_next_item)
+(local select-prev-item! cmp.select_prev_item)
+(local jump! ls.jump)
+(local expand! ls.expand)
+(local lsp-expand! ls.lsp_expand)
+(local expand-or-jump! ls.expand_or_jump)
+
+(local visible? cmp.visible)
+(local get-selected-entry cmp.get_selected_entry)
+(local jumpable? ls.jumpable)
+(local expandable? ls.expandable)
+(local expandable-or-jumpable? ls.expand_or_jumpable)
+(local in-treesitter-capture? ctx.in_treesitter_capture)
+(local in-syntax-group? ctx.in_syntax_group)
+
+(fn expandable-and-not-selected? []
+  (and (expandable?) (= nil (get-selected-entry))))
+(fn backwards-jumpable? [] (jumpable? -1))
+(fn has-word-before? []
+  (let [[line col] (win-get-cursor 0)
+        [s] (buf-get-lines 0 (- line 1) line true)]
     (and (~= col 0)
          (-> s
-             (string.sub col col)
-             (string.match "%s")
-             (a.nil?)))))
+             (s/sub col col)
+             (s/match "%s")
+             (not= nil)))))
+
+(lspkind.init {})
 
 (cmp.setup
   {:formatting
    {:format (lspkind.cmp_format)}
 
    :snippet
-   {:expand (fn [{: body}] (ls.lsp_expand body))}
+   {:expand (fn [{: body}] (lsp-expand! body))}
 
    :sources
    (s [{:name "nvim_lsp"}
@@ -39,9 +61,9 @@
 
    ; wonder if this slows down cmp?
    :enabled
-   #(if (= "c" (. (vim.api.nvim_get_mode) :mode)) true
-        (and (not (ctx.in_treesitter_capture "comment"))
-             (not (ctx.in_syntax_group "Comment"))))
+   #(if (= "c" (. (get-mode) :mode)) true
+        (and (not (in-treesitter-capture? "comment"))
+             (not (in-syntax-group? "Comment"))))
 
    :mapping
    {:<c-space> (m (m.complete) [:i :c])
@@ -49,15 +71,17 @@
     :<c-p>     (m (m.scroll_docs -4) [:i :c])
     :<c-n>     (m (m.scroll_docs 4) [:i :c])
     :<cr>      (m.confirm {:select true})
-    :<esc>     (m #(if (visible?) (cmp.abort) ($)) [:i :c])
-    :<tab>     (m #(if (expandable-and-not-selected?) (ls.expand)
-                       (visible?) (cmp.select_next_item)
-                       (expandable-or-jumpable?) (ls.expand_or_jump)
-                       (has-word-before?) (cmp.complete)
-                       ($)) [:i :s])
-    :<s-tab>   (m #(if (visible?) (cmp.select_prev_item)
-                       (backwards-jumpable?) (ls.jump -1)
-                       ($)) [:i :s])}})
+    :<esc>     (m #(if (visible?) (abort!) ($)) [:i :c])
+    :<tab>     (m #(if (expandable-and-not-selected?) (expand!)
+                       (visible?) (select-next-item!)
+                       (expandable-or-jumpable?) (expand-or-jump!)
+                       (has-word-before?) (complete!)
+                       ($))
+                  [:i :s])
+    :<s-tab>   (m #(if (visible?) (select-prev-item!)
+                       (backwards-jumpable?) (jump! -1)
+                       ($))
+                  [:i :s])}})
 
 (cmp.setup.filetype
   "fennel"
