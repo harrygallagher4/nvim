@@ -1,26 +1,23 @@
-(module dotfiles.maps.ft_packer
-  {require
-   {a aniseed.core}})
+(module dotfiles.maps.ft_packer)
 
 (def config {:cmd "open"})
 (local url-pattern "^  URL: (.+)$")
 
 (local pat-format
-  {url-pattern
-   #["%s" $2]
-   "    %x+ .+ %(#?(%d+)%) %(%d+ %w+ ago%)"
-   #["%s/pull/%s" $.url $2]
-   "    %x+ .+ #(%d+) %(%d+ %w+ ago%)"
-   #["%s/pull/%s" $.url $2]
-   "    %x+ Merge pull request #(%d+) from .+%(%d+ %w+ ago%)"
-   #["%s/pull/%s" $.url $2]
-   "^%W+Updated ([%w%-%.]+/[%w%-%.]+): (%w+)%.%.(%w+)$"
-   #["https://github.com/%s/compare/%s...%s" $2 $3 $4]
-   "^%W+Updated ([%w%-%.]+/[%w%-%.]+)/[%w%-%.]+: (%w+)%.%.(%w+)$"
-   #["https://github.com/%s/compare/%s...%s" $2 $3 $4]
-   "    (%x+) .+ %(%d+ %w+ ago%)"
-   #["%s/commit/%s" $.url $2]})
-
+  [[url-pattern
+    #["%s" $2]]
+   ["    %x+ .+ %(#?(%d+)%) %(%d+ %w+ ago%)"
+    #["%s/pull/%s" $.url $2]]
+   ["    %x+ .+ #(%d+) %(%d+ %w+ ago%)"
+    #["%s/pull/%s" $.url $2]]
+   ["    %x+ Merge pull request #(%d+) from .+%(%d+ %w+ ago%)"
+    #["%s/pull/%s" $.url $2]]
+   ["^%W+Updated ([%w%-%.]+/[%w%-%.]+): (%w+)%.%.(%w+)$"
+    #["https://github.com/%s/compare/%s...%s" $2 $3 $4]]
+   ["^%W+Updated ([%w%-%.]+/[%w%-%.]+)/[%w%-%.]+: (%w+)%.%.(%w+)$"
+    #["https://github.com/%s/compare/%s...%s" $2 $3 $4]]
+   ["    (%x+) .+ %(%d+ %w+ ago%)"
+    #["%s/commit/%s" $.url $2]]])
 
 ; this works to create a map of line->last url.
 ; i only had an old log saved so it probably needs to be tested on a
@@ -43,7 +40,7 @@
   (let [url (current-line-url)
         line (vim.api.nvim_get_current_line)]
     (var matched nil)
-    (each [p f (pairs pat-format) :until matched]
+    (each [_ [p f] (pairs pat-format) :until matched]
       (let [m [(string.match line p)]]
         (when (< 0 (length m))
           (->> (f {: url :match m} (unpack m))
@@ -53,7 +50,7 @@
     matched))
 
 (fn open-url! [url]
-  (when (not (a.nil? url))
+  (when (not= nil url)
         (vim.cmd (string.format "silent !%s '%s'" config.cmd url))))
 
 (fn do-line []
