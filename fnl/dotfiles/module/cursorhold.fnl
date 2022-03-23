@@ -10,6 +10,7 @@
 (local schedule vim.schedule)
 (local reg-recording vim.fn.reg_recording)
 (local del-augroup vim.api.nvim_del_augroup_by_name)
+(local create-augroup vim.api.nvim_create_augroup)
 (local create-autocmd vim.api.nvim_create_autocmd)
 (local do-autocmd vim.api.nvim_do_autocmd)
 (local get-mode vim.api.nvim_get_mode)
@@ -36,7 +37,7 @@
 
 (defn setup []
   (oset+ :eventignore [:CursorHold :CursorHoldI])
-  (create-autocmd "fix_cursorhold" {:clear true})
+  (create-augroup "fix_cursorhold" {:clear true})
   (create-autocmd :CursorMoved {:group "fix_cursorhold" :callback cursor-moved})
   (create-autocmd :CursorMovedI {:group "fix_cursorhold" :callback cursor-moved-i}))
 
