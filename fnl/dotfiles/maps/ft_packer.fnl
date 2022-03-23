@@ -3,6 +3,10 @@
 (def config {:cmd "open"})
 (local url-pattern "^  URL: (.+)$")
 
+; this needs to be a list-table in order to preserve order.
+; I consider these to be in order by decreasing priority, the `commit`
+; pattern also matches both of the PR patterns so if these aren't
+; iterated in order it's possible for PR detection to break
 (local pat-format
   [[url-pattern
     #["%s" $2]]
