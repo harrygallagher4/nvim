@@ -29,8 +29,11 @@
     :border true
     :path_display ["smart"]
     :dynamic_preview_title true
-    :layout_config {:vertical {:width 0.8 :height 0.6 :mirror true}
-                    :horizontal {:prompt_position "top" :preview_width 0.45
+    :layout_config {:vertical {:width 0.8
+                               :height 0.6
+                               :mirror true}
+                    :horizontal {:prompt_position "top"
+                                 :preview_width 0.45
                                  :width 0.85}}
     :mappings {:i {:<esc> actions.close
                    :<c-j> actions.move_selection_next
@@ -42,12 +45,15 @@
                    :<a-t> trouble.open_selected_with_trouble}}
     :file_ignore_patterns compiled-fnl}
    :extensions
-   {:fzf
-    {:override_generic_sorter true
-     :override_file_sorter true
-     :case_mode "smart_case"}}})
+   {:zf-native
+    {:file {:enable true
+            :highlight_results true
+            :match_filename true}
+     :generic {:enable true
+               :highlight_results true
+               :match_filename true}}}})
 
-(telescope.load_extension "fzf")
+(telescope.load_extension "zf-native")
 (telescope.load_extension "project")
 (telescope.load_extension "ghq")
 (telescope.load_extension "zoxide")
@@ -98,7 +104,7 @@
 (defn- oldfiles-theme [project?]
   (a.merge
     {:prompt_title "oldfiles"
-     :preview_title false
+     :previewer false
      :results_title false
      :cwd_only false}
     (when project?
@@ -128,8 +134,8 @@
   (when (not (. package.loaded :packer.plugin_utils))
     (let [plugin-utils (require :packer.plugin_utils)
           packer-config-defaults
-          {:start_dir "/Users/harry/.local/share/nvim/site/pack/packer/start/"
-           :opt_dir "/Users/harry/.local/share/nvim/site/pack/packer/opt/"
+          {:start_dir (util.stdfile "data" "site/pack/packer/start/")
+           :opt_dir (util.stdfile "data" "site/pack/packer/opt/")
            :git {:default_url_format "https://github.com/%s.git"}}]
       (plugin-utils.cfg packer-config-defaults)))
   (when (not telescope.extensions.packer)
@@ -139,6 +145,6 @@
   (setup-packer!)
   (telescope.extensions.packer.packer))
 
-(vim.api.nvim_add_user_command :Plugins plugin-picker {})
+(vim.api.nvim_create_user_command :Plugins plugin-picker {})
 (vim.cmd "highlight link TelescopePromptPrefix TelescopeBorder")
 
