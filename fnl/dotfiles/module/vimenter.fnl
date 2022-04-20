@@ -10,7 +10,12 @@
 
 (parinfer.setup {:trail_highlight false})
 
-(gitsigns.setup)
+(local gitsigns_disabled_filetypes ["norg"])
+(gitsigns.setup {:on_attach (fn [buf]
+                              (if (vim.tbl_contains
+                                    gitsigns_disabled_filetypes
+                                    vim.bo.filetype)
+                                  false))})
 
 (specs.setup {:popup {:blend 10
                       :inc 3
