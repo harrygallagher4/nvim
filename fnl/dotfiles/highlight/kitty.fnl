@@ -1,8 +1,10 @@
 (module dotfiles.highlight.kitty
-  {require {a aniseed.core
-            nvim aniseed.nvim
-            str dotfiles.util.string
-            lustache lustache}})
+  {require
+   {a aniseed.core
+    nvim aniseed.nvim
+    util dotfiles.util
+    str dotfiles.util.string
+    lustache lustache}})
 
 (local WHITE 16777215)
 (local BLACK 0)
@@ -112,9 +114,9 @@
 ; > kitty @ set-colors --all --configured ~/.config/kitty/nvim_auto_colors.conf
 (defn generate-kitty! []
   (->> (lustache:render template view)
-       (a.spit "/Users/harry/.config/kitty/nvim_auto_colors.conf")))
+       (a.spit (util.stdfile "config" ".." "kitty/nvim_auto_colors.conf"))))
 
 (defn generate-fzf! []
   (->> (lustache:render fzf-template view)
-       (a.spit "/Users/harry/.fzf-theme.zsh")))
+       (a.spit (util.stdfile "~" ".fzf-theme.zsh"))))
 
