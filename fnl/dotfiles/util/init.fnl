@@ -1,19 +1,42 @@
 (module dotfiles.util
-  {require {a aniseed.core
-            nvim aniseed.nvim
-            nvu aniseed.nvim.util
-            str dotfiles.util.string
-            preload plenary.reload
-            it plenary.iterators}})
+  {require
+   {a aniseed.core
+    nvim aniseed.nvim
+    nvu aniseed.nvim.util
+    str dotfiles.util.string
+    preload plenary.reload
+    it plenary.iterators}})
 
 ;; TODO this file needs a lot of work
 
 (def config-path (vim.fn.stdpath "config"))
 
-(defn stdfile [path ...]
-  (str.join "/"
-    [(vim.fn.stdpath path)
-     ...]))
+(local extra-paths
+  {"~" "~"
+   :home "~"
+   :scripts "~/scripts/"
+   :plugins (.. (vim.fn.stdpath "data") "/site/pack/packer/start")
+   :opt-plugins (.. (vim.fn.stdpath "data") "/site/pack/packer/opt")})
+
+(defn stdpath [name]
+  (let [custom-path (. extra-paths name)]
+    (if (= nil custom-path) (vim.fn.stdpath name)
+        (-> (vim.fn.fnamemodify custom-path ":p")
+            (: :sub 1 -2)))))
+
+(defn up-dir [path]
+  (->> path
+       (str.split "/")
+       (a.butlast)
+       (str.join "/")))
+
+(defn stdfile [dir ...]
+  (let [up? (= ".." (select 1 ...))
+        path (stdpath dir)
+        p-tbl (if up?
+                  [(up-dir path) (select 2 ...)]
+                  [path ...])]
+    (str.join "/" p-tbl)))
 
 ;
 ; general utils
