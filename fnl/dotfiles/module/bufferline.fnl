@@ -1,6 +1,7 @@
 (module dotfiles.module.bufferline
-  {require {maps dotfiles.maps
-            bufferline bufferline}})
+  {require
+   {maps dotfiles.maps
+    bufferline bufferline}})
 
 (defn- numbers [{: id : ordinal : lower : raise}]
   (match (vim.fn.bufwinnr id)
@@ -16,9 +17,5 @@
 (maps :n
   [["<a-i>" "<cmd>BufferLineCycleNext<cr>"]
    ["<a-o>" "<cmd>BufferLineCyclePrev<cr>"]
-   ["<a-b>" "<cmd>BufferLinePick<cr>"]
-   ["<c-q>" "<cmd>BufferLinePickClose<cr>"]
-   ["<leader>]" "<cmd>BufferLineCycleNext<cr>"]
-   ["<leader>[" "<cmd>BufferLineCyclePrev<cr>"]
-   ["<leader><leader>o" "<cmd>BufferLinePick<cr>"]])
+   ["<c-q>" "<cmd>BufferLinePickClose<cr>"]])
 
