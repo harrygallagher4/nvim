@@ -12,6 +12,8 @@
 
 (defn oset+ [optname value]
   (: (. vim.opt optname) :append value))
+(defn o+set [optname value]
+  (: (. vim.opt optname) :prepend value))
 (defn oset- [optname value]
   (: (. vim.opt optname) :remove value))
 
@@ -24,7 +26,7 @@
 
 (gset :loaded_python_provider 0)
 (gset :python3_host_prog "/usr/local/bin/python3")
-(gset :node_host_prog "/Users/harry/.config/yarn/global/node_modules/neovim/bin/cli.js")
+(gset :node_host_prog (util.stdfile "config" ".." "yarn/global/node_modules/neovim/bin/cli.js"))
 (gset :loaded_fix_cursorhold_nvim "yes")
 (gset :cursorhold_updatetime 100)
 (gset :do_filetype_lua 1)
@@ -64,7 +66,7 @@
 (oset :inccommand "nosplit")
 (oset :linebreak)
 (oset :list)
-(oset :listchars {:tab "  " :trail "⋅" :multispace "⋅" :nbsp "_" :lead " "})
+(oset :listchars {:tab "  " :trail "⋅" :nbsp "_"})
 (oset :mouse "a")
 (oset :equalalways false)
 (oset :wrap false)
@@ -91,6 +93,13 @@
 
 (oset :completeopt [:menu :menuone :noinsert :noselect])
 (oset+ :shortmess :c)
+
+(oset- :lispwords "if")
+(oset+ :lispwords ["accumulate" "doto"])
+(gset
+  :fennel_fuzzy_indent_patterns
+  ["^def" "^let" "^while" "^fn$" "^var$" "^case$" "^for$" "^each$"
+   "^local$" "^global$" "^match$" "^macro" "^lambda$" "^with-open$"])
 
 (set vim.env.FZF_DEFAULT_OPTS (.. vim.env.FZF_DEFAULT_OPTS " --margin=0,0"))
 

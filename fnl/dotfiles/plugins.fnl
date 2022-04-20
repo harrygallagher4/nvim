@@ -26,13 +26,13 @@
 
    :nvim-lua/plenary.nvim
    :nvim-lua/popup.nvim
-   :romgrk/fzy-lua-native {:run "make"}
 
    :andweeb/presence.nvim {:module "presence"}
 
    :kyazdani42/nvim-web-devicons
    :catppuccin/nvim {:as "catppuccin"}
    :hoob3rt/lualine.nvim
+   :feline-nvim/feline.nvim
    :akinsho/nvim-bufferline.lua
    :lukas-reineke/indent-blankline.nvim
    :lewis6991/gitsigns.nvim {:requires ["plenary.nvim"]}
@@ -58,7 +58,9 @@
    :nvim-telescope/telescope-packer.nvim
    :nvim-telescope/telescope-ghq.nvim
    :jvgrootveld/telescope-zoxide
+   :romgrk/fzy-lua-native {:run "make"}
    :nvim-telescope/telescope-fzf-native.nvim {:run "make"}
+   :natecraddock/telescope-zf-native.nvim
    :nvim-telescope/telescope.nvim {:requires ["popup.nvim" "plenary.nvim"]}
 
    :harrygallagher4/aniseed-ts-queries.nvim
