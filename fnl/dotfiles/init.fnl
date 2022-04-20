@@ -1,19 +1,23 @@
 (module dotfiles
   {autoload
-   {cmds dotfiles.commands
-    parinfer parinfer
-    specs specs}})
+   {cmds dotfiles.commands}})
 
-(defn- init-module [mod]
-  (require (.. "dotfiles.module." mod)))
+(fn require* [mod] (pcall require mod))
+(fn init-module [mod] (require* (.. "dotfiles.module." mod)))
 
-(require :dotfiles.options)
-(require :dotfiles.maps)
-(require :dotfiles.theme)
-(require :dotfiles.ftplugin)
+;; this goes here because if there's an error during startup I want to
+;; be able to recompile
+(vim.api.nvim_create_user_command
+  :AniseedCompile
+  #((. (require :dotfiles.compile) :aniseed-compile!))
+  {})
+
+(require* :dotfiles.options)
+(require* :dotfiles.maps)
+(require* :dotfiles.colorscheme)
+(require* :dotfiles.ftplugin)
 
 (init-module :cursorhold)
-
 ; override vim.notify. I figure this should be first in case a plugin
 ; wants to send a notification during startup
 (init-module :notify)
@@ -41,11 +45,9 @@
 ; parinfer needs to be required & setup after VimEnter so that
 ; :packadd! won't source plugin/* scripts. this way parinfer-rust is
 ; added to the runtimepath but isn't set up
-(defn init-post []
+(fn init-post []
   (init-module :vimenter)
-  (cmds.mod-cmd! :FnlClean :dotfiles.compile :clean!)
-  (cmds.mod-cmd! :FnlCompileAll :dotfiles.compile :compile-all!)
-  (cmds.mod-cmd! :AniseedCompile :dotfiles.compile :aniseed-compile!))
+  (cmds.enter-cmds!))
 
 (vim.api.nvim_create_augroup "dotfiles" {:clear true})
 (vim.api.nvim_create_autocmd :VimEnter {:callback init-post :group "dotfiles"})
