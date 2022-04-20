@@ -1,0 +1,108 @@
+               packer.nvim - finished in 5.511s
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ ✓ Updated nvim-neorg/neorg: 11bf79c1..8f8c1ae8
+  URL: https://github.com/nvim-neorg/neorg
+  Commits:
+    8f8c1ae8 chore: autoformat with stylua (12 hours ago)
+    b34f0229 feat: vastly improve regex code block highlighting (#367) (12 hours ago)
+    c4e1b534 fix(syntax) fix linter errors (12 hours ago)
+    94ceb6da fix(syntax) error with `syntax cluster` (13 hours ago)
+    f27ea763 fix(syntax) fix missing parameters (13 hours ago)
+    2b0e7abf fix(syntax) fix other part of bad merge (13 hours ago)
+    02a0a295 fix(syntax) fix bad merge (14 hours ago)
+    b8cc4c93 feat(integrations.treesitter): fix custom parser configs not being applied (14 hours ago)
+    7a2f91a9 Merge branch 'main' into regex-fixes (14 hours ago)
+    857a3345 fix(syntax) fix doubling at the cost of hi link breaking - reopens #315 (14 hours ago)
+    c3d630c2 fix(syntax) prevent double loading in various circumstances (2 days ago)
+    8ba05e72 fix(syntax) remove extra print, fix end nodes not working (2 weeks ago)
+    236f3f69 fix(syntax) prevent a syntax load doubling (3 weeks ago)
+    dcc2e2bf fix(syntax) remove extraneous function call (3 weeks ago)
+    1ff61851 fix(syntax) fix errors with unavailable languages (3 weeks ago)
+    64ef0299 docs(syntax) some minor documentation and formatting updates (3 weeks ago)
+    810cf3b6 feature(syntax) reduce number of calls for a lengthy function (3 weeks ago)
+    b39dfc64 chore: autoformat with stylua (3 weeks ago)
+    a4af7ef3 feature(completion) show all available languages (3 weeks ago)
+    febb5897 fix(concealer) remove extraneous require (3 weeks ago)
+    cc0dc3c9 refactor(syntax) move regex-code to its own module named 'syntax' (3 weeks ago)
+    5433e679 fix(regex-code) stop errors on empty code block (3 weeks ago)
+    1ac2b331 fix(regex-code) specifically track if a language include is empty or not (4 weeks ago)
+    def28816 fix(regex-code) minor fix to stop insert mode leaking code blocks (4 weeks ago)
+    688ed2fb fix(regex-code) prevent syntax files from escaping the code block (4 weeks ago)
+    a8d20d43 fix(regex-code) only remove syntax on certain autocommands (4 weeks ago)
+    894d2f44 fix(regex-code) restructure and fix settings from escaping - closes #365 (4 weeks ago)
+    b7f78174 fix(regex-code) hi link groups always work - closes #315 (4 weeks ago)
+    71d94c40 fix(regex-code) fix syntax from not clearing (4 weeks ago)
+    debaf32d feat(regex-code) clear out syntax files that aren't in file - currently broken for some weird reason (4 weeks ago)
+    61db8be9 feat(regex-code) sync based on incremental updates - should mildly help overall performance (4 weeks ago)
+    de7c84fa feat(regex-code) remove a treesitter an unneeded query parse (4 weeks ago)
+    80e54302 fix(regex-code) stage what is supposed to be from the last commit proper (4 weeks ago)
+    f687d9cc feat(regex-code) break out sync function, allow table to not be remade each time its called (4 weeks ago)
+    1044d51f feat(regex-code) restructure table to include start and end of code blocks - also stylua format (4 weeks ago)
+    0df8b61d feat(regex-code) use group syntax syncing - less overall file syncing, hopefully a performance benefit (4 weeks ago)
+    31aa5674 fix(regex-code) cleanups (4 weeks ago)
+    107fb563 feat(regex-code) source syntax files upon Neorg start - removes parse need on each syntax block addition (4 weeks ago)
+    16c1233a feat(regex-code) per-buffer table support - fixes reparse issues and loading issues (5 weeks ago)
+    9e42d646 feat(regex-code) use table instead of AST parsing - noticeable performance improvement - unfortunately is global to norg file types - syntax files will load for each (6 weeks ago)
+    93475c03 Merge branch 'regex-fixes' of github.com:katawful/neorg into regex-fixes (6 weeks ago)
+    e0f8a596 Merge branch 'nvim-neorg:main' into regex-fixes (6 weeks ago)
+    57a40682 fix(regex-code) cleanups, renamed tags (6 weeks ago)
+    cdeb1874 feat(regex-code) store loaded code blocks in the module (6 weeks ago)
+    ba24a393 fix(regex-code) fixed formatting issue (6 weeks ago)
+    471f8a91 fix(regex-code) formatting (6 weeks ago)
+    0afd6af3 feat(regex-code) use string.format instead of concatenation - marginally better performance overall (6 weeks ago)
+
+ ✓ Updated hoob3rt/lualine.nvim: 5a91d81..e9b935c
+  URL: https://github.com/hoob3rt/lualine.nvim
+  Commits:
+    e9b935c feat: add windows component (#595) (17 hours ago)
+    4480d91 fix: transparent background throwing errors without termguicolors (21 hours ago)
+    428da5a chore: add support link (21 hours ago)
+    4ebbb7a chore: lint correct test directory (21 hours ago)
+
+ ✓ Updated L3MON4D3/LuaSnip: 9017e57..f4e1fab
+  URL: https://github.com/L3MON4D3/LuaSnip
+  Commits:
+    f4e1fab Auto generate docs (21 hours ago)
+    cc64466 Merge pull request #353 from mathjiajia/patch-1 (21 hours ago)
+    11b03da fix(docs): typo in demonstration of `InsertNode` also added `The` in front of `0-th` (21 hours ago)
+    cb49022 remove branch-reference from workflow. (22 hours ago)
+    2d09973 Format with stylua (22 hours ago)
+    be9cb30 Auto generate docs (22 hours ago)
+    ef2c35f Merge pull request #355 from xiaket/fix-bash-example (22 hours ago)
+    8fdb772 Update example for bash. (22 hours ago)
+
+ ✓ Updated nvim-telescope/telescope.nvim: 503db70..cf2d6d3
+  URL: https://github.com/nvim-telescope/telescope.nvim
+  Commits:
+    cf2d6d3 fix (tags|btags): escape all special characters (#1806) (21 hours ago)
+    40c1e88 chore: fix lint errors from latest ci run (21 hours ago)
+
+ ✓ Updated nvim-treesitter/nvim-treesitter: 2f704e5..cd4d802
+  URL: https://github.com/nvim-treesitter/nvim-treesitter
+  Commits:
+    cd4d802 highlights: conceal `"` in JSON (13 hours ago)
+    739fefa ci: lock nix parser (20 hours ago)
+    a838a35 chore: placate luacheck (22 hours ago)
+    25bd021 Update lockfile.json (22 hours ago)
+
+ ✓ Updated Olical/conjure/develop: 9d6529e..9f493a5
+  URL: https://github.com/Olical/conjure
+  Commits:
+    9f493a5 Guard against log buf upserting race conditions and nil concats #320 (16 hours ago)
+    3331aa0 Add more notes on the key mappings #322 (16 hours ago)
+    5f56a6e Default the toggle command to vsplit, fix #325 (16 hours ago)
+    1d76ec5 Merge pull request #327 from monkoose/doc (16 hours ago)
+    6ac2d8f Merge branch 'stelcodes-gh-317' into develop (16 hours ago)
+    5620aad Correct calls to resolve-above, it now takes many files and returns one, so it can't be mapped / some-ed over (16 hours ago)
+    c0186c2 Correct some references to functions before they're defined (17 hours ago)
+    13500cf Recompile a missed Clojure client file (17 hours ago)
+    1e0e46f Sync sponsors, thank you for your time and money! It will always be appreciated! <3 (17 hours ago)
+    956e46b Add compiled lua files (2 days ago)
+    d5eb6d2 Fix documentation for fennel client (2 days ago)
+    1023190 Check for each nREPL port file at each tree level (#317) (5 days ago)
+
+
+ Press 'q' to quit
+ Press '<CR>' to show more info
+ Press 'd' to show the diff
+ Press 'r' to revert an update

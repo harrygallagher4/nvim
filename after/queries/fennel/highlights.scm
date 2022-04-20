@@ -4,6 +4,11 @@
   "accumulate"
 ] @repeat
 
+; (
+;   (string) @TSTag
+;   (#match? @TSTag "^:")
+; )
+
 (fn docstring: (string) @comment)
 
 ((list .
