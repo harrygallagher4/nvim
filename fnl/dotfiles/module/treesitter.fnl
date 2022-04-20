@@ -1,8 +1,11 @@
 (module dotfiles.module.treesitter
-  {require {a aniseed.core
-            str dotfiles.util.string
-            tsc nvim-treesitter.configs
-            parsers nvim-treesitter.parsers}})
+  {require
+   {a aniseed.core
+    str dotfiles.util.string
+    ts nvim-treesitter
+    tsc nvim-treesitter.configs
+    tsq nvim-treesitter.query
+    parsers nvim-treesitter.parsers}})
 
 (def- parser-configs (parsers.get_parser_configs))
 (defn- add-parser [name config]
@@ -40,8 +43,18 @@
        (a.map    #(a.last (str.split "/" $)))))
 (tset (require :nvim-treesitter.install) :compilers okay-compilers)
 
+
+(ts.define_modules
+  {:harryg
+   {:highlight_scope {:module_path :dotfiles.plugin.ts-highlight-scope
+                      :enable false
+                      :disable []
+                      :is_supported tsq.has_locals}}})
+
+
 (tsc.setup
-  {:indent {:enable true}
+  {:harryg {:highlight_scope {:enable true}}
+   :indent {:enable true}
    :highlight {:enable true}
    :textobjects {:enable false}
    :incremental_selection {:enable true
