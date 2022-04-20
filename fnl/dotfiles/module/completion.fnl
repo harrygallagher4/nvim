@@ -25,8 +25,8 @@
 (local lsp-expand! ls.lsp_expand)
 (local expand-or-jump! ls.expand_or_jump)
 
-(local visible? cmp.visible)
 (local get-selected-entry cmp.get_selected_entry)
+(local visible? cmp.visible)
 (local jumpable? ls.jumpable)
 (local expandable? ls.expandable)
 (local expandable-or-jumpable? ls.expand_or_jumpable)
@@ -37,65 +37,63 @@
   (and (expandable?) (= nil (get-selected-entry))))
 (fn backwards-jumpable? [] (jumpable? -1))
 (fn has-word-before? []
-  (let [[line col] (win-get-cursor 0)
-        [s] (buf-get-lines 0 (- line 1) line true)]
-    (and (~= col 0)
-         (-> s
-             (s/sub col col)
-             (s/match "%s")
-             (not= nil)))))
+  (if (= "c" (. (get-mode) :mode)) true
+      (let [[line col] (win-get-cursor 0)
+            [s] (buf-get-lines 0 (- line 1) line true)]
+        (and (~= col 0) (-> s (s/sub col col)
+                              (s/match "%w")
+                              (not= nil))))))
+
+(local buf-source {:name "buffer"
+                   :config {:keyword_pattern "\\k\\+"}})
 
 (lspkind.init {})
 
 (cmp.setup
-  {:formatting
-   {:format (lspkind.cmp_format)}
+  {:formatting {:format (lspkind.cmp_format {:mode "symbol_text"
+                                             :maxwidth 50})}
+   :view {:entries "custom"}
+   :window {:completion {:border ["" "" "" "" "" "" "" ""]
+                         :winhighlight "Search:None"}}
+   :snippet {:expand (fn [{: body}] (lsp-expand! body))}
+   :sources (s [{:name "nvim_lsp"}
+                {:name "path" :trigger_characters ["/"]}]
+               [buf-source])
+   :enabled #(if (= "c" (. (get-mode) :mode)) true
+                 (and (not (in-treesitter-capture? "comment"))
+                      (not (in-syntax-group? "Comment"))))
+   :mapping {:<c-space> (m (m.complete) [:i :c])
+             :<c-e>     (m {:i (m.abort) :c (m.close)})
+             :<c-p>     (m (m.scroll_docs -4) [:i :c])
+             :<c-n>     (m (m.scroll_docs 4) [:i :c])
+             :<cr>      (m (m.confirm {:select true}))
+             :<esc>     (m #(if (visible?) (abort!) ($)) [:i :c])
+             :<tab>     (m #(if (expandable-and-not-selected?) (expand!)
+                                (visible?) (select-next-item!)
+                                (expandable-or-jumpable?) (expand-or-jump!)
+                                (has-word-before?) (complete!)
+                                ($))
+                           [:i :s :c])
+             :<s-tab>   (m #(if (visible?) (select-prev-item!)
+                                (backwards-jumpable?) (jump! -1)
+                                ($))
+                           [:i :s :c])}})
 
-   :snippet
-   {:expand (fn [{: body}] (lsp-expand! body))}
+(cmp.setup.filetype :fennel
+                    {:sources (s [{:name "conjure"}
+                                  buf-source
+                                  {:name "path"
+                                   :trigger_characters ["/"]}])})
 
-   :sources
-   (s [{:name "nvim_lsp"}
-       {:name "path" :trigger_characters ["/"]}]
-      [{:name "buffer"}])
+(cmp.setup.filetype :norg
+                    {:sources (s [{:name "neorg"}])})
 
-   ; wonder if this slows down cmp?
-   :enabled
-   #(if (= "c" (. (get-mode) :mode)) true
-        (and (not (in-treesitter-capture? "comment"))
-             (not (in-syntax-group? "Comment"))))
+(cmp.setup.cmdline "/"
+                   {:sources [{:name "buffer"}]})
 
-   :mapping
-   {:<c-space> (m (m.complete) [:i :c])
-    :<c-e>     (m {:i (m.abort) :c (m.close)})
-    :<c-p>     (m (m.scroll_docs -4) [:i :c])
-    :<c-n>     (m (m.scroll_docs 4) [:i :c])
-    :<cr>      (m.confirm {:select true})
-    :<esc>     (m #(if (visible?) (abort!) ($)) [:i :c])
-    :<tab>     (m #(if (expandable-and-not-selected?) (expand!)
-                       (visible?) (select-next-item!)
-                       (expandable-or-jumpable?) (expand-or-jump!)
-                       (has-word-before?) (complete!)
-                       ($))
-                  [:i :s])
-    :<s-tab>   (m #(if (visible?) (select-prev-item!)
-                       (backwards-jumpable?) (jump! -1)
-                       ($))
-                  [:i :s])}})
-
-(cmp.setup.filetype
-  "fennel"
-  {:sources
-   (s [{:name "conjure"}
-       {:name "buffer"}
-       {:name "path" :trigger_characters ["/"]}])})
-
-(cmp.setup.filetype
-  "norg"
-  {:sources
-   (s [{:name "neorg"}])})
-
-; complete from buffer when searching
-(cmp.setup.cmdline "/" {:sources [{:name "buffer"}]})
-(cmp.setup.cmdline ":" {:sources (s [{:name "path"}] [{:name "cmdline"}])})
+(cmp.setup.cmdline ":"
+                   {:completion {:autocomplete [:CmdlineChanged :TextChanged]}
+                    :formatting {:fields ["abbr"] :format #$2}
+                    :sources (s [{:name "cmdline"}
+                                 {:name "path"}])})
 
