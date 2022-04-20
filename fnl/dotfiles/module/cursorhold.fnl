@@ -12,7 +12,7 @@
 (local del-augroup vim.api.nvim_del_augroup_by_name)
 (local create-augroup vim.api.nvim_create_augroup)
 (local create-autocmd vim.api.nvim_create_autocmd)
-(local do-autocmd vim.api.nvim_do_autocmd)
+(local exec-autocmd vim.api.nvim_exec_autocmds)
 (local get-mode vim.api.nvim_get_mode)
 
 (var timeout (or vim.g.cursorhold_updatetime 100))
@@ -21,7 +21,7 @@
 
 (fn callback [event]
   (oset- :eventignore event)
-  (do-autocmd event {:modeline false})
+  (exec-autocmd event {:modeline false})
   (oset+ :eventignore event))
 
 (fn cursor-moved []
