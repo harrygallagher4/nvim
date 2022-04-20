@@ -46,8 +46,9 @@
    ;; tries to format the buffer while the snippet is expanding
    ;; which messes with extmarks
    :fennel
-   [(s {:trig "module" :wordTrig true
-        :name "Module (dynamic)" :dscr "Aniseed module definition"}
+   [(s {:trig "module"
+        :wordTrig true :name "Module (dynamic)"
+        :dscr "Aniseed module definition"}
        [(t ["(module "])
         (d 1 module-name-snip [])
         (t ["" "  {require {"])
@@ -58,24 +59,28 @@
         (t ["]})" ""])
         (i 0)])
 
-    (s {:trig "*mod*" :wordTrig true :name "Module name"
+    (s {:trig "*mod*"
+        :wordTrig true :name "Module name"
         :dscr "Inserts would-be aniseed module name for the current file in x.y.z format"}
        [(f [] []
            [(current-module-name)])
         (i 0)])
 
-    (s {:trig "let" :wordTrig true :name "Let" :dscr "Fennel let"}
+    (s {:trig "let"
+        :wordTrig true :name "Let" :dscr "Fennel let"}
        [(t ["(let "])
         (t ["["]) (i 1) (t ["]"])
         (t ["" "  ("]) (i 0) (t ["))"])])
 
-    (s {:trig "fn" :wordTrig true :name "Function" :dscr "Fennel function"}
+    (s {:trig "fn"
+        :wordTrig true :name "Function" :dscr "Fennel function"}
        [(t ["(fn "])
         (i 1) (t " ")
         (t ["["]) (i 2) (t ["]"])
         (t ["" "  ("]) (i 0) (t ["))"])])
 
-    (s {:trig "defn" :wordTrig true :name "Aniseed function" :dscr "Aniseed function"}
+    (s {:trig "defn"
+        :wordTrig true :name "Aniseed function" :dscr "Aniseed function"}
        [(t ["(defn "])
         (i 1) (t " ")
         (t ["["]) (i 2) (t ["]"])
