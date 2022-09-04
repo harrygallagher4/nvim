@@ -1,8 +1,0 @@
-# vim: ft=zsh
-
-fd -t f -uu -p 'fnl/'\
-  | sed -e "s:^fnl:$PWD/lua:" -e 's:fnl$:lua:'
-
-fd -uua -t f -p 'fnl/'\
-  | sed -e "s:/fnl/:/lua/:" -e 's:fnl$:lua:'
-
